@@ -1,97 +1,76 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+
+<html class="scroll-smooth" lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TIME-X — Shipping & Order Policy</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <script>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Shipping &amp; Order Policy</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
         tailwind.config = { theme: { extend: {
             colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
             fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
             letterSpacing: { widest: '0.2em', mega: '0.3em' }
         } } }
     </script>
-    <style>
+<style>
         .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
         ::selection { background-color: #FFFFFF; color: #0A0A0A; }
     </style>
-<link rel="stylesheet" href="assets/css_theme.css">
-
+<link href="assets/css_theme.css" rel="stylesheet"/>
 <script src="assets/js/navbar.js"></script>
 </head>
 <body class="bg-timexBlack text-timexWhite font-sans antialiased">
+<div id="navbar-placeholder"></div>
 
-    <header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10">
-        <div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
-            <a href="index.html" class="text-2xl font-black tracking-widest uppercase"><img data-site-logo src="assets/logo-timex-nepal-gold.png" alt="TIME-X" class="hidden h-9 w-auto"><span data-site-logo-text>TIME-X</span></a>
-            <nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase">
-                <a href="men.html" class="text-timexLightGrey hover:text-timexWhite transition-colors">Men</a>
-                <a href="women.html" class="text-timexLightGrey hover:text-timexWhite transition-colors">Women</a>
-                <a href="shop.html" class="text-timexLightGrey hover:text-timexWhite transition-colors">Shop</a>
-                <a href="collections.html" class="text-timexLightGrey hover:text-timexWhite transition-colors">Collections</a>
-            </nav>
-            <a href="account.html" class="text-xs font-medium tracking-wider uppercase hover:opacity-75 transition-opacity">Account</a>
-            <button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none ml-2" id="menu-toggle"><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span></button>
-
-        </div>
-    </header>
-<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu"><div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col"><div class="flex items-center justify-between mb-10"><span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span><button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button></div><nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10"><a class="mobile-link mobile-nav-link" href="index.html">Home</a><a class="mobile-link mobile-nav-link" href="men.html">Men</a><a class="mobile-link mobile-nav-link" href="women.html">Women</a><a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a><a class="mobile-link mobile-nav-link" href="collections.html">Collections</a><a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a><a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a><a class="mobile-link mobile-nav-link" href="account.html">Account</a><a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a></nav><div class="mt-auto pt-10 border-t border-white/10"><a class="mobile-link text-[10px] tracking-[0.22em] uppercase opacity-60" href="wishlist.html">Wishlist</a></div></div></div>
-
-
-    <section class="pt-40 pb-24">
-        <div class="max-w-[760px] mx-auto px-6 lg:px-12">
-            <span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-2">Policies</span>
-            <h1 class="text-4xl sm:text-5xl font-black tracking-tight uppercase mb-4">Shipping & Order Policy</h1>
-            <p class="text-xs text-timexTextGrey uppercase tracking-wider mb-16">Last updated: September 2026</p>
-
-            <div class="space-y-10 text-sm text-timexLightGrey leading-relaxed">
-                <div>
-                    <h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Delivery Zones & Charges</h2>
-                    <p>We currently deliver across Nepal. Delivery charges are calculated at checkout based on your selected zone — Kathmandu, Lalitpur, and Bhaktapur typically ship for less than orders to Pokhara, Butwal, or other districts.</p>
-                    <p>Free delivery is offered on qualifying orders — the current threshold is shown at checkout and in your cart.</p>
-                </div>
-                <div>
-                    <h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Processing Time</h2>
-                    <p>Orders are processed within 1–2 business days of confirmation. You'll receive a confirmation email once your order is placed, and an update once it ships.</p>
-                </div>
-                <div>
-                    <h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Delivery Time</h2>
-                    <p>Within Kathmandu Valley, expect delivery in 2–4 business days. Outside the valley, delivery typically takes 4–7 business days depending on your district.</p>
-                </div>
-                <div>
-                    <h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Order Tracking</h2>
-                    <p>You can track your order at any time using your order number and phone number or email on our <a href="track-order.html" class="text-timexWhite underline underline-offset-4">Track Order</a> page.</p>
-                </div>
-                <div>
-                    <h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Cancellations & Returns</h2>
-                    <p>Orders can be cancelled before they are marked as shipped. Once delivered, returns are accepted within 7 days for unworn items in original packaging with all tags and papers intact — contact us to initiate a return.</p>
-                </div>
-
-            </div>
-
-            <div class="mt-16 pt-8 border-t border-timexDarkBorder">
-                <p class="text-xs text-timexTextGrey uppercase tracking-wider">Questions about this policy? Reach out via <a href="account.html" class="text-timexWhite underline underline-offset-4">your account</a>.</p>
-            </div>
-        </div>
-    </section>
-
-    <footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-12 pb-8">
-        <div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexTextGrey uppercase">
-            <p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
-            <div class="flex gap-6">
-                <a href="shipping-policy.html" class="hover:text-timexWhite transition-colors">Shipping</a>
-                <a href="warranty-policy.html" class="hover:text-timexWhite transition-colors">Warranty</a>
-                <a href="privacy-notice.html" class="hover:text-timexWhite transition-colors">Privacy</a>
-                <a href="exercise-your-rights.html" class="hover:text-timexWhite transition-colors">Your Rights</a>
-            </div>
-        </div>
-    </footer>
-
-    <script src="assets/js/api.js"></script>
-    <script src="assets/js/shared.js"></script>
+<section class="pt-40 pb-24">
+<div class="max-w-[760px] mx-auto px-6 lg:px-12">
+<span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-2">Policies</span>
+<h1 class="text-4xl sm:text-5xl font-black tracking-tight uppercase mb-4">Shipping &amp; Order Policy</h1>
+<p class="text-xs text-timexTextGrey uppercase tracking-wider mb-16">Last updated: September 2026</p>
+<div class="space-y-10 text-sm text-timexLightGrey leading-relaxed">
+<div>
+<h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Delivery Zones &amp; Charges</h2>
+<p>We currently deliver across Nepal. Delivery charges are calculated at checkout based on your selected zone — Kathmandu, Lalitpur, and Bhaktapur typically ship for less than orders to Pokhara, Butwal, or other districts.</p>
+<p>Free delivery is offered on qualifying orders — the current threshold is shown at checkout and in your cart.</p>
+</div>
+<div>
+<h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Processing Time</h2>
+<p>Orders are processed within 1–2 business days of confirmation. You'll receive a confirmation email once your order is placed, and an update once it ships.</p>
+</div>
+<div>
+<h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Delivery Time</h2>
+<p>Within Kathmandu Valley, expect delivery in 2–4 business days. Outside the valley, delivery typically takes 4–7 business days depending on your district.</p>
+</div>
+<div>
+<h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Order Tracking</h2>
+<p>You can track your order at any time using your order number and phone number or email on our <a class="text-timexWhite underline underline-offset-4" href="track-order.html">Track Order</a> page.</p>
+</div>
+<div>
+<h2 class="text-lg font-black uppercase tracking-tight text-timexWhite mb-3">Cancellations &amp; Returns</h2>
+<p>Orders can be cancelled before they are marked as shipped. Once delivered, returns are accepted within 7 days for unworn items in original packaging with all tags and papers intact — contact us to initiate a return.</p>
+</div>
+</div>
+<div class="mt-16 pt-8 border-t border-timexDarkBorder">
+<p class="text-xs text-timexTextGrey uppercase tracking-wider">Questions about this policy? Reach out via <a class="text-timexWhite underline underline-offset-4" href="account.html">your account</a>.</p>
+</div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-12 pb-8">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexTextGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+<div class="flex gap-6">
+<a class="hover:text-timexWhite transition-colors" href="shipping-policy.html">Shipping</a>
+<a class="hover:text-timexWhite transition-colors" href="warranty-policy.html">Warranty</a>
+<a class="hover:text-timexWhite transition-colors" href="privacy-notice.html">Privacy</a>
+<a class="hover:text-timexWhite transition-colors" href="exercise-your-rights.html">Your Rights</a>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
 </body>
 </html>
