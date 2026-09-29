@@ -67,7 +67,7 @@
 <link href="assets/css_theme.css" rel="stylesheet"/>
 </head>
 <body class="bg-white text-black font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
-<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-transparent text-black border-b border-black/10" id="site-header">
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-white/95 backdrop-blur-md text-black border-b border-black/10" id="site-header">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
 <a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 md:flex-shrink-0 min-w-0" href="index.html"><img alt="TIME-X" class="hidden h-9 md:h-12 w-auto max-w-full" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
 <form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
@@ -379,12 +379,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="text-sm font-bold uppercase tracking-wider">${p.title}</h3>
-                        <p class="text-xs text-gray-600 uppercase mt-1">${p.subcategory}</p>
-                    </div>
-                    <div class="text-right">${priceHTML}</div>
+                <div class="flex flex-col text-left gap-1">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-timexBlack leading-relaxed">${p.title}</h3>
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest font-mono">${p.subcategory || 'TIME-X'}</p>
+                    <div class="mt-1">${priceHTML}</div>
                 </div>
             </a>`;
         }
@@ -643,6 +641,12 @@
     </script>
 </body>
 </html>
+
+
+
+
+
+
 
 
 

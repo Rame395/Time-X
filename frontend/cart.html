@@ -171,27 +171,11 @@
                     <img src="${item.image || ''}" alt="${item.title}" class="w-full h-full object-cover object-center">
                 </a>
                 <div class="flex-1 space-y-2">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <a href="product.html?slug=${item.slug}"><h3 class="text-sm font-bold uppercase tracking-wider hover:opacity-70">${item.title}</h3></a>
-                            <p class="text-[11px] text-timexLightGrey uppercase mt-0.5 flex items-center gap-1.5">
-                                ${item.color_hex ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-timexDarkBorder flex-shrink-0" style="background:${item.color_hex}"></span>` : ''}
-                                ${[item.color, item.size].filter(Boolean).join(' / ') || 'One size'}
-                            </p>
-                        </div>
-                        <span class="text-sm font-semibold tracking-tight">${formatNPR(item.line_total)}</span>
-                    </div>
-                    <div class="flex justify-between items-center pt-2">
-                        <div class="flex items-center border border-timexDarkBorder">
-                            <button onclick="changeQty(${item.id}, ${item.quantity - 1})" class="px-3 py-1 text-xs hover:bg-timexCharcoal transition-colors">-</button>
-                            <span class="px-3 text-xs font-medium">${item.quantity}</span>
-                            <button onclick="changeQty(${item.id}, ${item.quantity + 1})" class="px-3 py-1 text-xs hover:bg-timexCharcoal transition-colors">+</button>
-                        </div>
-                        <button onclick="deleteItem(${item.id})" class="text-[11px] font-mono uppercase tracking-widest text-timexLightGrey hover:text-timexWhite underline underline-offset-4">Remove</button>
-                    </div>
-                    ${stockNote}
-                </div>
-            </div>`;
+                    <div class="flex flex-col text-left gap-1">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-timexBlack leading-relaxed">${p.title}</h3>
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest font-mono">${p.subcategory || p.department || 'TIME-X'}</p>
+                    <div class="mt-1">${priceHTML}</div>
+                </div>`;
         }
 
         function renderCart(cart) {
@@ -273,4 +257,9 @@
     </script>
 </body>
 </html>
+
+
+
+
+
 

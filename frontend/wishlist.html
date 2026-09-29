@@ -86,16 +86,11 @@
                     <img src="${item.image || ''}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center">
                     ${!item.in_stock ? '<span class="absolute bottom-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1">Out of Stock</span>' : ''}
                 </a>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <a href="product.html?slug=${item.slug}" class="text-xs font-bold uppercase tracking-wider hover:underline underline-offset-2">${item.title}</a>
-                        <p class="text-xs font-semibold mt-1">${item.compare_at_price ? `${formatNPR(item.price)} <span class="text-timexLightGrey line-through font-normal text-[10px]">${formatNPR(item.compare_at_price)}</span>` : formatNPR(item.price)}</p>
-                    </div>
-                    <button onclick="removeItem(${item.product_id})" aria-label="Remove from wishlist" class="text-timexLightGrey hover:text-timexWhite transition-colors flex-shrink-0 mt-0.5">
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
-                    </button>
-                </div>
-            </div>`;
+                <div class="flex flex-col text-left gap-1">
+                    <h3 class="text-xs font-bold uppercase tracking-widest text-timexBlack leading-relaxed">${p.title}</h3>
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest font-mono">${p.subcategory || p.department || 'TIME-X'}</p>
+                    <div class="mt-1">${priceHTML}</div>
+                </div>`;
         }
 
         async function loadWishlist() {
@@ -120,3 +115,8 @@
     </script>
 </body>
 </html>
+
+
+
+
+
