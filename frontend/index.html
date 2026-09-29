@@ -126,35 +126,32 @@
 </div>
 </div>
 </div>
-<section class="relative h-screen w-full flex items-end justify-start bg-white text-black overflow-hidden cursor-pointer" id="hero-section">
-<div class="absolute inset-0 z-0">
-<img alt="TIME-X Signature Chronograph" class="hidden w-full h-full object-cover object-center opacity-70 filter grayscale contrast-125 scale-105 editorial-image-zoom transition-opacity duration-700" id="hero-bg-img" src=""/>
-<video class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 pointer-events-none" id="hero-bg-video" loop="" muted="" playsinline="" preload="metadata"></video>
-<div class="absolute inset-0 bg-gradient-to-t from-timexBlack via-black/20 to-transparent"></div>
-</div>
-<div class="hidden absolute top-8 right-8 z-10 items-center gap-2 text-black/80 text-[10px] uppercase tracking-widest font-mono" id="hero-video-hint">
-<span class="relative flex h-2 w-2">
-<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-timexWhite/60"></span>
-<span class="relative inline-flex rounded-full h-2 w-2 bg-timexWhite"></span>
-</span>
-<span class="hero-video-hint-text">Hover To See It In Motion</span>
-</div>
-<div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 lg:px-12 pb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
-<div>
-<p class="text-xs font-mono tracking-mega text-gray-600 mb-4 uppercase" id="hero-eyebrow">Premium Timepieces</p>
-<h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
-<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision</span></span>
-<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Crafted</span></span>
-<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless.</span></span>
-</h1>
-<p class="hidden text-sm text-gray-600 mt-4 max-w-md uppercase tracking-wider" id="hero-subheading"></p>
-</div>
-<div class="flex flex-col sm:flex-row gap-4">
-<a class="inline-flex items-center justify-center bg-timexWhite text-timexBlack px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-timexLightGrey transition-colors" href="new-arrivals.html" id="hero-cta">Shop Collection</a>
-<a class="inline-flex items-center justify-center border border-black/40 text-black px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-black/5 transition-colors" href="#story">Explore TIME-X</a>
-</div>
-</div>
-<div class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
+<section class="relative pt-32 pb-16 lg:pt-48 lg:pb-24 w-full bg-timexOffWhite text-timexBlack overflow-hidden" id="hero-section">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16 lg:mb-24">
+        <div class="max-w-3xl">
+            <p class="text-[10px] font-mono tracking-mega text-timexTextGrey mb-6 uppercase">Curated Selection</p>
+            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-timexBlack">
+                Featured<br/>Timepieces.
+            </h1>
+        </div>
+        <div class="flex gap-3 mb-2">
+            <button id="hero-prev" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            </button>
+            <button id="hero-next" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </button>
+        </div>
+    </div>
+    
+    <div class="pl-6 lg:pl-12">
+        <div id="hero-featured-slider" class="flex gap-6 lg:gap-10 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-10" style="scroll-behavior: smooth;">
+            <!-- Loading state -->
+            <div class="min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] h-[500px] bg-white border border-black/5 flex items-center justify-center">
+                <p class="text-xs uppercase tracking-widest text-timexTextGrey animate-pulse">Loading Featured...</p>
+            </div>
+        </div>
+    </div>
 </section>
 
 <section aria-label="Brands We Carry" class="atelier-brands" id="brands-section">
@@ -425,56 +422,54 @@
         loadBrandsWeCarry();
         loadOnSaleSection();
         loadBestSellers();
-        async function loadHeroImages() {
-            let heroes = [];
+                async function loadFeaturedWatches() {
+            const slider = document.getElementById('hero-featured-slider');
             try {
-                heroes = await apiGet('/api/site-images/homepage_hero');
+                const products = await apiGet('/api/products?is_featured=true');
+                if (!products || products.length === 0) {
+                    slider.innerHTML = '<div class="min-w-[85vw] h-[500px] flex items-center justify-center text-xs tracking-widest uppercase text-timexTextGrey">No featured watches yet</div>';
+                    return;
+                }
+                
+                // Show up to 5 featured products
+                const featured = products.slice(0, 5);
+                
+                slider.innerHTML = featured.map(p => {
+                    const priceHTML = p.compare_at_price
+                        ? <span class="sm:whitespace-nowrap"><span class="text-sm font-semibold tracking-tight"> + formatNPR(p.price) + </span> <span class="text-[10px] text-gray-400 line-through"> + formatNPR(p.compare_at_price) + </span></span>
+                        : <span class="text-sm font-semibold tracking-tight"> + formatNPR(p.price) + </span>;
+                    
+                    return 
+                    <a href="product.html?slug=+p.slug+" class="group relative snap-start shrink-0 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] bg-white border border-black/5 flex flex-col hover:border-black/20 transition-colors">
+                        <div class="relative w-full aspect-[3/4] bg-gray-50 overflow-hidden">
+                            <img src="+(p.primary_image || '')+" alt="+p.title+" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                        </div>
+                        <div class="p-6 flex flex-col justify-between flex-1">
+                            <div>
+                                <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-2">+(p.brand_name || 'TIME-X')+</p>
+                                <h3 class="text-lg font-black uppercase tracking-tight mb-2">+p.title+</h3>
+                            </div>
+                            <div class="mt-4">+priceHTML+</div>
+                        </div>
+                    </a>
+                    ;
+                }).join('');
+                
+                // Setup slider buttons
+                const btnPrev = document.getElementById('hero-prev');
+                const btnNext = document.getElementById('hero-next');
+                
+                btnPrev.addEventListener('click', () => {
+                    slider.scrollBy({ left: -420, behavior: 'smooth' });
+                });
+                
+                btnNext.addEventListener('click', () => {
+                    slider.scrollBy({ left: 420, behavior: 'smooth' });
+                });
+                
             } catch (e) {
-                return; // keep the default hardcoded hero — never let this break the homepage
+                slider.innerHTML = '<div class="min-w-[85vw] h-[500px] flex items-center justify-center text-xs tracking-widest uppercase text-red-500">Could not load featured watches</div>';
             }
-            if (!heroes.length) return; // no admin-added heroes yet — default stays as-is
-
-            let current = 0;
-            const bgImg = document.getElementById('hero-bg-img');
-            const eyebrow = document.getElementById('hero-eyebrow');
-            const subheading = document.getElementById('hero-subheading');
-            const cta = document.getElementById('hero-cta');
-            const dotsWrap = document.getElementById('hero-dots');
-            const defaultEyebrow = eyebrow.textContent;
-
-            function applyHero(index) {
-                const h = heroes[index];
-                bgImg.style.opacity = '0';
-                setTimeout(() => {
-                    bgImg.src = h.url;
-                    bgImg.classList.remove('hidden');
-                    bgImg.style.opacity = '';
-                }, 350);
-                eyebrow.textContent = h.heading || defaultEyebrow;
-                if (h.subheading) {
-                    subheading.textContent = h.subheading;
-                    subheading.classList.remove('hidden');
-                } else {
-                    subheading.classList.add('hidden');
-                }
-                cta.href = h.link_url || 'shop.html';
-                if (dotsWrap.children.length) {
-                    Array.from(dotsWrap.children).forEach((dot, i) => {
-                        dot.className = `w-1.5 h-1.5 rounded-full ${i === index ? 'bg-timexWhite' : 'bg-white/40'}`;
-                    });
-                }
-            }
-
-            if (heroes.length > 1) {
-                dotsWrap.classList.remove('hidden');
-                dotsWrap.classList.add('flex');
-                dotsWrap.innerHTML = heroes.map((_, i) => `<span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>`).join('');
-                setInterval(() => {
-                    current = (current + 1) % heroes.length;
-                    applyHero(current);
-                }, 6000);
-            }
-            applyHero(0);
         }
         async function loadSingleSlotOverride(slot, applyFn) {
             try {
@@ -595,8 +590,8 @@
             }
         }
 
-        loadHeroImages();
-        initHeroVideo();
+        loadFeaturedWatches();
+        
         loadStoryOverride();
         loadTileOverrides();
         loadInstagramGrid();
@@ -608,3 +603,6 @@
     </script>
 </body>
 </html>
+
+
+

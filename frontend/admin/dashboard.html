@@ -364,9 +364,7 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
                             </div>
 
                             <label class="flex items-center gap-2 text-xs uppercase tracking-wider text-timexTextGrey">
-                                <input type="checkbox" name="is_new_arrival" class="accent-white">
-                                Mark as New Arrival
-                            </label>
+                                <input type="checkbox" name="is_new_arrival" class="accent-white"> Mark as New Arrival </label> <label class="flex items-center gap-2 text-xs uppercase tracking-wider text-timexTextGrey mt-2"> <input type="checkbox" name="is_featured" class="accent-white"> Feature in Hero Section </label>
 
                             <div class="pt-2">
                                 <button type="submit" class="btn-dark w-full">Create Product</button>
@@ -444,9 +442,7 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
 
                             <div class="flex gap-6">
                                 <label class="flex items-center gap-2 text-xs uppercase tracking-wider text-timexTextGrey">
-                                    <input type="checkbox" name="is_new_arrival" class="accent-white">
-                                    New Arrival
-                                </label>
+                                    <input type="checkbox" name="is_new_arrival" class="accent-white"> New Arrival </label> <label class="flex items-center gap-2 text-xs uppercase tracking-wider text-timexTextGrey"> <input type="checkbox" name="is_featured" class="accent-white"> Feature in Hero Section </label>
                                 <label class="flex items-center gap-2 text-xs uppercase tracking-wider text-timexTextGrey">
                                     <input type="checkbox" name="is_active" class="accent-white">
                                     Active (visible in store)
@@ -1613,8 +1609,7 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
                     collection_tag:
                         f.elements["collection_tag"].value.trim(),
 
-                    is_new_arrival:
-                        f.elements["is_new_arrival"].checked,
+                    is_new_arrival: f.elements["is_new_arrival"].checked, is_featured: f.elements["is_featured"].checked,
 
                     is_active:
                         true,
@@ -1779,8 +1774,7 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
                     p.collection_tag || '';
 
 
-                f.elements['is_new_arrival'].checked =
-                    !!p.is_new_arrival;
+                f.elements['is_new_arrival'].checked = !!p.is_new_arrival; f.elements['is_featured'].checked = !!p.is_featured;
 
 
                 f.elements['is_active'].checked =
@@ -1944,8 +1938,7 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
                 collection_tag:
                     f.elements['collection_tag'].value.trim(),
 
-                is_new_arrival:
-                    f.elements['is_new_arrival'].checked,
+                is_new_arrival: f.elements['is_new_arrival'].checked, is_featured: f.elements['is_featured'].checked,
 
                 is_active:
                     f.elements['is_active'].checked
@@ -3561,3 +3554,4 @@ html,body{background:#fff!important;color:#111!important}.bg-timexBlack{backgrou
 
 </body>
 </html>
+
