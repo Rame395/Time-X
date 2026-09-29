@@ -372,9 +372,9 @@ function initMegaMenu() {
         <ul class="space-y-2">
           ${taxonomy[dept].map((sub) => `
             <li><a href="${gender}.html?department=${encodeURIComponent(dept)}&subcategory=${encodeURIComponent(sub)}" class="text-xs font-medium text-timexBlack hover:opacity-60 transition-opacity">${sub}</a></li>
-          `).join(')}
+          `).join('')}
         </ul>
-      </div>`).join(');
+      </div>`).join('');
     return `<div class="grid grid-cols-2 sm:grid-cols-4 gap-8">${columns}</div>`;
   }
 
@@ -581,6 +581,7 @@ function initAutocompleteSearch() {
   });
 }
 document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
+
 
 
 
