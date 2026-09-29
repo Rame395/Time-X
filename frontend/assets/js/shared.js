@@ -1,6 +1,6 @@
 /* TIME-X storefront — shared header/menu behavior. Loaded on every page, after api.js. */
 
-document.addEventListener("NavbarLoaded", () => {
+document.addEventListener("DOMContentLoaded", () => {
   const menuToggle = document.getElementById("menu-toggle");
   const mobileMenu = document.getElementById("mobile-menu");
   if (menuToggle && mobileMenu) {
@@ -27,12 +27,8 @@ document.addEventListener("NavbarLoaded", () => {
   refreshCartBadge();
   initSiteSearch();
   applySiteSettingsToPage();
-  initMobileTopSearch();
-  initMegaMenu();
-});
-
-document.addEventListener("DOMContentLoaded", () => {
   showAdminReturnLinkIfLoggedIn();
+  initMobileTopSearch();
 });
 
 /* ---------------- Shared pricing helper ---------------- */
@@ -431,6 +427,7 @@ function initMegaMenu() {
   });
 }
 
+document.addEventListener('DOMContentLoaded', initMegaMenu);
 
 /* ---------------- Toast notifications (cart/wishlist success feedback) ---------------- */
 
