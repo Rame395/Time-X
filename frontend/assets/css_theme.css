@@ -184,3 +184,21 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
 
 
 
+
+/* Navbar utility classes */
+.txnav{color:rgba(0,0,0,0.6);text-decoration:none;transition:color .2s;position:relative;padding-bottom:2px;}
+.txnav::after{content:'';position:absolute;bottom:-2px;left:0;width:0;height:1.5px;background:#a8813c;transition:width .25s ease;}
+.txnav:hover{color:#111 !important;}
+.txnav:hover::after{width:100%;}
+.txicon{color:rgba(0,0,0,0.55);transition:color .2s;text-decoration:none;}
+.txicon:hover{color:#a8813c !important;}
+.txcart{color:#111;font-weight:700;font-size:10px;letter-spacing:.08em;transition:color .2s;text-decoration:none;}
+.txcart:hover{color:#a8813c !important;}
+/* Make sure the navbar logo img shows properly when JS sets it */
+#site-header img[data-site-logo]:not(.hidden){display:block !important;visibility:visible !important;}
+#site-header img[data-site-logo].hidden{display:none !important;}
+/* Compact navbar search bar */
+.tx-search-bar{background:rgba(0,0,0,0.04);border:1px solid rgba(0,0,0,0.10);border-radius:9999px;height:36px;display:flex;align-items:center;gap:8px;padding:0 14px;transition:border-color .2s,background .2s;}
+.tx-search-bar:focus-within{background:rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.20);}
+.tx-search-bar input{background:none;border:none;outline:none;font-size:11px;letter-spacing:.04em;color:#111;width:100%;}
+.tx-search-bar input::placeholder{color:rgba(0,0,0,0.38);}
