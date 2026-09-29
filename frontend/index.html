@@ -157,6 +157,22 @@
 <div class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
 </section>
 
+
+
+<section aria-label="Brands We Carry" class="atelier-brands" id="brands-section">
+<div class="atelier-brands-inner">
+<div class="atelier-brands-kicker">Brands We Carry · Six names, one standard</div>
+<div class="atelier-brand-row" id="brands-we-carry">
+<a class="atelier-brand" href="shop.html?brand=Timex"><img alt="Timex" src="assets/brands/timex.png"/><span class="atelier-brand-name">Timex</span></a>
+<a class="atelier-brand" href="shop.html?brand=Lacoste"><img alt="Lacoste" src="assets/brands/lacoste.png"/><span class="atelier-brand-name">Lacoste</span></a>
+<a class="atelier-brand" href="shop.html?brand=Guess"><img alt="Guess" src="assets/brands/guess.png"/><span class="atelier-brand-name">Guess</span></a>
+<a class="atelier-brand" href="shop.html?brand=Lee%20Cooper"><img alt="Lee Cooper" src="assets/brands/lee-cooper.png"/><span class="atelier-brand-name">Lee Cooper</span></a>
+<a class="atelier-brand" href="shop.html?brand=Calvin%20Klein"><img alt="Calvin Klein" src="assets/brands/calvin-klein.png"/><span class="atelier-brand-name">Calvin Klein</span></a>
+<a class="atelier-brand" href="shop.html?brand=Tommy%20Hilfiger"><img alt="Tommy Hilfiger" src="assets/brands/tommy-hilfiger.png"/><span class="atelier-brand-name">Tommy Hilfiger</span></a>
+</div>
+</div>
+</section>
+
 <!-- Featured Collection Section -->
 <section class="py-24 bg-timexOffWhite hidden" id="featured-section">
     <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
@@ -172,22 +188,7 @@
             <!-- Render featured watches using productCardHTML -->
         </div>
     </div>
-</section>
-
-<section aria-label="Brands We Carry" class="atelier-brands" id="brands-section">
-<div class="atelier-brands-inner">
-<div class="atelier-brands-kicker">Brands We Carry · Six names, one standard</div>
-<div class="atelier-brand-row" id="brands-we-carry">
-<a class="atelier-brand" href="shop.html?brand=Timex"><img alt="Timex" src="assets/brands/timex.png"/><span class="atelier-brand-name">Timex</span></a>
-<a class="atelier-brand" href="shop.html?brand=Lacoste"><img alt="Lacoste" src="assets/brands/lacoste.png"/><span class="atelier-brand-name">Lacoste</span></a>
-<a class="atelier-brand" href="shop.html?brand=Guess"><img alt="Guess" src="assets/brands/guess.png"/><span class="atelier-brand-name">Guess</span></a>
-<a class="atelier-brand" href="shop.html?brand=Lee%20Cooper"><img alt="Lee Cooper" src="assets/brands/lee-cooper.png"/><span class="atelier-brand-name">Lee Cooper</span></a>
-<a class="atelier-brand" href="shop.html?brand=Calvin%20Klein"><img alt="Calvin Klein" src="assets/brands/calvin-klein.png"/><span class="atelier-brand-name">Calvin Klein</span></a>
-<a class="atelier-brand" href="shop.html?brand=Tommy%20Hilfiger"><img alt="Tommy Hilfiger" src="assets/brands/tommy-hilfiger.png"/><span class="atelier-brand-name">Tommy Hilfiger</span></a>
-</div>
-</div>
-</section>
-<section class="hidden py-32 bg-white text-black" id="on-sale">
+</section><section class="hidden py-32 bg-white text-black" id="on-sale">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
 <div>
@@ -448,7 +449,7 @@
                 if (!products || products.length === 0) return;
                 
                 // Show up to 5 featured products
-                const featured = products.slice(0, 5);
+                const featured = products.slice(0, 4);
                 
                 document.getElementById('featured-grid').innerHTML = featured.map(productCardHTML).join('');
                 document.getElementById('featured-section').classList.remove('hidden');
@@ -642,6 +643,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 

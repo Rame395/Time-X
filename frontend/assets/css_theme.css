@@ -134,8 +134,8 @@ section span.text-xs.font-mono,section .font-mono{color:var(--lux-gold)!importan
 .atelier-brand:last-child{border-right:0!important}
 .atelier-brand-logo{height:46px;width:100%;display:flex;align-items:center;justify-content:center}
 /* uniform size: every logo fits the exact same box */
-.atelier-brand img{display:block;width:100%!important;height:46px!important;max-width:none!important;object-fit:contain!important;filter:grayscale(1);opacity:.7!important}
-.atelier-brand:hover img{filter:grayscale(0);opacity:1!important}
+.atelier-brand img{display:block;width:100%!important;height:46px!important;max-width:none!important;object-fit:contain!important;filter:none;opacity:1!important}
+
 .atelier-brand-name{font:500 9px/1 Inter,Helvetica Neue,sans-serif;text-transform:uppercase;letter-spacing:.16em;color:var(--lux-muted)!important;white-space:nowrap}
 
 /* Mobile menu — light */
@@ -422,3 +422,4 @@ img {
 @media(max-width:1023px){
   body > section:first-of-type{padding-top:124px!important}
 }
+
