@@ -126,23 +126,51 @@
 </div>
 </div>
 </div>
-<section class="relative h-screen w-full bg-timexOffWhite text-timexBlack overflow-hidden" id="hero-section">
-    <!-- Slider Track (Absolute slides) -->
-    <div id="hero-featured-slider" class="relative w-full h-full">
-        <!-- Loading state -->
-        <div class="absolute inset-0 flex items-center justify-center">
-            <p class="text-xs uppercase tracking-widest text-timexTextGrey animate-pulse">Loading Featured...</p>
-        </div>
-    </div>
+<section class="relative h-screen w-full flex items-end justify-start bg-white text-black overflow-hidden cursor-pointer" id="hero-section">
+<div class="absolute inset-0 z-0">
+<img alt="TIME-X Signature Chronograph" class="hidden w-full h-full object-cover object-center opacity-70 filter grayscale contrast-125 scale-105 editorial-image-zoom transition-opacity duration-700" id="hero-bg-img" src=""/>
+<video class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 pointer-events-none" id="hero-bg-video" loop="" muted="" playsinline="" preload="metadata"></video>
+<div class="absolute inset-0 bg-gradient-to-t from-timexBlack via-black/20 to-transparent"></div>
+</div>
+<div class="hidden absolute top-8 right-8 z-10 items-center gap-2 text-black/80 text-[10px] uppercase tracking-widest font-mono" id="hero-video-hint">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-timexWhite/60"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-timexWhite"></span>
+</span>
+<span class="hero-video-hint-text">Hover To See It In Motion</span>
+</div>
+<div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 lg:px-12 pb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+<div>
+<p class="text-xs font-mono tracking-mega text-gray-600 mb-4 uppercase" id="hero-eyebrow">Premium Timepieces</p>
+<h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision</span></span>
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Crafted</span></span>
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless.</span></span>
+</h1>
+<p class="hidden text-sm text-gray-600 mt-4 max-w-md uppercase tracking-wider" id="hero-subheading"></p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="inline-flex items-center justify-center bg-timexWhite text-timexBlack px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-timexLightGrey transition-colors" href="new-arrivals.html" id="hero-cta">Shop Collection</a>
+<a class="inline-flex items-center justify-center border border-black/40 text-black px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-black/5 transition-colors" href="#story">Explore TIME-X</a>
+</div>
+</div>
+<div class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
+</section>
 
-    <!-- Navigation Overlay -->
-    <div class="absolute right-6 lg:right-12 bottom-10 lg:bottom-16 z-30 flex gap-3">
-        <button id="hero-prev" class="w-12 h-12 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-timexOffWhite/80 backdrop-blur-sm">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-        </button>
-        <button id="hero-next" class="w-12 h-12 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-timexOffWhite/80 backdrop-blur-sm">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </button>
+<!-- Featured Collection Section -->
+<section class="py-24 bg-timexOffWhite hidden" id="featured-section">
+    <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+        <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 border-b border-black/10 pb-6">
+            <div>
+                <p class="text-[10px] font-mono tracking-mega text-timexTextGrey uppercase mb-2">Curated Selection</p>
+                <h2 class="text-3xl font-black uppercase tracking-tight">Featured Timepieces.</h2>
+            </div>
+            <a href="shop.html" class="hidden md:inline-flex text-[10px] uppercase font-bold tracking-widest border-b border-black hover:text-timexTextGrey hover:border-timexTextGrey transition-colors">View All</a>
+        </div>
+        
+        <div id="featured-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 gap-y-10 lg:gap-8">
+            <!-- Render featured watches using productCardHTML -->
+        </div>
     </div>
 </section>
 
@@ -414,69 +442,71 @@
         loadBrandsWeCarry();
         loadOnSaleSection();
         loadBestSellers();
-                async function loadFeaturedWatches() {
-            const slider = document.getElementById('hero-featured-slider');
+        async function loadFeaturedWatches() {
             try {
                 const products = await apiGet('/api/products?is_featured=true');
-                if (!products || products.length === 0) {
-                    slider.innerHTML = '<div class="min-w-[85vw] h-[500px] flex items-center justify-center text-xs tracking-widest uppercase text-timexTextGrey">No featured watches yet</div>';
-                    return;
-                }
+                if (!products || products.length === 0) return;
                 
                 // Show up to 5 featured products
                 const featured = products.slice(0, 5);
                 
-                slider.innerHTML = featured.map((p, index) => {
-                    return `
-                    <div class="hero-slide absolute inset-0 w-full h-full flex flex-col lg:flex-row items-center justify-center pt-24 pb-24 px-6 lg:px-12 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}">
-                        
-                        <div class="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left z-20">
-                            <p class="text-xs text-timexTextGrey font-mono tracking-mega uppercase mb-4">${p.brand_name || 'TIME-X'}</p>
-                            <h2 class="text-3xl lg:text-5xl font-black uppercase tracking-widest leading-tight mb-8 max-w-xl">${p.title}</h2>
-                            <div>
-                                <a href="product.html?slug=${p.slug}" class="inline-flex items-center justify-center bg-timexBlack text-timexWhite px-10 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-timexCharcoal transition-colors">
-                                    Shop Now
-                                </a>
-                            </div>
-                        </div>
-                        
-                        <div class="w-full lg:w-1/2 h-[45vh] lg:h-[75vh] relative mt-10 lg:mt-0 flex items-center justify-center z-10">
-                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute w-[90%] lg:w-full h-full object-contain object-center mix-blend-multiply">
-                        </div>
-                    </div>
-                    `;
-                }).join('');
-                
-                const btnPrev = document.getElementById('hero-prev');
-                const btnNext = document.getElementById('hero-next');
-                const slides = slider.querySelectorAll('.hero-slide');
-                let currentSlide = 0;
+                document.getElementById('featured-grid').innerHTML = featured.map(productCardHTML).join('');
+                document.getElementById('featured-section').classList.remove('hidden');
+            } catch (e) {
+                // fail silently
+            }
+        }
 
-                function showSlide(index) {
-                    slides.forEach((slide, i) => {
-                        if (i === index) {
-                            slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
-                            slide.classList.add('opacity-100', 'z-10', 'pointer-events-auto');
-                        } else {
-                            slide.classList.remove('opacity-100', 'z-10', 'pointer-events-auto');
-                            slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
-                        }
+        async function loadHeroImages() {
+            let heroes = [];
+            try {
+                heroes = await apiGet('/api/site-images/homepage_hero');
+            } catch (e) {
+                return; // keep the default hardcoded hero — never let this break the homepage
+            }
+            if (!heroes.length) return; // no admin-added heroes yet — default stays as-is
+
+            let current = 0;
+            const bgImg = document.getElementById('hero-bg-img');
+            const eyebrow = document.getElementById('hero-eyebrow');
+            const subheading = document.getElementById('hero-subheading');
+            const cta = document.getElementById('hero-cta');
+            const dotsWrap = document.getElementById('hero-dots');
+            const defaultEyebrow = eyebrow.textContent;
+
+            function applyHero(index) {
+                const h = heroes[index];
+                bgImg.style.opacity = '0';
+                setTimeout(() => {
+                    bgImg.src = h.url;
+                    bgImg.classList.remove('hidden');
+                    bgImg.style.opacity = '';
+                }, 350);
+                eyebrow.textContent = h.heading || defaultEyebrow;
+                if (h.subheading) {
+                    subheading.textContent = h.subheading;
+                    subheading.classList.remove('hidden');
+                } else {
+                    subheading.classList.add('hidden');
+                }
+                cta.href = h.link_url || 'shop.html';
+                if (dotsWrap.children.length) {
+                    Array.from(dotsWrap.children).forEach((dot, i) => {
+                        dot.className = `w-1.5 h-1.5 rounded-full ${i === index ? 'bg-timexWhite' : 'bg-white/40'}`;
                     });
                 }
-                
-                btnPrev.addEventListener('click', () => {
-                    currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
-                    showSlide(currentSlide);
-                });
-                
-                btnNext.addEventListener('click', () => {
-                    currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
-                    showSlide(currentSlide);
-                });
-                
-            } catch (e) {
-                slider.innerHTML = '<div class="min-w-[85vw] h-[500px] flex items-center justify-center text-xs tracking-widest uppercase text-red-500">Could not load featured watches</div>';
             }
+
+            if (heroes.length > 1) {
+                dotsWrap.classList.remove('hidden');
+                dotsWrap.classList.add('flex');
+                dotsWrap.innerHTML = heroes.map((_, i) => `<span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>`).join('');
+                setInterval(() => {
+                    current = (current + 1) % heroes.length;
+                    applyHero(current);
+                }, 6000);
+            }
+            applyHero(0);
         }
         async function loadSingleSlotOverride(slot, applyFn) {
             try {
@@ -597,6 +627,8 @@
             }
         }
 
+        loadHeroImages();
+        initHeroVideo();
         loadFeaturedWatches();
         
         loadStoryOverride();
