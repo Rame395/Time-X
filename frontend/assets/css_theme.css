@@ -202,3 +202,16 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
 .tx-search-bar:focus-within{background:rgba(0,0,0,0.06);border-color:rgba(0,0,0,0.20);}
 .tx-search-bar input{background:none;border:none;outline:none;font-size:11px;letter-spacing:.04em;color:#111;width:100%;}
 .tx-search-bar input::placeholder{color:rgba(0,0,0,0.38);}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.announce-scroll {
+  display: inline-block;
+  white-space: nowrap;
+}
+@media (max-width: 768px) {
+  .announce-scroll {
+    animation: marquee 15s linear infinite;
+  }
+}
