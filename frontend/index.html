@@ -127,24 +127,22 @@
 </div>
 </div>
 <section class="relative h-screen w-full bg-timexOffWhite text-timexBlack overflow-hidden" id="hero-section">
-    <!-- Navigation Overlay -->
-    <div class="absolute inset-x-0 bottom-10 lg:bottom-16 z-20 max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-between items-center pointer-events-none">
-        <div class="flex gap-3 pointer-events-auto">
-            <button id="hero-prev" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-transparent">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            </button>
-            <button id="hero-next" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-transparent">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-            </button>
-        </div>
-    </div>
-    
-    <!-- Slider Track -->
-    <div id="hero-featured-slider" class="flex w-full h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar" style="scroll-behavior: smooth;">
+    <!-- Slider Track (Absolute slides) -->
+    <div id="hero-featured-slider" class="relative w-full h-full">
         <!-- Loading state -->
-        <div class="w-full h-full shrink-0 flex items-center justify-center">
+        <div class="absolute inset-0 flex items-center justify-center">
             <p class="text-xs uppercase tracking-widest text-timexTextGrey animate-pulse">Loading Featured...</p>
         </div>
+    </div>
+
+    <!-- Navigation Overlay -->
+    <div class="absolute right-6 lg:right-12 bottom-10 lg:bottom-16 z-30 flex gap-3">
+        <button id="hero-prev" class="w-12 h-12 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-timexOffWhite/80 backdrop-blur-sm">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        </button>
+        <button id="hero-next" class="w-12 h-12 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-timexOffWhite/80 backdrop-blur-sm">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        </button>
     </div>
 </section>
 
@@ -428,40 +426,52 @@
                 // Show up to 5 featured products
                 const featured = products.slice(0, 5);
                 
-                slider.innerHTML = featured.map(p => {
-                    const priceHTML = p.compare_at_price
-                        ? `<span class="sm:whitespace-nowrap"><span class="text-lg lg:text-xl font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-xs text-gray-400 line-through ml-2">${formatNPR(p.compare_at_price)}</span></span>`
-                        : `<span class="text-lg lg:text-xl font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
-                    
+                slider.innerHTML = featured.map((p, index) => {
                     return `
-                    <div class="w-full h-full shrink-0 snap-start flex flex-col lg:flex-row items-center justify-center pt-24 pb-32 px-6 lg:px-12 max-w-[1440px] mx-auto relative group">
-                        <div class="w-full lg:w-1/2 flex flex-col justify-center z-10 text-center lg:text-left">
-                            <p class="text-[10px] text-timexTextGrey font-mono tracking-mega uppercase mb-4 lg:mb-6">${p.brand_name || 'TIME-X'}</p>
-                            <h2 class="text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-6">${p.title}</h2>
-                            <div class="mb-10 text-timexBlack">${priceHTML}</div>
+                    <div class="hero-slide absolute inset-0 w-full h-full flex flex-col lg:flex-row items-center justify-center pt-24 pb-24 px-6 lg:px-12 transition-opacity duration-1000 ease-in-out ${index === 0 ? 'opacity-100 z-10 pointer-events-auto' : 'opacity-0 z-0 pointer-events-none'}">
+                        
+                        <div class="w-full lg:w-1/2 flex flex-col justify-center text-center lg:text-left z-20">
+                            <p class="text-xs text-timexTextGrey font-mono tracking-mega uppercase mb-4">${p.brand_name || 'TIME-X'}</p>
+                            <h2 class="text-3xl lg:text-5xl font-black uppercase tracking-widest leading-tight mb-8 max-w-xl">${p.title}</h2>
                             <div>
                                 <a href="product.html?slug=${p.slug}" class="inline-flex items-center justify-center bg-timexBlack text-timexWhite px-10 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-timexCharcoal transition-colors">
                                     Shop Now
                                 </a>
                             </div>
                         </div>
-                        <div class="w-full lg:w-1/2 h-[40vh] lg:h-[70vh] relative mt-10 lg:mt-0 flex items-center justify-center">
-                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute w-[80%] lg:w-full h-full object-contain object-center drop-shadow-2xl mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 ease-out">
+                        
+                        <div class="w-full lg:w-1/2 h-[45vh] lg:h-[75vh] relative mt-10 lg:mt-0 flex items-center justify-center z-10">
+                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute w-[90%] lg:w-full h-full object-contain object-center mix-blend-multiply">
                         </div>
                     </div>
                     `;
                 }).join('');
                 
-                // Setup slider buttons
                 const btnPrev = document.getElementById('hero-prev');
                 const btnNext = document.getElementById('hero-next');
+                const slides = slider.querySelectorAll('.hero-slide');
+                let currentSlide = 0;
+
+                function showSlide(index) {
+                    slides.forEach((slide, i) => {
+                        if (i === index) {
+                            slide.classList.remove('opacity-0', 'z-0', 'pointer-events-none');
+                            slide.classList.add('opacity-100', 'z-10', 'pointer-events-auto');
+                        } else {
+                            slide.classList.remove('opacity-100', 'z-10', 'pointer-events-auto');
+                            slide.classList.add('opacity-0', 'z-0', 'pointer-events-none');
+                        }
+                    });
+                }
                 
                 btnPrev.addEventListener('click', () => {
-                    slider.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
+                    currentSlide = (currentSlide === 0) ? slides.length - 1 : currentSlide - 1;
+                    showSlide(currentSlide);
                 });
                 
                 btnNext.addEventListener('click', () => {
-                    slider.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
+                    currentSlide = (currentSlide === slides.length - 1) ? 0 : currentSlide + 1;
+                    showSlide(currentSlide);
                 });
                 
             } catch (e) {
