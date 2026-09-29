@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
   initSiteSearch();
   applySiteSettingsToPage();
   showAdminReturnLinkIfLoggedIn();
-  initMobileTopSearch();
+  // initMobileTopSearch();
 });
 
 /* ---------------- Shared pricing helper ---------------- */
@@ -80,8 +80,8 @@ async function showAdminReturnLinkIfLoggedIn() {
 /* ---------------- Search overlay ---------------- */
 
 function initSiteSearch() {
-  const trigger = document.getElementById("search-trigger");
-  if (!trigger) return; // page doesn't have a search trigger in its header
+  const triggers = [document.getElementById("search-trigger"), document.getElementById("mobile-search-trigger")];
+  if (!triggers[0] && !triggers[1]) return;
 
   const overlay = document.createElement("div");
   overlay.id = "site-search-overlay";
@@ -123,7 +123,7 @@ function initSiteSearch() {
     results.innerHTML = "";
   }
 
-  trigger.addEventListener("click", openOverlay);
+  triggers.forEach(t => t && t.addEventListener("click", openOverlay));
   closeBtn.addEventListener("click", closeOverlay);
   overlay.addEventListener("click", (e) => { if (e.target === overlay) closeOverlay(); });
   document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeOverlay(); });

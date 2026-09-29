@@ -260,12 +260,14 @@ def list_products(
         if in_stock:
             q = q.filter(models.ProductVariant.stock_qty > 0)
     if search:
+        q = q.outerjoin(models.Brand)
         like = f"%{search.strip()}%"
         q = q.filter(
             (models.Product.title.ilike(like))
             | (models.Product.subcategory.ilike(like))
             | (models.Product.department.ilike(like))
             | (models.Product.description.ilike(like))
+            | (models.Brand.name.ilike(like))
         )
 
     if sort == "price_asc":

@@ -108,10 +108,10 @@
       <span id="cart-counter">(0)</span>
     </a>
     <!-- Hamburger -->
-    <button id="menu-toggle" aria-label="Open Menu" class="lg:hidden" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;">
-      <span style="display:block;width:22px;height:1.5px;background:#111;border-radius:2px;"></span>
-      <span style="display:block;width:22px;height:1.5px;background:#111;border-radius:2px;"></span>
-      <span style="display:block;width:14px;height:1.5px;background:#111;border-radius:2px;"></span>
+    <button id="menu-toggle" aria-label="Open Menu" class="lg:hidden" style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;gap:5px;padding:4px;align-items:center;justify-content:center;width:32px;height:32px;">
+      <span style="display:block;width:20px;height:1.5px;background:#111;border-radius:2px;"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#111;border-radius:2px;"></span>
+      <span style="display:block;width:20px;height:1.5px;background:#111;border-radius:2px;"></span>
     </button>
   </div>
 </div>
@@ -145,7 +145,7 @@
   <!-- Background image / video -->
   <div class="absolute inset-0 z-0">
     <img alt="TIME-X Hero" id="hero-bg-img" src=""
-      class="hidden w-full h-full object-cover object-center opacity-80 scale-105 editorial-image-zoom transition-opacity duration-700"/>
+      class="hidden w-full h-full object-cover object-[75%_center] lg:object-center opacity-80 scale-105 editorial-image-zoom transition-opacity duration-700"/>
     <video id="hero-bg-video" loop muted playsinline preload="metadata"
       class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 pointer-events-none"></video>
     <!-- Gradient: strong at bottom-left, soft everywhere else -->
@@ -179,7 +179,7 @@
 
         <div>
           <p id="hero-eyebrow" class="text-[10px] font-mono tracking-[0.3em] text-white/50 mb-5 uppercase">Premium Timepieces</p>
-          <h1 class="font-black tracking-tighter uppercase leading-[0.88] text-white" style="font-size: clamp(3rem, 9vw, 7rem); font-family: 'Cormorant Garamond', Georgia, serif;">
+          <h1 class="font-black tracking-tighter uppercase leading-[0.88] text-white" style="font-size: clamp(2.2rem, 11vw, 7rem); font-family: 'Cormorant Garamond', Georgia, serif;">
             <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision</span></span>
             <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Crafted</span></span>
             <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless.</span></span>
@@ -187,12 +187,12 @@
           <p id="hero-subheading" class="hidden text-sm text-white/50 mt-4 max-w-xs uppercase tracking-wider"></p>
 
           <!-- Buttons directly under text (mobile & tablet) -->
-          <div class="flex flex-wrap gap-3 mt-8 lg:hidden">
+          <div class="flex flex-col sm:flex-row gap-3 mt-8 lg:hidden">
             <a id="hero-cta" href="new-arrivals.html"
-              class="inline-flex items-center justify-center px-7 py-3.5 text-[11px] font-semibold tracking-widest uppercase text-black transition-all"
+              class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-3.5 text-[11px] font-semibold tracking-widest uppercase text-black transition-all"
               style="background:#a8813c;">Shop Collection</a>
             <a href="#story"
-              class="inline-flex items-center justify-center px-7 py-3.5 text-[11px] font-semibold tracking-widest uppercase text-white border border-white/30 hover:border-white transition-all">Explore TIME-X</a>
+              class="inline-flex items-center justify-center w-full sm:w-auto px-7 py-3.5 text-[11px] font-semibold tracking-widest uppercase text-white border border-white/30 hover:border-white transition-all">Explore TIME-X</a>
           </div>
         </div>
       </div>
@@ -698,6 +698,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
