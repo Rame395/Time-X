@@ -443,6 +443,50 @@
             }
         }
 
+        function flyToCart() {
+            const img = document.getElementById('primary-photo-img') || document.querySelector('.grid img');
+            const cartIcon = document.querySelector('.txcart');
+            if (!img || !cartIcon) return;
+
+            const imgRect = img.getBoundingClientRect();
+            const cartRect = cartIcon.getBoundingClientRect();
+
+            // Create flying clone
+            const clone = img.cloneNode(true);
+            clone.style.position = 'fixed';
+            clone.style.top = imgRect.top + 'px';
+            clone.style.left = imgRect.left + 'px';
+            clone.style.width = imgRect.width + 'px';
+            clone.style.height = imgRect.height + 'px';
+            clone.style.objectFit = 'cover';
+            clone.style.zIndex = '9999';
+            clone.style.borderRadius = '8px';
+            clone.style.transition = 'all 0.8s cubic-bezier(0.25, 1, 0.5, 1)';
+            clone.style.boxShadow = '0 10px 25px rgba(0,0,0,0.2)';
+            document.body.appendChild(clone);
+
+            // Force reflow
+            void clone.offsetWidth;
+
+            // Target positions
+            const targetX = cartRect.left - imgRect.left + (cartRect.width / 2) - (imgRect.width / 2);
+            const targetY = cartRect.top - imgRect.top + (cartRect.height / 2) - (imgRect.height / 2);
+
+            // Animate flying
+            clone.style.transform = `translate(${targetX}px, ${targetY}px) scale(0.05)`;
+            clone.style.opacity = '0';
+
+            // Clean up and animate cart icon
+            setTimeout(() => {
+                clone.remove();
+                cartIcon.style.transform = 'scale(1.2)';
+                cartIcon.style.transition = 'transform 0.2s';
+                setTimeout(() => {
+                    cartIcon.style.transform = 'scale(1)';
+                }, 200);
+            }, 800);
+        }
+
         async function handleAddToCart() {
             const btn = document.getElementById('add-to-cart-btn');
             const originalText = btn.textContent;
@@ -451,23 +495,24 @@
                 // Change button state
                 btn.disabled = true;
                 btn.innerHTML = `<span class="inline-block animate-pulse">Adding to Cart...</span>`;
-                btn.classList.add('bg-gray-100', 'text-gray-400');
+                btn.classList.add('bg-white/10', 'text-white/60');
                 btn.classList.remove('bg-timexWhite', 'text-timexBlack', 'hover:bg-timexSilver');
                 
                 await addToCart(product.id, selectedColor || '', selectedSize || '');
                 await refreshCartBadge();
                 
+                // Fly to cart animation
+                flyToCart();
+
                 // Success state
-                btn.innerHTML = `<span class="inline-flex items-center gap-2"><span>Added to Cart</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><polyline points="20 6 9 17 4 12"></polyline></svg></span>`;
-                btn.classList.remove('bg-gray-100', 'text-gray-400');
-                btn.classList.add('bg-green-50', 'text-green-700', 'border', 'border-green-200');
-                
-                showToast(`Added: ${product.title}${selectedColor ? ' (' + selectedColor + ')' : ''}`);
+                btn.innerHTML = `<span class="inline-flex items-center gap-2"><span>Added to Cart</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-[#4ade80]"><polyline points="20 6 9 17 4 12"></polyline></svg></span>`;
+                btn.classList.remove('bg-white/10', 'text-white/60');
+                btn.classList.add('bg-[#1a3824]', 'text-[#4ade80]', 'border', 'border-[#22c55e]');
                 
             } catch (e) {
                 btn.innerHTML = `<span>Error - Try Again</span>`;
-                btn.classList.remove('bg-gray-100', 'text-gray-400');
-                btn.classList.add('bg-red-50', 'text-red-700');
+                btn.classList.remove('bg-white/10', 'text-white/60');
+                btn.classList.add('bg-[#3f1919]', 'text-[#f87171]', 'border', 'border-[#ef4444]');
                 showToast(e.message || 'Could not add to cart', true);
             } finally {
                 // Reset button after 2.5 seconds
@@ -686,6 +731,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
