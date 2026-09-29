@@ -328,7 +328,7 @@ function injectMegaMenuStyles() {
   const style = document.createElement('style');
   style.textContent = `
     .mega-menu-panel {
-      position: fixed; top: 80px; left: 0; right: 0; z-index: 45;
+      position: fixed; top: 96px; left: 0; right: 0; z-index: 45;
       background: #FFFFFF; color: #111111;
       border-bottom: 1px solid #EAEAEA;
       box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
@@ -504,6 +504,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
 /* ---------------- Autocomplete Search ---------------- */
 function initAutocompleteSearch() {
+  const fmtNPR = (v) => v ? 'NPR ' + Number(v).toLocaleString('en-IN') : '';
   const searchInputs = document.querySelectorAll('input[name="search"]');
   
   searchInputs.forEach(input => {
@@ -511,7 +512,7 @@ function initAutocompleteSearch() {
     wrapper.style.position = 'relative';
     
     const dropdown = document.createElement('div');
-    dropdown.className = 'absolute top-full left-0 right-0 mt-2 bg-white text-black border border-black/10 shadow-2xl rounded-lg overflow-hidden z-[100] hidden flex-col max-h-[70vh] overflow-y-auto';
+    dropdown.style.cssText = 'position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;color:#111;border:1px solid rgba(0,0,0,0.1);border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.15);z-index:9999;overflow:hidden;display:none;flex-direction:column;max-height:70vh;overflow-y:auto;';
     wrapper.appendChild(dropdown);
     
     let debounceTimer;
@@ -520,61 +521,66 @@ function initAutocompleteSearch() {
       const query = e.target.value.trim();
       clearTimeout(debounceTimer);
       
-      if (query.length < 2) {
-        dropdown.classList.add('hidden');
-        dropdown.classList.remove('flex');
+      if (query.length < 1) {
+        dropdown.style.display = 'none';
         return;
       }
       
       debounceTimer = setTimeout(async () => {
         try {
-          dropdown.classList.remove('hidden');
-          dropdown.classList.add('flex');
-          dropdown.innerHTML = '<div class="p-4 text-xs text-gray-500 uppercase tracking-widest text-center">Searching...</div>';
+          dropdown.style.display = 'flex';
+          dropdown.innerHTML = '<div style="padding:16px;text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#999;">Searching...</div>';
           
-          const results = await apiGet(`/api/products?search=${encodeURIComponent(query)}`);
+          const results = await apiGet('/api/products?search=' + encodeURIComponent(query));
           
           if (!results || results.length === 0) {
-            dropdown.innerHTML = '<div class="p-4 text-xs text-gray-500 uppercase tracking-widest text-center">No matches found</div>';
+            dropdown.innerHTML = '<div style="padding:20px;text-align:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#999;">No results for &ldquo;' + query + '&rdquo;</div>';
             return;
           }
           
-          const topResults = results.slice(0, 5);
+          const topResults = results.slice(0, 6);
           
-          dropdown.innerHTML = topResults.map(p => `
-            <a href="product.html?slug=${p.slug}" class="flex items-center gap-4 p-3 hover:bg-gray-50 transition-colors border-b border-black/5 last:border-0">
-              <img src="${p.primary_image || ''}" class="w-10 h-10 object-cover bg-gray-100 rounded" alt="">
-              <div class="flex-1 min-w-0">
-                <h4 class="text-[10px] font-bold uppercase tracking-widest truncate text-black">${p.title}</h4>
-                <p class="text-[9px] text-gray-500 font-mono tracking-widest mt-1">${p.brand_name || 'TIME-X'}</p>
+          let html = '<div style="padding:10px 16px 8px;border-bottom:1px solid #f0f0f0;"><span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#aaa;font-family:monospace;">' + results.length + ' results found</span></div>';
+          
+          html += topResults.map(p => `
+            <a href="product.html?slug=${p.slug}" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f5f5f5;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background=''">
+              <div style="width:44px;height:44px;background:#f5f5f5;border-radius:6px;overflow:hidden;flex-shrink:0;">
+                <img src="${p.primary_image || ''}" style="width:100%;height:100%;object-fit:contain;" alt="">
               </div>
-              <div class="text-[10px] font-semibold text-black shrink-0">
-                ${formatNPR(p.price)}
+              <div style="flex:1;min-width:0;">
+                <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;">${p.title}</div>
+                <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-top:2px;font-family:monospace;">${p.brand_name || 'TIME-X'}</div>
               </div>
+              <div style="font-size:11px;font-weight:700;color:#111;flex-shrink:0;">${fmtNPR(p.price)}</div>
             </a>
-          `).join('') + `<a href="shop.html?search=${encodeURIComponent(query)}" class="block p-3 text-[10px] text-center font-bold uppercase tracking-widest text-timexTextGrey hover:text-black bg-gray-50 hover:bg-gray-100 transition-colors">View All Results &rarr;</a>`;
+          `).join('');
+          
+          html += `<a href="shop.html?search=${encodeURIComponent(query)}" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#666;text-decoration:none;background:#fafafa;border-top:1px solid #f0f0f0;transition:all .15s;" onmouseover="this.style.color='#111';this.style.background='#f0f0f0'" onmouseout="this.style.color='#666';this.style.background='#fafafa'">
+            View All ${results.length} Results &rarr;
+          </a>`;
+          
+          dropdown.innerHTML = html;
           
         } catch (err) {
-          dropdown.classList.add('hidden');
-          dropdown.classList.remove('flex');
+          dropdown.style.display = 'none';
         }
-      }, 250);
+      }, 180);
     });
     
     document.addEventListener('click', (e) => {
       if (!wrapper.contains(e.target)) {
-        dropdown.classList.add('hidden');
-        dropdown.classList.remove('flex');
+        dropdown.style.display = 'none';
       }
     });
     
     input.addEventListener('focus', () => {
-      if (input.value.trim().length >= 2 && dropdown.innerHTML.length > 50) {
-        dropdown.classList.remove('hidden');
-        dropdown.classList.add('flex');
+      if (input.value.trim().length >= 1 && dropdown.innerHTML.length > 50) {
+        dropdown.style.display = 'flex';
       }
     });
   });
 }
 document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
+
+
 

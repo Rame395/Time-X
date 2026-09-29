@@ -151,7 +151,7 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
 .mobile-top-search-inner{display:flex;align-items:center;gap:10px;height:44px;margin:0 16px;padding:0 14px;border:1px solid var(--lux-line);border-radius:999px;background:#ffffff;color:var(--lux-gold-bright)}
 .mobile-top-search-inner input{width:100%;background:transparent!important;border:0!important;outline:0!important;color:#141311!important;font-size:11px;letter-spacing:.08em;text-transform:uppercase}
 .mobile-top-search-inner input::placeholder{color:#8a857a!important}
-#site-header + #mobile-top-search{position:fixed;left:0;right:0;top:72px;z-index:48;padding:8px 0;background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--lux-line)}
+#site-header + #mobile-top-search{position:fixed;left:0;right:0;top:96px;z-index:48;padding:8px 0;background:rgba(255,255,255,.96);backdrop-filter:blur(18px);border-bottom:1px solid var(--lux-line)}
 @media(max-width:1023px){#mobile-top-search{display:block!important}.mobile-top-search-inner{margin:0 16px}}
 @media(min-width:1024px){#mobile-top-search{display:none!important}}
 
@@ -178,8 +178,9 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
   header#site-header #menu-toggle{position:static!important;left:auto!important;top:auto!important;margin-left:0!important;width:24px!important;height:18px!important}
 }
 @media(max-width:1023px){
-  body > section:first-of-type{padding-top:124px!important}
+  body > section:first-of-type{padding-top:96px!important}
 }
+
 
 
 
