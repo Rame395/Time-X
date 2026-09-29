@@ -1,0 +1,59 @@
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-transparent text-black border-b border-black/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 md:flex-shrink-0 min-w-0" href="index.html"><img alt="TIME-X" class="hidden h-9 md:h-12 w-auto max-w-full" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
+<div class="relative w-full">
+<svg class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input class="w-full bg-white/5 border border-black/20 rounded-full pl-9 pr-4 py-2 text-xs tracking-wide placeholder:text-gray-500 focus:outline-none focus:border-timexWhite focus:bg-white/10 transition-colors" name="search" placeholder="Search watches, brands, collections…" type="text"/>
+</div>
+</form>
+<nav class="hidden lg:flex items-center space-x-8 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="hover:text-gray-500 transition-colors" href="men.html">Men</a>
+<a class="hover:text-gray-500 transition-colors" href="women.html">Women</a>
+<a class="hover:text-gray-500 transition-colors" href="new-arrivals.html">New Arrivals</a>
+<a class="hover:text-gray-500 transition-colors" href="collections.html">Collection</a>
+<a class="hover:text-gray-500 transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase md:flex-shrink-0">
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="gallery.html">Gallery</a>
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hidden xl:block hover:opacity-75 transition-opacity" href="track-order.html">Track Order</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="track-order.html">Track Order</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>

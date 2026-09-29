@@ -1,0 +1,53 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  test:
+    name: Test Code Integrity
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check out the code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: |
+          cd backend
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          
+      - name: Test Application Startup (Catch Syntax/Import Errors)
+        run: |
+          cd backend
+          # This tries to load your FastAPI app. If there is a syntax error, 
+          # a bad import, or broken code, this command will crash and stop the deployment!
+          python -c "from app.main import app"
+
+  deploy:
+    name: Deploy to Server
+    needs: test
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to Hostinger VPS
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            cd ~/Time-X
+            git pull origin main
+            cd backend
+            source venv/bin/activate
+            pip install -r requirements.txt
+            pm2 restart timex-backend
