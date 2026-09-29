@@ -328,7 +328,7 @@ function injectMegaMenuStyles() {
   const style = document.createElement('style');
   style.textContent = `
     .mega-menu-panel {
-      position: fixed; top: 158px; left: 0; right: 0; z-index: 45;
+      position: fixed; top: 80px; left: 0; right: 0; z-index: 45;
       background: #FFFFFF; color: #111111;
       border-bottom: 1px solid #EAEAEA;
       box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);
@@ -372,9 +372,9 @@ function initMegaMenu() {
         <ul class="space-y-2">
           ${taxonomy[dept].map((sub) => `
             <li><a href="${gender}.html?department=${encodeURIComponent(dept)}&subcategory=${encodeURIComponent(sub)}" class="text-xs font-medium text-timexBlack hover:opacity-60 transition-opacity">${sub}</a></li>
-          `).join('')}
+          `).join(')}
         </ul>
-      </div>`).join('');
+      </div>`).join(');
     return `<div class="grid grid-cols-2 sm:grid-cols-4 gap-8">${columns}</div>`;
   }
 
@@ -500,3 +500,81 @@ document.addEventListener("DOMContentLoaded", () => {
   atelierTouchVideos();
   document.body.classList.add("page-fade");
 });
+
+
+/* ---------------- Autocomplete Search ---------------- */
+function initAutocompleteSearch() {
+  const searchInputs = document.querySelectorAll('input[name="search"]');
+  
+  searchInputs.forEach(input => {
+    const wrapper = input.closest('.relative') || input.parentElement;
+    wrapper.style.position = 'relative';
+    
+    const dropdown = document.createElement('div');
+    dropdown.className = 'absolute top-full left-0 right-0 mt-2 bg-white text-black border border-black/10 shadow-2xl rounded-lg overflow-hidden z-[100] hidden flex-col max-h-[70vh] overflow-y-auto';
+    wrapper.appendChild(dropdown);
+    
+    let debounceTimer;
+    
+    input.addEventListener('input', (e) => {
+      const query = e.target.value.trim();
+      clearTimeout(debounceTimer);
+      
+      if (query.length < 2) {
+        dropdown.classList.add('hidden');
+        dropdown.classList.remove('flex');
+        return;
+      }
+      
+      debounceTimer = setTimeout(async () => {
+        try {
+          dropdown.classList.remove('hidden');
+          dropdown.classList.add('flex');
+          dropdown.innerHTML = '<div class="p-4 text-xs text-gray-500 uppercase tracking-widest text-center">Searching...</div>';
+          
+          const results = await apiGet(`/api/products?search=${encodeURIComponent(query)}`);
+          
+          if (!results || results.length === 0) {
+            dropdown.innerHTML = '<div class="p-4 text-xs text-gray-500 uppercase tracking-widest text-center">No matches found</div>';
+            return;
+          }
+          
+          const topResults = results.slice(0, 5);
+          
+          dropdown.innerHTML = topResults.map(p => `
+            <a href="product.html?slug=${p.slug}" class="flex items-center gap-4 p-3 hover:bg-gray-50 transition-colors border-b border-black/5 last:border-0">
+              <img src="${p.primary_image || ''}" class="w-10 h-10 object-cover bg-gray-100 rounded" alt="">
+              <div class="flex-1 min-w-0">
+                <h4 class="text-[10px] font-bold uppercase tracking-widest truncate text-black">${p.title}</h4>
+                <p class="text-[9px] text-gray-500 font-mono tracking-widest mt-1">${p.brand_name || 'TIME-X'}</p>
+              </div>
+              <div class="text-[10px] font-semibold text-black shrink-0">
+                ${formatNPR(p.price)}
+              </div>
+            </a>
+          `).join('') + `<a href="shop.html?search=${encodeURIComponent(query)}" class="block p-3 text-[10px] text-center font-bold uppercase tracking-widest text-timexTextGrey hover:text-black bg-gray-50 hover:bg-gray-100 transition-colors">View All Results &rarr;</a>`;
+          
+        } catch (err) {
+          dropdown.classList.add('hidden');
+          dropdown.classList.remove('flex');
+        }
+      }, 250);
+    });
+    
+    document.addEventListener('click', (e) => {
+      if (!wrapper.contains(e.target)) {
+        dropdown.classList.add('hidden');
+        dropdown.classList.remove('flex');
+      }
+    });
+    
+    input.addEventListener('focus', () => {
+      if (input.value.trim().length >= 2 && dropdown.innerHTML.length > 50) {
+        dropdown.classList.remove('hidden');
+        dropdown.classList.add('flex');
+      }
+    });
+  });
+}
+document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
+
