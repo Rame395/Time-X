@@ -33,6 +33,7 @@ header#site-header:before{
   display:flex;align-items:center;justify-content:center;
   border-bottom:1px solid rgba(168,129,60,.18);
   color:var(--lux-muted);font:500 9px/1 Inter, sans-serif;letter-spacing:.24em;text-transform:uppercase;
+  pointer-events:none;
 }
 header#site-header>div{
   position:relative;height:158px!important;max-width:1500px!important;
@@ -396,8 +397,13 @@ img {
 @media(max-width:1023px){#mobile-top-search{display:block!important}.mobile-top-search-inner{margin:0 16px}}
 @media(min-width:1024px){#mobile-top-search{display:none!important}}
 
-/* Hamburger is intentionally available on desktop and mobile. */
-#menu-toggle{display:flex!important;flex-shrink:0}
+/* Hamburger: hide on desktop, show on mobile */
+@media(min-width:1024px){
+  #menu-toggle{display:none!important}
+}
+@media(max-width:1023px){
+  #menu-toggle{display:flex!important;flex-shrink:0;z-index:9999}
+}
 #mobile-menu{display:block!important}
 
 /* Gallery filters stay in the document flow and scroll away with the page. */
