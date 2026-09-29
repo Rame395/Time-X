@@ -440,16 +440,14 @@
                         : `<span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
                     
                     return `
-                    <a href="product.html?slug=${p.slug}" class="group relative snap-start shrink-0 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] bg-white border border-black/5 flex flex-col hover:border-black/20 transition-colors">
-                        <div class="relative w-full aspect-[3/4] bg-gray-50 overflow-hidden">
-                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                    <a href="product.html?slug=${p.slug}" class="group relative snap-start shrink-0 w-[85vw] sm:w-[320px] lg:w-[380px] flex flex-col gap-6 cursor-pointer">
+                        <div class="relative w-full aspect-square bg-transparent overflow-hidden flex items-center justify-center p-6 transition-transform duration-700 ease-out group-hover:-translate-y-2">
+                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-contain object-center group-hover:scale-110 transition-transform duration-1000 ease-out mix-blend-multiply p-8">
                         </div>
-                        <div class="p-6 flex flex-col justify-between flex-1">
-                            <div>
-                                <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-2">${p.brand_name || 'TIME-X'}</p>
-                                <h3 class="text-lg font-black uppercase tracking-tight mb-2">${p.title}</h3>
-                            </div>
-                            <div class="mt-4">${priceHTML}</div>
+                        <div class="flex flex-col items-center text-center px-4">
+                            <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-3">${p.brand_name || 'TIME-X'}</p>
+                            <h3 class="text-xl font-black uppercase tracking-tight mb-3">${p.title}</h3>
+                            <div class="text-timexBlack">${priceHTML}</div>
                         </div>
                     </a>
                     `;
