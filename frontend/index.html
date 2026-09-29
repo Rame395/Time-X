@@ -126,30 +126,24 @@
 </div>
 </div>
 </div>
-<section class="relative pt-32 pb-16 lg:pt-48 lg:pb-24 w-full bg-timexOffWhite text-timexBlack overflow-hidden" id="hero-section">
-    <div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row lg:items-end justify-between gap-12 mb-16 lg:mb-24">
-        <div class="max-w-3xl">
-            <p class="text-[10px] font-mono tracking-mega text-timexTextGrey mb-6 uppercase">Curated Selection</p>
-            <h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9] text-timexBlack">
-                Featured<br/>Timepieces.
-            </h1>
-        </div>
-        <div class="flex gap-3 mb-2">
-            <button id="hero-prev" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack">
+<section class="relative h-screen w-full bg-timexOffWhite text-timexBlack overflow-hidden" id="hero-section">
+    <!-- Navigation Overlay -->
+    <div class="absolute inset-x-0 bottom-10 lg:bottom-16 z-20 max-w-[1440px] mx-auto px-6 lg:px-12 flex justify-between items-center pointer-events-none">
+        <div class="flex gap-3 pointer-events-auto">
+            <button id="hero-prev" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-transparent">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
             </button>
-            <button id="hero-next" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack">
+            <button id="hero-next" class="w-14 h-14 flex items-center justify-center border border-timexBlack/20 hover:border-timexBlack transition-colors text-timexBlack bg-transparent">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
             </button>
         </div>
     </div>
     
-    <div class="pl-6 lg:pl-12">
-        <div id="hero-featured-slider" class="flex gap-6 lg:gap-10 overflow-x-auto snap-x snap-mandatory hide-scrollbar pb-10" style="scroll-behavior: smooth;">
-            <!-- Loading state -->
-            <div class="min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] h-[500px] bg-white border border-black/5 flex items-center justify-center">
-                <p class="text-xs uppercase tracking-widest text-timexTextGrey animate-pulse">Loading Featured...</p>
-            </div>
+    <!-- Slider Track -->
+    <div id="hero-featured-slider" class="flex w-full h-full overflow-x-auto snap-x snap-mandatory hide-scrollbar" style="scroll-behavior: smooth;">
+        <!-- Loading state -->
+        <div class="w-full h-full shrink-0 flex items-center justify-center">
+            <p class="text-xs uppercase tracking-widest text-timexTextGrey animate-pulse">Loading Featured...</p>
         </div>
     </div>
 </section>
@@ -436,20 +430,25 @@
                 
                 slider.innerHTML = featured.map(p => {
                     const priceHTML = p.compare_at_price
-                        ? `<span class="sm:whitespace-nowrap"><span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-[10px] text-gray-400 line-through">${formatNPR(p.compare_at_price)}</span></span>`
-                        : `<span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
+                        ? `<span class="sm:whitespace-nowrap"><span class="text-lg lg:text-xl font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-xs text-gray-400 line-through ml-2">${formatNPR(p.compare_at_price)}</span></span>`
+                        : `<span class="text-lg lg:text-xl font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
                     
                     return `
-                    <a href="product.html?slug=${p.slug}" class="group relative snap-start shrink-0 w-[85vw] sm:w-[320px] lg:w-[380px] flex flex-col gap-6 cursor-pointer">
-                        <div class="relative w-full aspect-square bg-transparent overflow-hidden flex items-center justify-center p-6 transition-transform duration-700 ease-out group-hover:-translate-y-2">
-                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-contain object-center group-hover:scale-110 transition-transform duration-1000 ease-out mix-blend-multiply p-8">
+                    <div class="w-full h-full shrink-0 snap-start flex flex-col lg:flex-row items-center justify-center pt-24 pb-32 px-6 lg:px-12 max-w-[1440px] mx-auto relative group">
+                        <div class="w-full lg:w-1/2 flex flex-col justify-center z-10 text-center lg:text-left">
+                            <p class="text-[10px] text-timexTextGrey font-mono tracking-mega uppercase mb-4 lg:mb-6">${p.brand_name || 'TIME-X'}</p>
+                            <h2 class="text-5xl sm:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.9] mb-6">${p.title}</h2>
+                            <div class="mb-10 text-timexBlack">${priceHTML}</div>
+                            <div>
+                                <a href="product.html?slug=${p.slug}" class="inline-flex items-center justify-center bg-timexBlack text-timexWhite px-10 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-timexCharcoal transition-colors">
+                                    Shop Now
+                                </a>
+                            </div>
                         </div>
-                        <div class="flex flex-col items-center text-center px-4">
-                            <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-3">${p.brand_name || 'TIME-X'}</p>
-                            <h3 class="text-xl font-black uppercase tracking-tight mb-3">${p.title}</h3>
-                            <div class="text-timexBlack">${priceHTML}</div>
+                        <div class="w-full lg:w-1/2 h-[40vh] lg:h-[70vh] relative mt-10 lg:mt-0 flex items-center justify-center">
+                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute w-[80%] lg:w-full h-full object-contain object-center drop-shadow-2xl mix-blend-multiply group-hover:scale-105 transition-transform duration-1000 ease-out">
                         </div>
-                    </a>
+                    </div>
                     `;
                 }).join('');
                 
@@ -458,11 +457,11 @@
                 const btnNext = document.getElementById('hero-next');
                 
                 btnPrev.addEventListener('click', () => {
-                    slider.scrollBy({ left: -420, behavior: 'smooth' });
+                    slider.scrollBy({ left: -window.innerWidth, behavior: 'smooth' });
                 });
                 
                 btnNext.addEventListener('click', () => {
-                    slider.scrollBy({ left: 420, behavior: 'smooth' });
+                    slider.scrollBy({ left: window.innerWidth, behavior: 'smooth' });
                 });
                 
             } catch (e) {
