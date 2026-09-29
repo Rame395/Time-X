@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Track Your Order</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>::selection { background-color: #FFFFFF; color: #111111; } select option { color: #111111; background-color: #FFFFFF; }</style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 flex-shrink-0" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
+<div class="relative w-full">
+<svg class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input class="w-full bg-white/5 border border-white/20 rounded-full pl-9 pr-4 py-2 text-xs tracking-wide placeholder:text-timexTextGrey focus:outline-none focus:border-timexWhite focus:bg-white/10 transition-colors" name="search" placeholder="Search watches, brands, collections…" type="text"/>
+</div>
+</form>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="new-arrivals.html">New Arrivals</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collection</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase flex-shrink-0">
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="track-order.html">Track Order</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>
+<section class="pt-40 pb-24 bg-timexBlack text-timexWhite min-h-screen">
+<div class="max-w-lg mx-auto px-6">
+<div class="text-center mb-10">
+<span class="text-[10px] font-mono uppercase tracking-widest text-timexLightGrey block mb-1">Guest Order Lookup</span>
+<h1 class="text-3xl font-black uppercase tracking-tight">Track Your Order</h1>
+<p class="text-xs text-timexLightGrey uppercase tracking-wider mt-3">TIME-X doesn't require an account to shop — enter your order number and either the email or phone number you checked out with to view its status.</p>
+</div>
+<form class="bg-timexCharcoal border border-timexDarkBorder p-8 space-y-4" id="lookup-form" onsubmit="handleLookup(event)">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Order Number</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite uppercase" name="order_number" placeholder="TN-XXXXX" required=""/>
+</div>
+<div>
+<div class="flex gap-4 mb-2">
+<button class="text-[10px] font-mono uppercase tracking-widest pb-1 border-b-2 border-timexWhite text-timexWhite" id="method-email-btn" onclick="setLookupMethod('email')" type="button">Use Email</button>
+<button class="text-[10px] font-mono uppercase tracking-widest pb-1 border-b-2 border-transparent text-timexLightGrey" id="method-phone-btn" onclick="setLookupMethod('phone')" type="button">Use Phone</button>
+</div>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" id="method-email-input" name="email" placeholder="YOUR EMAIL" required="" type="email"/>
+<input class="hidden w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" id="method-phone-input" name="phone" placeholder="98XXXXXXXX" type="tel"/>
+</div>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider" id="lookup-error"></p>
+<button class="w-full bg-timexWhite text-timexBlack py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" id="lookup-btn" type="submit">
+                    Track Order
+                </button>
+</form>
+<div class="hidden bg-timexCharcoal border border-timexDarkBorder p-8 mt-6 space-y-4" id="order-result">
+<div class="flex justify-between items-start pb-4 border-b border-timexDarkBorder">
+<div>
+<h3 class="text-sm font-black uppercase tracking-wide" id="r-number"></h3>
+<p class="text-[11px] text-timexLightGrey uppercase mt-1" id="r-date"></p>
+</div>
+<span class="text-[11px] font-semibold uppercase tracking-widest px-3 py-1 border border-timexWhite" id="r-status"></span>
+</div>
+<p class="text-[10px] uppercase tracking-widest text-timexLightGrey" id="r-warranty"></p>
+<div class="space-y-2 text-xs uppercase tracking-wide" id="r-items"></div>
+<div class="flex justify-between pt-3 border-t border-timexDarkBorder text-sm font-bold">
+<span>Total</span><span id="r-total"></span>
+</div>
+<p class="text-[11px] text-timexLightGrey uppercase tracking-wider" id="r-address"></p>
+<a class="inline-block w-full text-center border border-timexWhite text-timexWhite py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors" href="#" id="r-receipt" target="_blank">
+                    Download Receipt PDF
+                </a>
+<button class="hidden w-full text-center border border-red-600 text-red-600 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-red-50 transition-colors" id="r-cancel-btn" onclick="handleCancelOrder()">
+                    Cancel This Order
+                </button>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider text-center" id="r-cancel-error"></p>
+<button class="hidden w-full text-center border border-timexWhite text-timexWhite py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors" id="r-return-btn" onclick="toggleReturnForm()">
+                    Request A Return
+                </button>
+<form class="hidden space-y-3 border border-timexDarkBorder p-5" id="return-form" onsubmit="handleReturnRequest(event)">
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey">Reason For Return</label>
+<textarea class="w-full bg-transparent border border-timexDarkBorder px-3 py-2 text-xs focus:outline-none focus:border-timexWhite" name="reason" placeholder="What's the issue?" required="" rows="3"></textarea>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider" id="return-error"></p>
+<button class="w-full bg-timexWhite text-timexBlack py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" type="submit">Submit Return Request</button>
+</form>
+<div class="hidden border border-timexDarkBorder p-5 space-y-2" id="return-status-box">
+<p class="text-[10px] font-mono uppercase tracking-widest text-timexLightGrey">Return Status</p>
+<p class="text-sm font-bold uppercase tracking-wide" id="return-status-text"></p>
+<p class="hidden text-xs text-timexLightGrey" id="return-status-note"></p>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        if (mobileSearchTrigger) {
+            mobileSearchTrigger.addEventListener('click', () => { window.location.href = 'shop.html'; });
+        }
+    </script>
+<script>
+        const STATUS_LABELS = { pending: 'Pending', confirmed: 'Confirmed', processing: 'Processing', packed: 'Packed', shipped: 'Shipped', out_for_delivery: 'Out For Delivery', delivered: 'Delivered', cancelled: 'Cancelled', returned: 'Returned', refunded: 'Refunded', failed: 'Failed' };
+        const CANCELLABLE_STATUSES = ['pending', 'confirmed']; // must match backend's CANCELLABLE_STATUSES
+        let currentOrder = null;
+        let currentCredential = { type: 'email', value: '' };
+
+        const orderFromQuery = new URLSearchParams(window.location.search).get('order');
+        if (orderFromQuery) {
+            document.querySelector('#lookup-form input[name="order_number"]').value = orderFromQuery.toUpperCase();
+        }
+
+        function setLookupMethod(method) {
+            const isEmail = method === 'email';
+            document.getElementById('method-email-input').classList.toggle('hidden', !isEmail);
+            document.getElementById('method-phone-input').classList.toggle('hidden', isEmail);
+            document.getElementById('method-email-input').required = isEmail;
+            document.getElementById('method-phone-input').required = !isEmail;
+            document.getElementById('method-email-btn').className = `text-[10px] font-mono uppercase tracking-widest pb-1 border-b-2 ${isEmail ? 'border-timexWhite text-timexWhite' : 'border-transparent text-timexLightGrey'}`;
+            document.getElementById('method-phone-btn').className = `text-[10px] font-mono uppercase tracking-widest pb-1 border-b-2 ${!isEmail ? 'border-timexWhite text-timexWhite' : 'border-transparent text-timexLightGrey'}`;
+        }
+
+        async function handleLookup(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('lookup-btn');
+            const errorEl = document.getElementById('lookup-error');
+            errorEl.classList.add('hidden');
+            document.getElementById('order-result').classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Looking Up…';
+
+            const orderNumber = form.elements.order_number.value.trim().toUpperCase();
+            const usingEmail = !document.getElementById('method-email-input').classList.contains('hidden');
+            currentCredential = usingEmail
+                ? { type: 'email', value: form.elements.email.value.trim() }
+                : { type: 'phone', value: form.elements.phone.value.trim() };
+            const param = `${currentCredential.type}=${encodeURIComponent(currentCredential.value)}`;
+
+            try {
+                const order = await apiGet(`/api/orders/${encodeURIComponent(orderNumber)}?${param}`);
+                renderOrder(order);
+            } catch (e) {
+                errorEl.textContent = `We couldn't find a matching order — check the order number and ${currentCredential.type}.`;
+                errorEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Track Order';
+            }
+        }
+
+        function renderOrder(order) {
+            currentOrder = order;
+            document.getElementById('r-number').textContent = `#${order.order_number}`;
+            document.getElementById('r-date').textContent = new Date(order.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'long', day: 'numeric' });
+            const statusEl = document.getElementById('r-status');
+            statusEl.textContent = STATUS_LABELS[order.status] || order.status;
+            const statusColors = { confirmed: '#16A34A', cancelled: '#DC2626', returned: '#DC2626', failed: '#DC2626' };
+            const statusColor = statusColors[order.status] || '#FFFFFF';
+            statusEl.style.color = statusColor;
+            statusEl.style.borderColor = statusColor;
+            document.getElementById('r-items').innerHTML = order.items.map((i) => `
+                <div class="flex justify-between">
+                    <span class="flex items-center gap-1.5">${i.color_hex ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-timexDarkBorder flex-shrink-0" style="background:${i.color_hex}"></span>` : ''}${i.product_title} <span class="text-timexLightGrey">(${[i.color, i.size].filter(Boolean).join(' / ') || 'One size'} × ${i.quantity})</span></span>
+                    <span>${formatNPR(i.line_total)}</span>
+                </div>`).join('');
+            document.getElementById('r-total').textContent = formatNPR(order.total);
+            document.getElementById('r-address').textContent = `Shipping to: ${order.address}, ${order.city} ${order.postal_code}`;
+            document.getElementById('r-receipt').href = `/api/orders/${encodeURIComponent(order.order_number)}/receipt.pdf?${currentCredential.type}=${encodeURIComponent(currentCredential.value)}`;
+
+            const cancelBtn = document.getElementById('r-cancel-btn');
+            document.getElementById('r-cancel-error').classList.add('hidden');
+            cancelBtn.classList.toggle('hidden', !CANCELLABLE_STATUSES.includes(order.status));
+            document.getElementById('order-result').classList.remove('hidden');
+
+            checkReturnStatus();
+        }
+
+        const RETURN_STATUS_LABELS = { requested: 'Requested', approved: 'Approved', rejected: 'Rejected', received: 'Received', refunded: 'Refunded' };
+
+        async function checkReturnStatus() {
+            const returnBtn = document.getElementById('r-return-btn');
+            const returnForm = document.getElementById('return-form');
+            const statusBox = document.getElementById('return-status-box');
+            returnBtn.classList.add('hidden');
+            returnForm.classList.add('hidden');
+            statusBox.classList.add('hidden');
+
+            if (currentOrder.status !== 'delivered') return;
+
+            try {
+                const ret = await apiGet(`/api/orders/${encodeURIComponent(currentOrder.order_number)}/returns?${currentCredential.type}=${encodeURIComponent(currentCredential.value)}`);
+                document.getElementById('return-status-text').textContent = RETURN_STATUS_LABELS[ret.status] || ret.status;
+                if (ret.admin_note) {
+                    document.getElementById('return-status-note').textContent = ret.admin_note;
+                    document.getElementById('return-status-note').classList.remove('hidden');
+                }
+                statusBox.classList.remove('hidden');
+            } catch (e) {
+                // No return request exists yet — offer the button instead.
+                returnBtn.classList.remove('hidden');
+            }
+        }
+
+        function toggleReturnForm() {
+            document.getElementById('return-form').classList.toggle('hidden');
+        }
+
+        async function handleReturnRequest(event) {
+            event.preventDefault();
+            const form = event.target;
+            const errorEl = document.getElementById('return-error');
+            errorEl.classList.add('hidden');
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            btn.textContent = 'Submitting…';
+            try {
+                await apiJSON('POST', `/api/orders/${encodeURIComponent(currentOrder.order_number)}/returns`, {
+                    reason: form.elements.reason.value.trim(),
+                    [currentCredential.type]: currentCredential.value,
+                });
+                await checkReturnStatus();
+                form.reset();
+            } catch (e) {
+                errorEl.textContent = e.message || "Couldn't submit your return request.";
+                errorEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Submit Return Request';
+            }
+        }
+
+        async function handleCancelOrder() {
+            if (!currentOrder) return;
+            if (!confirm(`Cancel order #${currentOrder.order_number}? This can't be undone.`)) return;
+
+            const btn = document.getElementById('r-cancel-btn');
+            const errorEl = document.getElementById('r-cancel-error');
+            errorEl.classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Cancelling…';
+
+            try {
+                const updated = await apiJSON(
+                    'POST',
+                    `/api/orders/${encodeURIComponent(currentOrder.order_number)}/cancel?${currentCredential.type}=${encodeURIComponent(currentCredential.value)}`,
+                );
+                renderOrder(updated);
+            } catch (e) {
+                errorEl.textContent = e.message || "Couldn't cancel this order — please try again.";
+                errorEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Cancel This Order';
+            }
+        }
+    </script>
+</body>
+</html>

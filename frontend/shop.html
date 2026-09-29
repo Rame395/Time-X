@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Shop</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection { background-color: #FFFFFF; color: #0A0A0A; }
+        .filter-active { color: #FFFFFF !important; font-weight: 700; }
+        .facet-list { max-height: 220px; overflow-y: auto; }
+        .facet-list::-webkit-scrollbar { width: 4px; }
+        .facet-list::-webkit-scrollbar-thumb { background: #E3E3E1; }
+        input[type="range"] { accent-color: #FFFFFF; }
+        select option { color: #111111; background-color: #FFFFFF; }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased page-fade">
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<a class="text-2xl font-black tracking-widest uppercase" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexWhite font-bold underline underline-offset-4" href="shop.html">Shop</a>
+<a class="hover:text-gray-500 transition-colors" href="new-arrivals.html">New Arrivals</a><a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collections</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase">
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+</div>
+
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none ml-2" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10"><span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span><button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button></div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a><a class="mobile-link mobile-nav-link" href="men.html">Men</a><a class="mobile-link mobile-nav-link" href="women.html">Women</a><a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a><a class="mobile-link mobile-nav-link" href="collections.html">Collections</a><a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a><a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a><a class="mobile-link mobile-nav-link" href="account.html">Account</a><a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10"><a class="mobile-link text-[10px] tracking-[0.22em] uppercase opacity-60" href="wishlist.html">Wishlist</a></div>
+</div></div>
+
+<section class="pt-32 pb-10 max-w-[1440px] mx-auto px-6 lg:px-12">
+<span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-2">The Full Collection</span>
+<h1 class="text-4xl sm:text-5xl font-black tracking-tight uppercase">Shop All Watches.</h1>
+</section>
+<section class="pb-24">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 flex flex-col lg:flex-row gap-12">
+<!-- FILTER SIDEBAR -->
+<aside class="w-full lg:w-64 flex-shrink-0 space-y-8">
+<div>
+<label class="field-label text-[10px] font-mono uppercase tracking-widest text-timexLightGrey block mb-2">Search</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-3 py-2 text-xs focus:outline-none focus:border-timexWhite" id="search-input" placeholder="Search watches..." type="text"/>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Gender</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="gender-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Brand</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="brand-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Price Range</h3>
+<div class="flex items-center gap-2 text-xs mb-2">
+<span id="price-min-label">NPR 0</span>
+<span class="text-timexLightGrey">—</span>
+<span id="price-max-label">NPR 100,000</span>
+</div>
+<input class="w-full" id="price-range" max="100000" min="0" oninput="onPriceRangeChange()" step="1000" type="range" value="100000"/>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Movement</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="movement-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Case Size</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="size-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Case Material</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="case-material-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Strap Material</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="strap-material-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Dial Color</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="dial-color-list"></ul>
+</div>
+<div>
+<h3 class="text-xs font-bold uppercase tracking-widest mb-3">Collection</h3>
+<ul class="space-y-2 text-xs uppercase tracking-wider facet-list" id="collection-list"></ul>
+</div>
+<div>
+<label class="flex items-center gap-2 text-xs uppercase tracking-wider cursor-pointer">
+<input class="accent-timexWhite" id="in-stock-only" onchange="onFilterChange()" type="checkbox"/>
+                        In Stock Only
+                    </label>
+</div>
+<button class="text-xs uppercase tracking-widest underline underline-offset-4 text-timexLightGrey hover:text-timexWhite transition-colors" onclick="clearAllFilters()">Clear All Filters</button>
+</aside>
+<!-- RESULTS -->
+<div class="flex-1">
+<div class="flex flex-wrap justify-between items-center gap-4 mb-8">
+<p class="text-xs uppercase tracking-widest text-timexLightGrey" id="results-count">Loading…</p>
+<select class="bg-transparent border border-timexDarkBorder px-3 py-2 text-xs uppercase tracking-widest focus:outline-none focus:border-timexWhite" id="sort-select" onchange="onFilterChange()">
+<option value="latest">Newest</option>
+<option value="price_asc">Price: Low to High</option>
+<option value="price_desc">Price: High to Low</option>
+<option value="popularity">Popularity</option>
+</select>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 gap-x-6 gap-y-12" id="product-grid">
+<div class="col-span-full text-center py-24 text-xs uppercase tracking-widest text-timexLightGrey">Loading watches…</div>
+</div>
+<div class="hidden flex justify-center items-center gap-2 mt-16" id="pagination"></div>
+</div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite pt-20 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-2 md:grid-cols-4 gap-10 pb-16 border-b border-white/10">
+<div class="col-span-2 md:col-span-1">
+<span class="text-xl font-black tracking-widest uppercase block mb-4" data-site-brand-name="">TIME-X</span>
+<p class="text-xs text-timexLightGrey leading-relaxed" data-site-tagline="">Precision, crafted. Timeless. Premium watches from Kathmandu.</p>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4">Shop</h4>
+<ul class="space-y-3 text-xs text-timexLightGrey uppercase tracking-wider">
+<li><a class="hover:text-timexWhite transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="shop.html">Shop All</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4">Explore</h4>
+<ul class="space-y-3 text-xs text-timexLightGrey uppercase tracking-wider">
+<li><a class="hover:text-timexWhite transition-colors" href="collections.html">Collections</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="blog.html">Blog</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="track-order.html">Track Order</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-bold uppercase tracking-widest mb-4">Connect</h4>
+<ul class="space-y-3 text-xs text-timexLightGrey uppercase tracking-wider">
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const PAGE_SIZE = 12;
+        let allProductsUnfiltered = [];
+        let currentPage = 1;
+        const state = {
+            gender: null, brand: null, movement: null, size: null,
+            case_material: null, strap_material: null, dial_color: null, collection: null,
+            maxPrice: 100000, inStockOnly: false, search: '', sort: 'latest',
+        };
+
+        // Pick up ?search=... from the header search bar on other pages.
+        const urlParams = new URLSearchParams(window.location.search);
+        const searchFromUrl = urlParams.get('search');
+        if (searchFromUrl) {
+            state.search = searchFromUrl;
+            document.getElementById('search-input').value = searchFromUrl;
+        }
+
+        // Pick up ?brand=... from clicking a brand logo elsewhere on the site.
+        const brandFromUrl = urlParams.get('brand');
+        if (brandFromUrl) {
+            state.brand = brandFromUrl;
+        }
+
+        function setFacet(key, value) {
+            state[key] = state[key] === value ? null : value;
+            currentPage = 1;
+            renderAllFacets();
+            applyFiltersAndRender();
+        }
+
+        function onPriceRangeChange() {
+            state.maxPrice = Number(document.getElementById('price-range').value);
+            document.getElementById('price-max-label').textContent = `NPR ${state.maxPrice.toLocaleString()}`;
+            currentPage = 1;
+            applyFiltersAndRender();
+        }
+
+        function onFilterChange() {
+            state.inStockOnly = document.getElementById('in-stock-only').checked;
+            state.sort = document.getElementById('sort-select').value;
+            currentPage = 1;
+            applyFiltersAndRender();
+        }
+
+        function clearAllFilters() {
+            Object.assign(state, { gender: null, brand: null, movement: null, size: null, case_material: null, strap_material: null, dial_color: null, collection: null, maxPrice: 100000, inStockOnly: false, search: '' });
+            document.getElementById('search-input').value = '';
+            document.getElementById('in-stock-only').checked = false;
+            document.getElementById('price-range').value = 100000;
+            document.getElementById('price-max-label').textContent = 'NPR 100,000';
+            currentPage = 1;
+            renderAllFacets();
+            applyFiltersAndRender();
+        }
+
+        function facetHtml(items, activeKey, onclickName, labelKey = null) {
+            const all = `<li><a href="#" onclick="setFacet('${onclickName}', null); return false;" class="${!state[onclickName] ? 'filter-active' : 'text-timexLightGrey'} flex justify-between items-center hover:text-timexWhite transition-colors">All <span>(${items.total})</span></a></li>`;
+            const rows = Object.entries(items.counts).sort().map(([key, count]) => {
+                const active = state[onclickName] === key ? 'filter-active' : 'text-timexLightGrey';
+                const label = labelKey ? items.labels[key] : key;
+                return `<li><a href="#" onclick="setFacet('${onclickName}', '${key}'); return false;" class="${active} flex justify-between items-center hover:text-timexWhite transition-colors">${label} <span>(${count})</span></a></li>`;
+            }).join('');
+            return all + rows;
+        }
+
+        function computeFacet(field) {
+            const counts = {};
+            allProductsUnfiltered.forEach((p) => { if (p[field]) counts[p[field]] = (counts[p[field]] || 0) + 1; });
+            return { counts, total: allProductsUnfiltered.length };
+        }
+
+        function renderAllFacets() {
+            document.getElementById('gender-list').innerHTML = facetHtml(computeFacet('category_slug'), 'gender', 'gender');
+            document.getElementById('brand-list').innerHTML = facetHtml(computeFacet('brand_name'), 'brand', 'brand');
+            document.getElementById('movement-list').innerHTML = facetHtml(computeFacet('movement'), 'movement', 'movement');
+            document.getElementById('case-material-list').innerHTML = facetHtml(computeFacet('case_material'), 'case_material', 'case_material');
+            document.getElementById('dial-color-list').innerHTML = facetHtml(computeFacet('dial_color'), 'dial_color', 'dial_color');
+            document.getElementById('collection-list').innerHTML = facetHtml(computeFacet('collection_tag'), 'collection', 'collection');
+
+            // Size and strap material live on variants, not the product card itself.
+            const sizeCounts = {}, strapCounts = {};
+            allProductsUnfiltered.forEach((p) => {
+                (p.available_sizes || []).forEach((s) => { sizeCounts[s] = (sizeCounts[s] || 0) + 1; });
+                (p.available_straps || []).forEach((s) => { strapCounts[s] = (strapCounts[s] || 0) + 1; });
+            });
+            document.getElementById('size-list').innerHTML = facetHtml({ counts: sizeCounts, total: allProductsUnfiltered.length }, 'size', 'size');
+            document.getElementById('strap-material-list').innerHTML = facetHtml({ counts: strapCounts, total: allProductsUnfiltered.length }, 'strap_material', 'strap_material');
+        }
+
+        function productCardHTML(p) {
+            const secondary = p.secondary_image || p.primary_image;
+            const priceHTML = p.compare_at_price
+                ? `<span class="sm:whitespace-nowrap"><span class="text-xs font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-[10px] text-timexLightGrey line-through">${formatNPR(p.compare_at_price)}</span></span>`
+                : `<span class="text-xs font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
+            const discount = getDiscountPercent(p.price, p.compare_at_price);
+            const badge = p.is_limited_edition ? 'Limited Edition' : (discount ? `${discount}% OFF` : (p.is_new_arrival ? 'New' : ''));
+            return `
+            <a href="product.html?slug=${p.slug}" class="group cursor-pointer block ${!p.in_stock ? 'opacity-50' : ''}">
+                <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3"${p.video_url ? ` onmouseenter="this.querySelector('.product-card-video').play()" onmouseleave="this.querySelector('.product-card-video').pause()" ontouchstart="this.querySelector('.product-card-video')?.play().catch(()=>{})"` : ''}>
+                    <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-cover object-center">
+                    <img src="${secondary}" alt="${p.title}" class="absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                    ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500" muted loop playsinline preload="metadata" src="${p.video_url}"></video>` : ''}
+                    ${badge ? `<span class="absolute top-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${badge}</span>` : ''}
+                    ${!p.in_stock ? '<span class="absolute bottom-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">Out of Stock</span>' : `
+                    <div class="absolute inset-x-0 bottom-0 p-3 opacity-0 group-hover:opacity-100 transition-opacity bg-gradient-to-t from-black/60 to-transparent">
+                        <button onclick="event.preventDefault(); quickAdd(${p.id}, '${p.slug}', '${p.title.replace(/'/g, "\\'")}')" class="w-full bg-timexWhite text-timexBlack py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors">
+                            Add To Cart +
+                        </button>
+                    </div>`}
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        ${p.brand_name ? `<p class="text-[10px] text-timexLightGrey uppercase tracking-widest">${p.brand_name}</p>` : ''}
+                        <h3 class="text-xs font-bold uppercase tracking-wider">${p.title}</h3>
+                        <p class="text-[10px] text-timexLightGrey uppercase mt-0.5">${p.movement || p.department}</p>
+                    </div>
+                    <div class="text-right">${priceHTML}</div>
+                </div>
+            </a>`;
+        }
+
+        async function quickAdd(productId, slug, title) {
+            try {
+                await addToCart(productId, '', '');
+                await refreshCartBadge();
+                showToast(`Added to Cart: ${title}`);
+            } catch (e) {
+                showToast('Please pick a size on the product page', true);
+                window.location.href = `product.html?slug=${slug}`;
+            }
+        }
+
+        function applyFiltersAndRender() {
+            let filtered = allProductsUnfiltered.filter((p) => {
+                if (state.gender && p.category_slug !== state.gender) return false;
+                if (state.brand && p.brand_name !== state.brand) return false;
+                if (state.movement && p.movement !== state.movement) return false;
+                if (state.case_material && p.case_material !== state.case_material) return false;
+                if (state.dial_color && p.dial_color !== state.dial_color) return false;
+                if (state.collection && p.collection_tag !== state.collection) return false;
+                if (state.size && !(p.available_sizes || []).includes(state.size)) return false;
+                if (state.strap_material && !(p.available_straps || []).includes(state.strap_material)) return false;
+                if (state.inStockOnly && !p.in_stock) return false;
+                if (p.price > state.maxPrice) return false;
+                if (state.search && !p.title.toLowerCase().includes(state.search.toLowerCase())) return false;
+                return true;
+            });
+
+            if (state.sort === 'price_asc') filtered.sort((a, b) => a.price - b.price);
+            else if (state.sort === 'price_desc') filtered.sort((a, b) => b.price - a.price);
+            else if (state.sort === 'popularity') filtered.sort((a, b) => (b.is_best_seller ? 1 : 0) - (a.is_best_seller ? 1 : 0));
+
+            currentFiltered = filtered;
+            renderPage(filtered, 1);
+        }
+        let currentFiltered = [];
+
+        function renderPage(filtered, page) {
+            currentPage = page;
+            const start = (page - 1) * PAGE_SIZE;
+            const pageItems = filtered.slice(start, start + PAGE_SIZE);
+            document.getElementById('product-grid').innerHTML = pageItems.map(productCardHTML).join('') ||
+                '<p class="col-span-full text-center text-xs uppercase tracking-widest text-timexLightGrey py-24">No watches match these filters.</p>';
+            document.getElementById('results-count').textContent = filtered.length
+                ? `Showing ${start + 1}–${Math.min(start + PAGE_SIZE, filtered.length)} of ${filtered.length} Watches`
+                : '0 Watches Found';
+
+            const totalPages = Math.ceil(filtered.length / PAGE_SIZE);
+            const pag = document.getElementById('pagination');
+            if (totalPages <= 1) { pag.classList.add('hidden'); return; }
+            pag.classList.remove('hidden');
+            let html = `<button ${page === 1 ? 'disabled' : ''} onclick="renderPage(currentFiltered, ${page - 1})" class="px-4 py-2 text-xs uppercase tracking-widest border border-timexDarkBorder hover:bg-timexWhite hover:text-timexBlack disabled:opacity-30 disabled:pointer-events-none">Previous</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button onclick="renderPage(currentFiltered, ${i})" class="w-9 h-9 text-xs uppercase ${i === page ? 'bg-timexWhite text-timexBlack' : 'border border-timexDarkBorder hover:bg-timexWhite hover:text-timexBlack'}">${i}</button>`;
+            }
+            html += `<button ${page === totalPages ? 'disabled' : ''} onclick="renderPage(currentFiltered, ${page + 1})" class="px-4 py-2 text-xs uppercase tracking-widest border border-timexDarkBorder hover:bg-timexWhite hover:text-timexBlack disabled:opacity-30 disabled:pointer-events-none">Next</button>`;
+            pag.innerHTML = html;
+            window.scrollTo({ top: document.getElementById('product-grid').offsetTop - 120, behavior: 'smooth' });
+        }
+
+        document.getElementById('search-input').addEventListener('input', (e) => {
+            state.search = e.target.value;
+            applyFiltersAndRender();
+        });
+
+        async function loadAllProducts() {
+            try {
+                allProductsUnfiltered = await apiGet('/api/products');
+                renderAllFacets();
+                applyFiltersAndRender();
+            } catch (e) {
+                document.getElementById('product-grid').innerHTML = '<p class="col-span-full text-center text-xs uppercase tracking-widest text-timexLightGrey py-24">Could not load watches right now.</p>';
+            }
+        }
+
+        loadAllProducts();
+    </script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+.git
+.gitignore
+.env
+.env.*
+!.env.example
+backend/timex.db
+backend/media/*
+!backend/media/.gitkeep
+__pycache__
+*.pyc
+*.pyo
+*.log
+venv
+.venv
+node_modules

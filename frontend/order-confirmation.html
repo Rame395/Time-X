@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Order Confirmed</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>::selection { background-color: #FFFFFF; color: #111111; }</style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<div class="text-[11px] font-mono tracking-widest uppercase text-timexLightGrey">Order Confirmed ✓</div>
+</div>
+</header>
+<section class="pt-40 pb-24 bg-timexBlack text-timexWhite min-h-screen">
+<div class="max-w-2xl mx-auto px-6">
+<div class="text-center text-xs uppercase tracking-widest text-timexLightGrey py-16" id="loading-state">Loading your order…</div>
+<div class="hidden text-center py-16 space-y-4" id="not-found">
+<p class="text-sm uppercase tracking-widest text-timexLightGrey">We couldn't find that order.</p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="index.html">Return to Homepage</a>
+</div>
+<div class="hidden bg-timexCharcoal border border-timexDarkBorder p-8 sm:p-10 text-center space-y-6" id="confirmation-root">
+<span class="text-4xl"><svg height="18" style="display:inline-block;vertical-align:-2px;flex-shrink:0;" viewbox="0 0 90 120" width="15" xmlns="http://www.w3.org/2000/svg"><path d="M0,0 L72,35 L37,50 L72,88 L0,120 Z" fill="#003893"></path><path d="M4,6 L65,35 L34,49 L65,83 L4,113 Z" fill="#DC143C"></path><path d="M13,20 a9,9 0 1,0 12,13 a11,11 0 1,1 -12,-13 Z" fill="#FFFFFF"></path><circle cx="20" cy="75" fill="#FFFFFF" r="8"></circle><g fill="#FFFFFF"><polygon points="20,62 22,68 18,68"></polygon><polygon points="20,88 22,82 18,82"></polygon><polygon points="7,75 13,73 13,77"></polygon><polygon points="33,75 27,73 27,77"></polygon><polygon points="11,66 16,70 12,71"></polygon><polygon points="29,84 24,80 28,79"></polygon><polygon points="29,66 24,70 28,71"></polygon><polygon points="11,84 16,80 12,79"></polygon></g></svg></span>
+<h1 class="text-2xl sm:text-3xl font-black uppercase tracking-tight">Order Placed Successfully</h1>
+<p class="text-xs text-timexLightGrey uppercase tracking-wider leading-relaxed">
+                    Thank you, <span class="text-timexWhite font-semibold" id="c-name"></span>.
+                    We've received order <span class="text-timexWhite font-semibold" id="c-number"></span> and will contact you via phone/WhatsApp to confirm dispatch.
+                </p>
+<div class="text-left border-t border-b border-timexDarkBorder py-6 space-y-3">
+<div class="space-y-3 text-xs uppercase tracking-wider" id="c-items"></div>
+<div class="flex justify-between pt-3 border-t border-timexDarkBorder text-sm font-bold">
+<span>Total</span><span id="c-total"></span>
+</div>
+</div>
+<div class="text-left text-[11px] text-timexLightGrey uppercase tracking-wider space-y-1">
+<p><span class="text-timexWhite font-semibold">Ship to:</span> <span id="c-address"></span></p>
+<p><span class="text-timexWhite font-semibold">Payment:</span> <span id="c-payment"></span></p>
+<p id="c-email-note"></p>
+</div>
+<div class="space-y-3 pt-2">
+<a class="inline-block w-full bg-timexWhite text-timexBlack py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="#" id="c-receipt-link">
+                        Download PDF Receipt
+                    </a>
+<a class="inline-block w-full border border-timexWhite text-timexWhite py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors" href="index.html">
+                        Return to Homepage
+                    </a>
+</div>
+</div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-10 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script>
+        async function init() {
+            const params = new URLSearchParams(window.location.search);
+            const orderNumber = params.get('order');
+            const email = params.get('email');
+            const loading = document.getElementById('loading-state');
+
+            if (!orderNumber || !email) {
+                loading.classList.add('hidden');
+                document.getElementById('not-found').classList.remove('hidden');
+                return;
+            }
+
+            let order;
+            try {
+                order = await apiGet(`/api/orders/${encodeURIComponent(orderNumber)}?email=${encodeURIComponent(email)}`);
+            } catch (e) {
+                loading.classList.add('hidden');
+                document.getElementById('not-found').classList.remove('hidden');
+                return;
+            }
+
+            loading.classList.add('hidden');
+            document.getElementById('confirmation-root').classList.remove('hidden');
+            document.getElementById('c-name').textContent = order.first_name;
+            document.getElementById('c-number').textContent = `#${order.order_number}`;
+            document.getElementById('c-items').innerHTML = order.items.map((i) => `
+                <div class="flex justify-between">
+                    <span class="flex items-center gap-1.5">${i.color_hex ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-timexDarkBorder flex-shrink-0" style="background:${i.color_hex}"></span>` : ''}${i.product_title} <span class="text-timexLightGrey">(${[i.color, i.size].filter(Boolean).join(' / ') || 'One size'} × ${i.quantity})</span></span>
+                    <span>${formatNPR(i.line_total)}</span>
+                </div>`).join('');
+            document.getElementById('c-total').textContent = formatNPR(order.total);
+            document.getElementById('c-address').textContent = `${order.address}, ${order.city} ${order.postal_code}`;
+            document.getElementById('c-payment').textContent = order.payment_method === 'cod' ? 'Cash on Delivery' : 'Mobile Banking (Fonepay/eSewa)';
+            document.getElementById('c-email-note').textContent = order.email_sent
+                ? `A copy of this receipt has also been emailed to ${order.email}.`
+                : '';
+            document.getElementById('c-receipt-link').href = `/api/orders/${encodeURIComponent(order.order_number)}/receipt.pdf?email=${encodeURIComponent(order.email)}`;
+        }
+        init();
+    </script>
+</body>
+</html>

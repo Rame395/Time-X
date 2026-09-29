@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Precision Crafted Timeless</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        timexBlack: '#0A0A0A',
+                        timexWhite: '#FFFFFF',
+                        timexOffWhite: '#FAFAF8',
+                        timexCharcoal: '#161616',
+                        timexDarkBorder: '#2A2A2A',
+                        timexLightGrey: '#E3E3E1',
+                        timexTextGrey: '#6B6B6B',
+                        timexSilver: '#B8B8B8',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica Neue', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                    },
+                    letterSpacing: { widest: '0.2em', mega: '0.3em' }
+                }
+            }
+        }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection { background-color: #FFFFFF; color: #111111; }
+        select option { color: #111111; background-color: #FFFFFF; }
+        .editorial-image-zoom { transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+        .group:hover .editorial-image-zoom { transform: scale(1.04); }
+        .product-secondary-img { transition: opacity 0.4s ease-in-out; }
+        .group:hover .product-primary-img { opacity: 0; }
+        .group:hover .product-secondary-img { opacity: 1; }
+        .product-card-video { transition: opacity 0.4s ease-in-out; }
+        .group:hover .product-card-video { opacity: 1; }
+        .product-quick-action {
+            transform: translateY(100%);
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.3s ease;
+            opacity: 0;
+        }
+        .group:hover .product-quick-action { transform: translateY(0); opacity: 1; }
+        .hero-word-inner {
+            display: block;
+            transform: translateY(110%);
+            animation: heroWordUp 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+        .hero-word:nth-child(1) .hero-word-inner { animation-delay: 0.15s; }
+        .hero-word:nth-child(2) .hero-word-inner { animation-delay: 0.30s; }
+        .hero-word:nth-child(3) .hero-word-inner { animation-delay: 0.45s; }
+        @keyframes heroWordUp {
+            to { transform: translateY(0); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            .hero-word-inner { animation: none; transform: translateY(0); }
+        }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-white text-black font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-transparent text-black border-b border-black/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 md:flex-shrink-0 min-w-0" href="index.html"><img alt="TIME-X" class="hidden h-9 md:h-12 w-auto max-w-full" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
+<div class="relative w-full">
+<svg class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input class="w-full bg-white/5 border border-black/20 rounded-full pl-9 pr-4 py-2 text-xs tracking-wide placeholder:text-gray-500 focus:outline-none focus:border-timexWhite focus:bg-white/10 transition-colors" name="search" placeholder="Search watches, brands, collections…" type="text"/>
+</div>
+</form>
+<nav class="hidden lg:flex items-center space-x-8 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="hover:text-gray-500 transition-colors" href="men.html">Men</a>
+<a class="hover:text-gray-500 transition-colors" href="women.html">Women</a>
+<a class="hover:text-gray-500 transition-colors" href="new-arrivals.html">New Arrivals</a>
+<a class="hover:text-gray-500 transition-colors" href="collections.html">Collection</a>
+<a class="hover:text-gray-500 transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase md:flex-shrink-0">
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="gallery.html">Gallery</a>
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hidden xl:block hover:opacity-75 transition-opacity" href="track-order.html">Track Order</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="track-order.html">Track Order</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>
+<section class="relative h-screen w-full flex items-end justify-start bg-white text-black overflow-hidden cursor-pointer" id="hero-section">
+<div class="absolute inset-0 z-0">
+<img alt="TIME-X Signature Chronograph" class="hidden w-full h-full object-cover object-center opacity-70 filter grayscale contrast-125 scale-105 editorial-image-zoom transition-opacity duration-700" id="hero-bg-img" src=""/>
+<video class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-700 pointer-events-none" id="hero-bg-video" loop="" muted="" playsinline="" preload="metadata"></video>
+<div class="absolute inset-0 bg-gradient-to-t from-timexBlack via-black/20 to-transparent"></div>
+</div>
+<div class="hidden absolute top-8 right-8 z-10 items-center gap-2 text-black/80 text-[10px] uppercase tracking-widest font-mono" id="hero-video-hint">
+<span class="relative flex h-2 w-2">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-timexWhite/60"></span>
+<span class="relative inline-flex rounded-full h-2 w-2 bg-timexWhite"></span>
+</span>
+<span class="hero-video-hint-text">Hover To See It In Motion</span>
+</div>
+<div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 lg:px-12 pb-20 flex flex-col lg:flex-row lg:items-end justify-between gap-8">
+<div>
+<p class="text-xs font-mono tracking-mega text-gray-600 mb-4 uppercase" id="hero-eyebrow">Premium Timepieces</p>
+<h1 class="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tighter uppercase leading-[0.9]">
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision</span></span>
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Crafted</span></span>
+<span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless.</span></span>
+</h1>
+<p class="hidden text-sm text-gray-600 mt-4 max-w-md uppercase tracking-wider" id="hero-subheading"></p>
+</div>
+<div class="flex flex-col sm:flex-row gap-4">
+<a class="inline-flex items-center justify-center bg-timexWhite text-timexBlack px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-timexLightGrey transition-colors" href="new-arrivals.html" id="hero-cta">Shop Collection</a>
+<a class="inline-flex items-center justify-center border border-black/40 text-black px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-black/5 transition-colors" href="#story">Explore TIME-X</a>
+</div>
+</div>
+<div class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
+</section>
+
+<section aria-label="Brands We Carry" class="atelier-brands" id="brands-section">
+<div class="atelier-brands-inner">
+<div class="atelier-brands-kicker">Brands We Carry · Six names, one standard</div>
+<div class="atelier-brand-row" id="brands-we-carry">
+<a class="atelier-brand" href="shop.html?brand=Timex"><img alt="Timex" src="assets/brands/timex.png"/><span class="atelier-brand-name">Timex</span></a>
+<a class="atelier-brand" href="shop.html?brand=Lacoste"><img alt="Lacoste" src="assets/brands/lacoste.png"/><span class="atelier-brand-name">Lacoste</span></a>
+<a class="atelier-brand" href="shop.html?brand=Guess"><img alt="Guess" src="assets/brands/guess.png"/><span class="atelier-brand-name">Guess</span></a>
+<a class="atelier-brand" href="shop.html?brand=Lee%20Cooper"><img alt="Lee Cooper" src="assets/brands/lee-cooper.png"/><span class="atelier-brand-name">Lee Cooper</span></a>
+<a class="atelier-brand" href="shop.html?brand=Calvin%20Klein"><img alt="Calvin Klein" src="assets/brands/calvin-klein.png"/><span class="atelier-brand-name">Calvin Klein</span></a>
+<a class="atelier-brand" href="shop.html?brand=Tommy%20Hilfiger"><img alt="Tommy Hilfiger" src="assets/brands/tommy-hilfiger.png"/><span class="atelier-brand-name">Tommy Hilfiger</span></a>
+</div>
+</div>
+</section>
+<section class="hidden py-32 bg-white text-black" id="on-sale">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="text-xs font-mono tracking-widest uppercase text-gray-600 block mb-2">Limited Time</span>
+<h2 class="text-3xl sm:text-5xl font-black tracking-tight uppercase">On Sale</h2>
+</div>
+<p class="text-sm text-gray-600 max-w-sm">Selected pieces at a reduced price, while stock lasts.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8" id="on-sale-grid"></div>
+</div>
+</section>
+<section class="hidden py-32 bg-gray-100 text-black" id="best-sellers">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
+<div>
+<span class="text-xs font-mono tracking-widest uppercase text-gray-600 block mb-2">Customer Favourites</span>
+<h2 class="text-3xl sm:text-5xl font-black tracking-tight uppercase">Best Sellers</h2>
+</div>
+<p class="text-sm text-gray-600 max-w-sm">The watches our customers reach for again and again.</p>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-8" id="best-sellers-grid"></div>
+</div>
+</section>
+<section class="relative h-[85vh] w-full flex items-center justify-center bg-white text-black overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="TIME-X Heritage Timepieces" class="hidden w-full h-full object-cover object-center opacity-60 filter grayscale editorial-image-zoom" id="story-img" src=""/>
+</div>
+<div class="relative z-10 max-w-3xl mx-auto px-6 text-center">
+<span class="text-xs font-mono tracking-mega text-gray-600 uppercase block mb-4">Editorial 01</span>
+<h2 class="text-4xl sm:text-6xl font-black tracking-tight uppercase mb-6" id="story-heading">Precision, Crafted.</h2>
+<p class="text-base sm:text-lg text-gray-600 font-light leading-relaxed mb-10 max-w-xl mx-auto" id="story-subheading">
+                A watch is more than an instrument. It is a quiet statement of precision in a world that rarely slows down.
+            </p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-4 text-xs font-medium tracking-widest uppercase hover:bg-timexLightGrey transition-colors" href="gallery.html" id="story-link">Explore The TIME-X Story</a>
+</div>
+</section>
+<section class="py-24 bg-white text-black">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<a class="group relative aspect-[4/5] bg-gray-100 overflow-hidden flex flex-col justify-end p-8 text-black" href="men.html" id="tile-men-link">
+<div class="absolute inset-0 z-0">
+<img alt="Men Category" class="hidden w-full h-full object-cover object-center filter grayscale contrast-110 editorial-image-zoom" id="tile-men-img" src=""/>
+</div>
+<div class="relative z-10 flex justify-between items-end">
+<h3 class="text-2xl font-black uppercase tracking-tight" id="tile-men-heading">Men</h3>
+<span class="text-xs font-medium uppercase tracking-widest underline underline-offset-4">Shop Men →</span>
+</div>
+</a>
+<a class="group relative aspect-[4/5] bg-gray-100 overflow-hidden flex flex-col justify-end p-8 text-black" href="women.html" id="tile-women-link">
+<div class="absolute inset-0 z-0">
+<img alt="Women Category" class="hidden w-full h-full object-cover object-center filter grayscale contrast-110 editorial-image-zoom" id="tile-women-img" src=""/>
+</div>
+<div class="relative z-10 flex justify-between items-end">
+<h3 class="text-2xl font-black uppercase tracking-tight" id="tile-women-heading">Women</h3>
+<span class="text-xs font-medium uppercase tracking-widest underline underline-offset-4">Shop Women →</span>
+</div>
+</a>
+<a class="group relative aspect-[4/5] bg-gray-100 overflow-hidden flex flex-col justify-end p-8 text-black" href="new-arrivals.html" id="tile-new-link">
+<div class="absolute inset-0 z-0">
+<img alt="New Arrivals Category" class="hidden w-full h-full object-cover object-center filter grayscale contrast-110 editorial-image-zoom" id="tile-new-img" src=""/>
+</div>
+<div class="relative z-10 flex justify-between items-end">
+<h3 class="text-2xl font-black uppercase tracking-tight" id="tile-new-heading">New Arrivals</h3>
+<span class="text-xs font-medium uppercase tracking-widest underline underline-offset-4">Discover →</span>
+</div>
+</a>
+</div>
+</div>
+</section>
+<section class="py-36 bg-white text-black" id="story">
+<div class="max-w-4xl mx-auto px-6 text-center">
+<span class="text-xs font-mono tracking-mega text-gray-600 uppercase block mb-6">Our Philosophy</span>
+<h2 class="text-4xl sm:text-6xl font-black tracking-tight uppercase mb-10">Precision, Crafted.</h2>
+<div class="w-12 h-[1px] bg-white/30 mx-auto mb-10"></div>
+<p class="text-lg sm:text-xl font-light text-gray-600 leading-relaxed mb-8">
+                TIME-X is a watch brand built around precision, restraint, and timeless design.
+            </p>
+<p class="text-sm font-mono tracking-wider text-gray-500 uppercase"></p>
+</div>
+</section>
+<section class="py-24 bg-white text-black">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
+<div>
+<h2 class="text-2xl sm:text-3xl font-black uppercase tracking-tight">Follow The Craft</h2>
+<p class="text-xs font-mono text-gray-600 mt-1 uppercase">@timex.official</p>
+</div>
+<a class="text-xs font-semibold uppercase tracking-widest underline underline-offset-4 hover:opacity-75" href="https://instagram.com" target="_blank">Follow Us</a>
+</div>
+<div class="grid grid-cols-2 lg:grid-cols-4 gap-4" id="instagram-grid">
+</div>
+</div>
+</section>
+
+<section class="py-28 bg-white text-black">
+<div class="max-w-xl mx-auto px-6 text-center">
+<h2 class="text-3xl font-black tracking-tight uppercase mb-4">Stay In The Loop.</h2>
+<p class="text-xs text-gray-500 uppercase tracking-wider mb-8">Be the first to know about new drops, collections and TIME-X stories.</p>
+<form class="flex flex-col sm:flex-row gap-3" id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+<input class="flex-1 bg-transparent border border-black/20 px-4 py-4 text-xs tracking-widest text-black placeholder-black/40 focus:outline-none focus:border-white" name="email" placeholder="YOUR EMAIL" required="" type="email"/>
+<select class="bg-transparent border border-black/20 px-4 py-4 text-xs tracking-widest text-black focus:outline-none focus:border-white uppercase" name="category">
+<option class="text-timexBlack" value="all">I'm Interested In...</option>
+<option class="text-timexBlack" value="men">Men's Drops</option>
+<option class="text-timexBlack" value="women">Women's Drops</option>
+<option class="text-timexBlack" value="other">Everything Else</option>
+</select>
+<button class="bg-timexWhite text-timexBlack px-8 py-4 text-xs font-semibold tracking-widest uppercase hover:bg-timexLightGrey transition-colors" type="submit">Subscribe</button>
+</form>
+<p class="hidden text-xs uppercase tracking-widest mt-4" id="newsletter-message"></p>
+</div>
+</section>
+<footer class="bg-white text-black border-t border-black/10 pt-20 pb-12">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
+<div class="col-span-2 md:col-span-1">
+<span class="text-2xl font-black tracking-widest uppercase block mb-4" data-site-brand-name="">TIME-X</span>
+<p class="text-xs text-gray-500 tracking-wider uppercase leading-relaxed" data-site-tagline="">Precision, crafted. Timeless. Premium watches from Kathmandu.</p>
+</div>
+<div>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Shop</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-black transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-black transition-colors" href="new-arrivals.html">New Arrivals</a></li>
+<li><a class="hover:text-black transition-colors" href="collections.html">Collections</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">About</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="#story">Our Story</a></li>
+<li><a class="hover:text-black transition-colors" href="gallery.html">Gallery</a></li>
+<li><a class="hover:text-black transition-colors" href="#">Size Guide</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Policies</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="shipping-policy.html">Shipping &amp; Order Policy</a></li>
+<li><a class="hover:text-black transition-colors" href="warranty-policy.html">Warranty Policy</a></li>
+<li><a class="hover:text-black transition-colors" href="privacy-notice.html">Privacy Notice</a></li>
+<li><a class="hover:text-black transition-colors" href="exercise-your-rights.html">Exercise Your Rights</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Social</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-8 border-t border-black/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-gray-500 uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const header = document.getElementById('site-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.remove('bg-transparent', 'text-black', 'border-black/10');
+                header.classList.add('bg-white', 'text-black', 'border-black/10');
+            } else {
+                header.classList.add('bg-transparent', 'text-black', 'border-black/10');
+                header.classList.remove('bg-white', 'border-black/10');
+            }
+        });
+
+        function productCardHTML(p) {
+            const secondary = p.secondary_image || p.primary_image;
+            const priceHTML = p.compare_at_price
+                ? `<span class="sm:whitespace-nowrap"><span class="text-xs font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-[10px] text-gray-600 line-through">${formatNPR(p.compare_at_price)}</span></span>`
+                : `<span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
+            return `
+            <a href="product.html?slug=${p.slug}" class="group cursor-pointer block">
+                <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-4"${p.video_url ? ` onmouseenter="this.querySelector('.product-card-video').play()" onmouseleave="this.querySelector('.product-card-video').pause()" ontouchstart="this.querySelector('.product-card-video')?.play().catch(()=>{})"` : ''}>
+                    <img src="${p.primary_image || ''}" alt="${p.title}" class="product-primary-img absolute inset-0 w-full h-full object-cover object-center">
+                    <img src="${secondary}" alt="${p.title}" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">
+                    ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="metadata" src="${p.video_url}"></video>` : ''}
+                    ${getDiscountPercent(p.price, p.compare_at_price) ? `<span class="absolute top-3 left-3 discount-badge text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${getDiscountPercent(p.price, p.compare_at_price)}% OFF</span>` : ''}
+                    <div class="absolute inset-x-0 bottom-0 p-3 product-quick-action bg-gradient-to-t from-black/60 to-transparent">
+                        <button onclick="event.preventDefault(); quickAdd(${p.id}, '${p.slug}', '${p.title.replace(/'/g, "\\'")}')" class="w-full bg-timexWhite text-timexBlack py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors">
+                            Add To Cart +
+                        </button>
+                    </div>
+                </div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="text-sm font-bold uppercase tracking-wider">${p.title}</h3>
+                        <p class="text-xs text-gray-600 uppercase mt-1">${p.subcategory}</p>
+                    </div>
+                    <div class="text-right">${priceHTML}</div>
+                </div>
+            </a>`;
+        }
+
+        async function quickAdd(productId, slug, title) {
+            try {
+                await addToCart(productId, '', '');
+                await refreshCartBadge();
+                showToast(`Added to Cart: ${title}`);
+            } catch (e) {
+                showToast('Please pick a size on the product page', true);
+                window.location.href = `product.html?slug=${slug}`;
+            }
+        }
+
+        async function loadBrandsWeCarry() {
+            const container = document.getElementById('brands-we-carry');
+            if (!container) return;
+            try {
+                const brands = await apiGet('/api/brands');
+                const carried = brands.filter((b) => b.slug !== 'timex-nepal' && b.logo_url).slice(0, 6);
+                if (!carried.length) return;
+                container.innerHTML = carried.map((b) => `
+                    <a href="shop.html?brand=${encodeURIComponent(b.name)}" class="atelier-brand" title="Shop ${b.name}">
+                        <span class="atelier-brand-logo"><img src="${b.logo_url}" alt="${b.name}"></span>
+                        <span class="atelier-brand-name">${b.name}</span>
+                    </a>
+                `).join('');
+            } catch (e) {
+                // Keep the six built-in logos visible if the API is temporarily unavailable.
+            }
+        }
+
+        async function loadOnSaleSection() {
+            try {
+                const products = await apiGet('/api/products?on_sale=true');
+                if (!products.length) return; // section stays hidden — no sale live right now
+                document.getElementById('on-sale-grid').innerHTML = products.slice(0, 4).map(productCardHTML).join('');
+                document.getElementById('on-sale').classList.remove('hidden');
+            } catch (e) {
+                // fails silently — an empty/missing sale section is not worth showing an error for
+            }
+        }
+
+        async function loadBestSellers() {
+            try {
+                const products = await apiGet('/api/products?is_best_seller=true&sort=popularity');
+                if (!products.length) return; // section stays hidden until admin marks some as best-sellers
+                document.getElementById('best-sellers-grid').innerHTML = products.slice(0, 4).map(productCardHTML).join('');
+                document.getElementById('best-sellers').classList.remove('hidden');
+            } catch (e) {
+                // fails silently, same as on-sale
+            }
+        }
+
+        loadBrandsWeCarry();
+        loadOnSaleSection();
+        loadBestSellers();
+        async function loadHeroImages() {
+            let heroes = [];
+            try {
+                heroes = await apiGet('/api/site-images/homepage_hero');
+            } catch (e) {
+                return; // keep the default hardcoded hero — never let this break the homepage
+            }
+            if (!heroes.length) return; // no admin-added heroes yet — default stays as-is
+
+            let current = 0;
+            const bgImg = document.getElementById('hero-bg-img');
+            const eyebrow = document.getElementById('hero-eyebrow');
+            const subheading = document.getElementById('hero-subheading');
+            const cta = document.getElementById('hero-cta');
+            const dotsWrap = document.getElementById('hero-dots');
+            const defaultEyebrow = eyebrow.textContent;
+
+            function applyHero(index) {
+                const h = heroes[index];
+                bgImg.style.opacity = '0';
+                setTimeout(() => {
+                    bgImg.src = h.url;
+                    bgImg.classList.remove('hidden');
+                    bgImg.style.opacity = '';
+                }, 350);
+                eyebrow.textContent = h.heading || defaultEyebrow;
+                if (h.subheading) {
+                    subheading.textContent = h.subheading;
+                    subheading.classList.remove('hidden');
+                } else {
+                    subheading.classList.add('hidden');
+                }
+                cta.href = h.link_url || 'shop.html';
+                if (dotsWrap.children.length) {
+                    Array.from(dotsWrap.children).forEach((dot, i) => {
+                        dot.className = `w-1.5 h-1.5 rounded-full ${i === index ? 'bg-timexWhite' : 'bg-white/40'}`;
+                    });
+                }
+            }
+
+            if (heroes.length > 1) {
+                dotsWrap.classList.remove('hidden');
+                dotsWrap.classList.add('flex');
+                dotsWrap.innerHTML = heroes.map((_, i) => `<span class="w-1.5 h-1.5 rounded-full bg-white/40"></span>`).join('');
+                setInterval(() => {
+                    current = (current + 1) % heroes.length;
+                    applyHero(current);
+                }, 6000);
+            }
+            applyHero(0);
+        }
+        async function loadSingleSlotOverride(slot, applyFn) {
+            try {
+                const images = await apiGet(`/api/site-images/${slot}`);
+                if (images.length) applyFn(images[0]);
+            } catch (e) {
+                // Fetch failed — the page's hardcoded default stays exactly as it was.
+            }
+        }
+
+        function loadStoryOverride() {
+            loadSingleSlotOverride('homepage_story', (img) => {
+                document.getElementById('story-img').src = img.url;
+                document.getElementById('story-img').classList.remove('hidden');
+                if (img.heading) document.getElementById('story-heading').textContent = img.heading;
+                if (img.subheading) document.getElementById('story-subheading').textContent = img.subheading;
+                if (img.link_url) document.getElementById('story-link').href = img.link_url;
+            });
+        }
+
+        function loadTileOverrides() {
+            [['homepage_tile_men', 'tile-men'], ['homepage_tile_women', 'tile-women'], ['homepage_tile_new', 'tile-new']].forEach(([slot, prefix]) => {
+                loadSingleSlotOverride(slot, (img) => {
+                    document.getElementById(`${prefix}-img`).src = img.url;
+                    document.getElementById(`${prefix}-img`).classList.remove('hidden');
+                    if (img.heading) document.getElementById(`${prefix}-heading`).textContent = img.heading;
+                    if (prefix !== 'tile-new' && img.link_url) document.getElementById(`${prefix}-link`).href = img.link_url;
+                    if (prefix === 'tile-new') document.getElementById('tile-new-link').href = 'new-arrivals.html';
+                    if (img.width && img.height) {
+                        document.getElementById(`${prefix}-link`).style.aspectRatio = `${img.width} / ${img.height}`;
+                    }
+                });
+            });
+        }
+
+        async function loadInstagramGrid() {
+            try {
+                const images = await apiGet('/api/site-images/instagram_grid');
+                if (!images.length) return; // keep the 4 hardcoded defaults
+                document.getElementById('instagram-grid').innerHTML = images.map((img) => `
+                    <div class="relative aspect-square bg-gray-100 overflow-hidden group cursor-pointer">
+                        <img src="${img.url}" alt="Instagram Post" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>`).join('');
+            } catch (e) {
+                // Fetch failed — the 4 hardcoded defaults stay exactly as they were.
+            }
+        }
+
+        async function handleNewsletterSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const msgEl = document.getElementById('newsletter-message');
+            const btn = form.querySelector('button[type="submit"]');
+            btn.disabled = true;
+            try {
+                await apiJSON('POST', '/api/subscribe', {
+                    email: form.elements.email.value.trim(),
+                    category: form.elements.category.value,
+                });
+                msgEl.textContent = "You're on the list — thanks for subscribing.";
+                msgEl.className = 'text-xs uppercase tracking-widest mt-4 text-white';
+                form.reset();
+            } catch (e) {
+                msgEl.textContent = e.message || 'Could not subscribe right now — please try again.';
+                msgEl.className = 'text-xs uppercase tracking-widest mt-4 text-red-400';
+            } finally {
+                msgEl.classList.remove('hidden');
+                btn.disabled = false;
+            }
+        }
+
+        async function initHeroVideo() {
+            const section = document.getElementById('hero-section');
+            const video = document.getElementById('hero-bg-video');
+            const img = document.getElementById('hero-bg-img');
+            const hint = document.getElementById('hero-video-hint');
+
+            let videoUrl = null;
+            try {
+                const videos = await apiGet('/api/site-images/homepage_hero_video');
+                if (videos.length) videoUrl = videos[0].url;
+            } catch (e) { /* no video uploaded yet — leave the static photo as-is */ }
+
+            if (!videoUrl) return; // nothing to wire up
+
+            video.src = videoUrl;
+            hint.classList.remove('hidden');
+            hint.classList.add('flex');
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            hint.querySelector('.hero-video-hint-text').textContent = isTouchDevice ? 'Tap To See It In Motion' : 'Hover To See It In Motion';
+
+            function showVideo() {
+                video.currentTime = 0;
+                video.play().catch(() => {});
+                video.classList.remove('opacity-0');
+                img.classList.add('opacity-0');
+                hint.classList.add('opacity-0');
+            }
+            function hideVideo() {
+                video.pause();
+                video.classList.add('opacity-0');
+                img.classList.remove('opacity-0');
+                hint.classList.remove('opacity-0');
+            }
+
+            if (isTouchDevice) {
+                let playing = false;
+                section.addEventListener('click', (e) => {
+                    // Don't hijack taps on the actual hero buttons/links inside the section.
+                    if (e.target.closest('a, button')) return;
+                    playing = !playing;
+                    playing ? showVideo() : hideVideo();
+                });
+            } else {
+                section.addEventListener('mouseenter', showVideo);
+                section.addEventListener('mouseleave', hideVideo);
+            }
+        }
+
+        loadHeroImages();
+        initHeroVideo();
+        loadStoryOverride();
+        loadTileOverrides();
+        loadInstagramGrid();
+
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        if (mobileSearchTrigger) {
+            mobileSearchTrigger.addEventListener('click', () => { window.location.href = 'shop.html'; });
+        }
+    </script>
+</body>
+</html>

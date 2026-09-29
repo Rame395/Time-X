@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — My Account</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection { background-color: #FFFFFF; color: #0A0A0A; }
+        .tab-active { border-bottom: 2px solid #FFFFFF; color: #FFFFFF; }
+        select option { color: #111111; background-color: #FFFFFF; }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased page-fade">
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<a class="text-2xl font-black tracking-widest uppercase" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="shop.html">Shop</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collections</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="track-order.html">Track Order</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase">
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hover:opacity-75 transition-opacity" href="cart.html">Cart</a>
+</div>
+
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none ml-2" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10"><span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span><button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button></div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a><a class="mobile-link mobile-nav-link" href="men.html">Men</a><a class="mobile-link mobile-nav-link" href="women.html">Women</a><a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a><a class="mobile-link mobile-nav-link" href="collections.html">Collections</a><a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a><a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a><a class="mobile-link mobile-nav-link" href="account.html">Account</a><a class="mobile-link mobile-nav-link" href="track-order.html">Track Order</a><a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10"><a class="mobile-link text-[10px] tracking-[0.22em] uppercase opacity-60" href="wishlist.html">Wishlist</a></div>
+</div></div>
+
+<section class="pt-32 pb-24 min-h-screen">
+<div class="max-w-[900px] mx-auto px-6 lg:px-12">
+<div class="text-center py-24 text-xs uppercase tracking-widest text-timexLightGrey" id="loading-state">Loading…</div>
+<!-- LOGGED OUT: login / register -->
+<div class="hidden max-w-md mx-auto" id="auth-panel">
+<div class="flex border-b border-timexDarkBorder mb-8">
+<button class="flex-1 py-3 text-xs font-bold uppercase tracking-widest tab-active" id="tab-login" onclick="setAuthTab('login')">Sign In</button>
+<button class="flex-1 py-3 text-xs font-bold uppercase tracking-widest text-timexLightGrey" id="tab-register" onclick="setAuthTab('register')">Sign Up</button>
+</div>
+<form class="space-y-4" id="login-form" onsubmit="handleLogin(event)">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Email</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="email" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Password</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="password" required="" type="password"/>
+</div>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider" id="login-error"></p>
+<button class="w-full bg-timexWhite text-timexBlack py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" type="submit">Sign In</button>
+</form>
+<form class="hidden space-y-4" id="register-form" onsubmit="handleRegister(event)">
+<div class="border border-timexDarkBorder bg-timexCharcoal p-4 mb-2">
+<p class="text-[10px] font-mono uppercase tracking-[0.22em] text-timexLightGrey mb-2">Join TIME-X</p>
+<p class="text-xs text-timexLightGrey leading-relaxed">Create an account to save your details, follow your orders, and check out faster next time.</p>
+</div>
+<div class="grid grid-cols-2 gap-3">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">First Name</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="first_name" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Last Name</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="last_name" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Phone</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="phone" type="tel"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Email</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="email" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Password <span class="normal-case">(min. 6 characters)</span></label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" minlength="6" name="password" required="" type="password"/>
+</div>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider" id="register-error"></p>
+<button class="w-full bg-timexWhite text-timexBlack py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" type="submit">Create Account</button>
+</form>
+<p class="text-center text-[10px] uppercase tracking-widest text-timexLightGrey mt-6" id="auth-switch">
+New to TIME-X?
+<button class="text-timexWhite underline underline-offset-4 hover:text-timexSilver" onclick="setAuthTab('register')" type="button">Sign Up</button>
+</p>
+</div>
+<div class="max-w-md mx-auto mt-8 border-t border-timexDarkBorder pt-6 text-center" id="guest-track-card">
+<p class="text-[10px] font-mono uppercase tracking-[0.22em] text-timexLightGrey mb-2">Already placed an order?</p>
+<p class="text-xs text-timexLightGrey leading-relaxed mb-4">You can track it without signing in using your order number and checkout email or phone.</p>
+<a class="inline-flex items-center justify-center border border-timexWhite px-6 py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors" href="track-order.html">Track Order</a>
+</div>
+<!-- LOGGED IN: profile / addresses / orders -->
+<div class="hidden" id="account-panel">
+<div class="flex flex-wrap justify-between items-end gap-4 mb-10">
+<div>
+<span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-1">My Account</span>
+<h1 class="text-3xl font-black uppercase tracking-tight" id="welcome-name"></h1>
+</div>
+<button class="text-xs uppercase tracking-widest underline underline-offset-4 text-timexLightGrey hover:text-timexWhite transition-colors" onclick="handleLogout()">Sign Out</button>
+</div>
+<div class="flex flex-wrap items-center justify-between gap-3 border border-timexDarkBorder bg-timexCharcoal px-4 py-3 mb-8">
+<span class="text-[10px] uppercase tracking-widest text-timexLightGrey">Need to check a guest order?</span>
+<a class="text-[10px] uppercase tracking-widest underline underline-offset-4 hover:text-timexSilver" href="track-order.html">Track without signing in →</a>
+</div>
+<div class="flex border-b border-timexDarkBorder mb-8 overflow-x-auto">
+<button class="tab-active px-4 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap" id="acct-tab-orders" onclick="setAccountTab('orders')">Orders</button>
+<button class="px-4 py-3 text-xs font-bold uppercase tracking-widest text-timexLightGrey whitespace-nowrap" id="acct-tab-addresses" onclick="setAccountTab('addresses')">Addresses</button>
+<button class="px-4 py-3 text-xs font-bold uppercase tracking-widest text-timexLightGrey whitespace-nowrap" id="acct-tab-profile" onclick="setAccountTab('profile')">Profile</button>
+</div>
+<div id="acct-section-orders">
+<div class="space-y-3" id="orders-list"></div>
+</div>
+<div class="hidden space-y-6" id="acct-section-addresses">
+<div class="grid sm:grid-cols-2 gap-4" id="addresses-list"></div>
+<button class="text-xs uppercase tracking-widest underline underline-offset-4" onclick="toggleAddressForm()">+ Add A New Address</button>
+<form class="hidden bg-timexCharcoal border border-timexDarkBorder p-6 space-y-4" id="address-form" onsubmit="handleAddAddress(event)">
+<div class="grid grid-cols-2 gap-3">
+<input class="bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="label" placeholder="LABEL (E.G. HOME)"/>
+<input class="bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="phone" placeholder="PHONE" required=""/>
+</div>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="full_name" placeholder="FULL NAME" required=""/>
+<div class="grid grid-cols-2 gap-3">
+<input class="bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="province" placeholder="PROVINCE" required=""/>
+<input class="bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="city" placeholder="DISTRICT / CITY" required=""/>
+</div>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="address" placeholder="FULL ADDRESS" required=""/>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="landmark" placeholder="LANDMARK (OPTIONAL)"/>
+<label class="flex items-center gap-2 text-xs uppercase tracking-wider">
+<input class="accent-timexWhite" name="is_default" type="checkbox"/> Set as default address
+                        </label>
+<button class="bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" type="submit">Save Address</button>
+</form>
+</div>
+<div class="hidden max-w-md space-y-3 text-xs uppercase tracking-wider" id="acct-section-profile">
+<div class="flex justify-between py-2 border-b border-timexDarkBorder"><span class="text-timexLightGrey">Name</span><span id="profile-name"></span></div>
+<div class="flex justify-between py-2 border-b border-timexDarkBorder"><span class="text-timexLightGrey">Email</span><span id="profile-email"></span></div>
+<div class="flex justify-between py-2 border-b border-timexDarkBorder"><span class="text-timexLightGrey">Phone</span><span id="profile-phone"></span></div>
+<div class="flex justify-between py-2 border-b border-timexDarkBorder"><span class="text-timexLightGrey">Member Since</span><span id="profile-since"></span></div>
+</div>
+</div>
+</div>
+</section>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        let currentCustomer = null;
+
+        function setAuthTab(tab) {
+            document.getElementById('tab-login').className = `flex-1 py-3 text-xs font-bold uppercase tracking-widest ${tab === 'login' ? 'tab-active' : 'text-timexLightGrey'}`;
+            document.getElementById('tab-register').className = `flex-1 py-3 text-xs font-bold uppercase tracking-widest ${tab === 'register' ? 'tab-active' : 'text-timexLightGrey'}`;
+            document.getElementById('login-form').classList.toggle('hidden', tab !== 'login');
+            document.getElementById('register-form').classList.toggle('hidden', tab !== 'register');
+            document.getElementById('auth-switch').innerHTML = tab === 'login'
+                ? `New to TIME-X? <button class="text-timexWhite underline underline-offset-4 hover:text-timexSilver" onclick="setAuthTab('register')" type="button">Sign Up</button>`
+                : `Already have an account? <button class="text-timexWhite underline underline-offset-4 hover:text-timexSilver" onclick="setAuthTab('login')" type="button">Sign In</button>`;
+        }
+
+        function setAccountTab(tab) {
+            ['orders', 'addresses', 'profile'].forEach((t) => {
+                document.getElementById(`acct-tab-${t}`).className = `px-4 py-3 text-xs font-bold uppercase tracking-widest whitespace-nowrap ${t === tab ? 'tab-active' : 'text-timexLightGrey'}`;
+                document.getElementById(`acct-section-${t}`).classList.toggle('hidden', t !== tab);
+            });
+        }
+
+        async function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const errEl = document.getElementById('login-error');
+            errEl.classList.add('hidden');
+            try {
+                currentCustomer = await apiJSON('POST', '/api/customers/login', {
+                    email: form.elements.email.value.trim(), password: form.elements.password.value,
+                });
+                showAccountPanel();
+            } catch (e) {
+                errEl.textContent = e.message || 'Incorrect email or password.';
+                errEl.classList.remove('hidden');
+            }
+        }
+
+        async function handleRegister(event) {
+            event.preventDefault();
+            const form = event.target;
+            const errEl = document.getElementById('register-error');
+            errEl.classList.add('hidden');
+            try {
+                currentCustomer = await apiJSON('POST', '/api/customers/register', {
+                    email: form.elements.email.value.trim(), password: form.elements.password.value,
+                    first_name: form.elements.first_name.value.trim(), last_name: form.elements.last_name.value.trim(),
+                    phone: form.elements.phone.value.trim(),
+                });
+                showAccountPanel();
+            } catch (e) {
+                errEl.textContent = e.message || 'Could not create your account.';
+                errEl.classList.remove('hidden');
+            }
+        }
+
+        async function handleLogout() {
+            await apiJSON('POST', '/api/customers/logout', {}).catch(() => {});
+            currentCustomer = null;
+            document.getElementById('account-panel').classList.add('hidden');
+            document.getElementById('auth-panel').classList.remove('hidden');
+        }
+
+        async function showAccountPanel() {
+            document.getElementById('auth-panel').classList.add('hidden');
+            document.getElementById('account-panel').classList.remove('hidden');
+            const name = [currentCustomer.first_name, currentCustomer.last_name].filter(Boolean).join(' ') || currentCustomer.email;
+            document.getElementById('welcome-name').textContent = `Hi, ${currentCustomer.first_name || name}.`;
+            document.getElementById('profile-name').textContent = name;
+            document.getElementById('profile-email').textContent = currentCustomer.email;
+            document.getElementById('profile-phone').textContent = currentCustomer.phone || '—';
+            document.getElementById('profile-since').textContent = new Date(currentCustomer.created_at).toLocaleDateString('en-US', { year: 'numeric', month: 'long' });
+            loadOrders();
+            loadAddresses();
+        }
+
+        const WARRANTY_COLORS = { active: 'text-green-400', claimed: 'text-timexLightGrey', expired: 'text-timexTextGrey', void: 'text-red-400' };
+        const ORDER_STATUS_COLORS = { confirmed: 'text-green-400', cancelled: 'text-red-400', returned: 'text-red-400', failed: 'text-red-400' };
+
+        async function loadOrders() {
+            const wrap = document.getElementById('orders-list');
+            try {
+                const orders = await apiGet('/api/customers/me/orders');
+                wrap.innerHTML = orders.length ? orders.map((o) => `
+                    <a href="track-order.html?order=${o.order_number}" class="flex justify-between items-center p-4 border border-timexDarkBorder bg-timexCharcoal hover:border-timexWhite transition-colors">
+                        <div>
+                            <p class="text-xs font-bold uppercase tracking-wider">${o.order_number}</p>
+                            <p class="text-[10px] text-timexLightGrey uppercase mt-0.5">${new Date(o.created_at).toLocaleDateString()} · ${o.item_count} item${o.item_count === 1 ? '' : 's'}</p>
+                            <p class="text-[10px] uppercase mt-1 ${WARRANTY_COLORS[o.warranty_status] || 'text-timexLightGrey'}">Warranty: ${o.warranty_status}</p>
+                        </div>
+                        <div class="text-right">
+                            <p class="text-xs font-semibold">${formatNPR(o.total)}</p>
+                            <p class="text-[10px] uppercase mt-0.5 ${ORDER_STATUS_COLORS[o.status] || 'text-timexLightGrey'}">${o.status.replace(/_/g, ' ')}</p>
+                        </div>
+                    </a>
+                `).join('') : '<p class="text-xs uppercase tracking-widest text-timexLightGrey py-8 text-center">No orders yet.</p>';
+            } catch (e) {
+                wrap.innerHTML = '<p class="text-xs uppercase tracking-widest text-timexLightGrey py-8 text-center">Could not load your orders.</p>';
+            }
+        }
+
+        async function loadAddresses() {
+            const wrap = document.getElementById('addresses-list');
+            try {
+                const addresses = await apiGet('/api/customers/me/addresses');
+                wrap.innerHTML = addresses.map((a) => `
+                    <div class="p-4 border border-timexDarkBorder bg-timexCharcoal text-xs uppercase tracking-wider relative">
+                        ${a.is_default ? '<span class="absolute top-2 right-2 text-[9px] bg-timexWhite text-timexBlack px-2 py-0.5">Default</span>' : ''}
+                        <p class="font-bold">${a.label}</p>
+                        <p class="mt-1 text-timexLightGrey normal-case">${a.full_name}<br>${a.address}${a.landmark ? ', ' + a.landmark : ''}<br>${a.city}, ${a.province}<br>${a.phone}</p>
+                        <button onclick="handleDeleteAddress(${a.id})" class="mt-2 text-[10px] underline underline-offset-4 text-timexLightGrey hover:text-timexWhite">Remove</button>
+                    </div>
+                `).join('') || '<p class="text-xs uppercase tracking-widest text-timexLightGrey col-span-2">No saved addresses yet.</p>';
+            } catch (e) {
+                wrap.innerHTML = '<p class="text-xs uppercase tracking-widest text-timexLightGrey col-span-2">Could not load addresses.</p>';
+            }
+        }
+
+        function toggleAddressForm() {
+            document.getElementById('address-form').classList.toggle('hidden');
+        }
+
+        async function handleAddAddress(event) {
+            event.preventDefault();
+            const form = event.target;
+            try {
+                await apiJSON('POST', '/api/customers/me/addresses', {
+                    label: form.elements.label.value.trim() || 'Home',
+                    full_name: form.elements.full_name.value.trim(),
+                    phone: form.elements.phone.value.trim(),
+                    province: form.elements.province.value.trim(),
+                    city: form.elements.city.value.trim(),
+                    address: form.elements.address.value.trim(),
+                    landmark: form.elements.landmark.value.trim(),
+                    is_default: form.elements.is_default.checked,
+                });
+                form.reset();
+                form.classList.add('hidden');
+                loadAddresses();
+            } catch (e) {
+                alert(e.message || 'Could not save this address.');
+            }
+        }
+
+        async function handleDeleteAddress(id) {
+            await apiJSON('DELETE', `/api/customers/me/addresses/${id}`, {}).catch(() => {});
+            loadAddresses();
+        }
+
+        async function init() {
+            try {
+                currentCustomer = await apiGet('/api/customers/me');
+                document.getElementById('loading-state').classList.add('hidden');
+                showAccountPanel();
+            } catch (e) {
+                document.getElementById('loading-state').classList.add('hidden');
+                document.getElementById('auth-panel').classList.remove('hidden');
+            }
+        }
+        init();
+    </script>
+</body>
+</html>

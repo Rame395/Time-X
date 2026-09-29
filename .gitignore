@@ -1,0 +1,13 @@
+.env
+*.db
+*.sqlite
+*.sqlite3
+backend/media/*
+!backend/media/.gitkeep
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.env.*
+!.env.example
+*.log

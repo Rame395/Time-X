@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Secure Checkout</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>::selection { background-color: #FFFFFF; color: #111111; } select option { color: #111111; background-color: #FFFFFF; }</style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<div class="text-[11px] font-mono tracking-widest uppercase text-timexLightGrey">Secure Checkout 🔒</div>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase">
+<a class="hover:opacity-75 transition-opacity underline underline-offset-4" href="cart.html">← Back to Cart</a>
+</div>
+
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none ml-2" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10"><span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span><button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button></div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a><a class="mobile-link mobile-nav-link" href="men.html">Men</a><a class="mobile-link mobile-nav-link" href="women.html">Women</a><a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a><a class="mobile-link mobile-nav-link" href="collections.html">Collections</a><a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a><a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a><a class="mobile-link mobile-nav-link" href="account.html">Account</a><a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10"><a class="mobile-link text-[10px] tracking-[0.22em] uppercase opacity-60" href="wishlist.html">Wishlist</a></div>
+</div></div>
+
+<section class="pt-32 pb-24 bg-timexBlack text-timexWhite min-h-screen">
+<div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+<div class="mb-12 border-b border-timexDarkBorder pb-6">
+<span class="text-[10px] font-mono uppercase tracking-widest text-timexLightGrey block mb-1">Step 01 of 02</span>
+<h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight">Checkout</h1>
+</div>
+<div class="py-24 text-center text-xs uppercase tracking-widest text-timexLightGrey" id="loading-state">Loading your cart…</div>
+<div class="hidden py-24 text-center space-y-4" id="empty-notice">
+<p class="text-sm uppercase tracking-widest text-timexLightGrey">Your cart is empty — add something before checking out.</p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="men.html">Explore Collection</a>
+</div>
+<form class="hidden grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" id="checkout-form" onsubmit="handleCheckoutSubmit(event)">
+<div class="lg:col-span-7 space-y-10">
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest pb-2 border-b border-timexDarkBorder">1. Contact Information</h3>
+<div class="grid grid-cols-1 gap-4">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Email Address</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="email" placeholder="YOUR EMAIL" required="" type="email"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Phone Number (Nepal +977)</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="phone" placeholder="98XXXXXXXX" required="" type="tel"/>
+</div>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest pb-2 border-b border-timexDarkBorder">2. Shipping Address (Nepal)</h3>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">First Name</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="first_name" placeholder="FIRST NAME" required="" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Last Name</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="last_name" placeholder="LAST NAME" required="" type="text"/>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Street Address / Landmark</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="address" placeholder="STREET ADDRESS, AREA" required="" type="text"/>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Province</label>
+<select class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" id="province-select" name="province" required="">
+<option value="">SELECT PROVINCE</option>
+</select>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">District</label>
+<select class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite disabled:opacity-40" disabled="" id="district-select" name="city" required="">
+<option value="">SELECT PROVINCE FIRST</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Postal Code <span class="normal-case text-timexLightGrey">(optional, 5 digits)</span></label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" id="postal-code-input" inputmode="numeric" maxlength="5" name="postal_code" placeholder="44600" type="text"/>
+<p class="hidden text-[10px] text-red-600 uppercase tracking-widest mt-1" id="postal-code-error">Postal code must be exactly 5 digits, or left blank.</p>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Landmark <span class="normal-case text-timexLightGrey">(optional)</span></label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="landmark" placeholder="e.g. Near Durbar Marg" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Delivery Instructions <span class="normal-case text-timexLightGrey">(optional)</span></label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="delivery_instructions" placeholder="e.g. Call on arrival" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Delivery Zone</label>
+<select class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" id="delivery-zone-select" name="delivery_zone" onchange="onDeliveryZoneChange()">
+<option value="">Loading zones…</option>
+</select>
+</div>
+</div>
+<div class="space-y-4">
+<h3 class="text-xs font-bold uppercase tracking-widest pb-2 border-b border-timexDarkBorder">3. Payment Method</h3>
+<div class="space-y-3" id="payment-options"></div>
+<div class="hidden bg-timexCharcoal border border-timexDarkBorder p-6 space-y-4" id="qr-panel">
+<p class="text-[11px] font-semibold uppercase tracking-widest">Scan to Pay</p>
+<div class="flex justify-center" id="qr-image-wrap"></div>
+<p aria-hidden="true" class="hidden text-[11px] text-timexLightGrey uppercase tracking-wider text-center" id="merchant-info"></p>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Transaction Reference / ID</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="payment_reference" placeholder="e.g. TXN1234567" type="text"/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Payment Screenshot (optional)</label>
+<input accept="image/*" class="w-full text-xs" name="payment_proof" type="file"/>
+</div>
+</div>
+</div>
+</div>
+<div class="lg:col-span-5 bg-timexCharcoal p-8 border border-timexDarkBorder space-y-6 lg:sticky lg:top-28">
+<h3 class="text-xs font-bold uppercase tracking-widest pb-4 border-b border-timexDarkBorder">Order Summary</h3>
+<div class="space-y-4 pb-4 border-b border-timexDarkBorder" id="summary-items"></div>
+<div class="flex gap-2">
+<input class="flex-1 bg-transparent border border-timexDarkBorder px-3 py-2.5 text-xs uppercase tracking-widest focus:outline-none focus:border-timexWhite" id="coupon-input" placeholder="Coupon Code" type="text"/>
+<button class="border border-timexWhite text-timexWhite px-4 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors" onclick="applyCoupon()" type="button">Apply</button>
+</div>
+<p class="hidden text-[11px] uppercase tracking-wider" id="coupon-message"></p>
+<div class="hidden text-[11px] uppercase tracking-wider px-4 py-3 border border-timexDarkBorder" id="free-delivery-banner"></div>
+<div class="space-y-3 text-xs uppercase tracking-wider text-timexLightGrey">
+<div class="flex justify-between"><span>Subtotal</span><span class="text-timexWhite font-semibold" id="summary-subtotal"></span></div>
+<div class="flex justify-between"><span>Delivery</span><span class="text-timexWhite font-semibold" id="summary-shipping">Select a zone</span></div>
+<div class="hidden flex justify-between" id="summary-discount-row"><span>Discount</span><span class="text-timexWhite font-semibold" id="summary-discount"></span></div>
+<div class="flex justify-between pt-3 border-t border-timexDarkBorder text-sm font-bold text-timexWhite"><span>Total</span><span id="summary-total"></span></div>
+</div>
+<div class="pt-2">
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider text-center mb-3" id="size-gate-notice"></p>
+<button class="w-full bg-timexWhite text-timexBlack py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" id="submit-btn" type="submit">
+                            Complete Order
+                        </button>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider text-center mt-3" id="submit-error"></p>
+</div>
+<p class="text-[10px] font-mono text-timexLightGrey text-center uppercase tracking-widest pt-2"> • Secure SSL Checkout</p>
+</div>
+</form>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        let cart = null;
+        let settings = null;
+        let selectedZoneFee = 0;
+        let appliedDiscount = 0;
+        let appliedCouponCode = '';
+
+        const productDetailCache = {};
+        async function getProductDetail(slug) {
+            if (!productDetailCache[slug]) productDetailCache[slug] = await apiGet(`/api/products/${encodeURIComponent(slug)}`);
+            return productDetailCache[slug];
+        }
+
+        async function renderSummary() {
+            const rows = await Promise.all(cart.items.map(async (i) => {
+                const full = await getProductDetail(i.slug);
+                const needsSize = full.variants.length > 0;
+                const sizeChoices = full.variants.filter((v) => v.color_name === i.color);
+                const sizeSelectHtml = needsSize ? `
+                    <select onchange="handleSizeChange(${i.id}, this.value)" class="mt-1.5 bg-transparent border border-timexDarkBorder px-2 py-1.5 text-[10px] uppercase tracking-wider focus:outline-none focus:border-timexWhite">
+                        <option value="">Select Size</option>
+                        ${sizeChoices.map((v) => `<option value="${v.size}" ${v.stock_qty <= 0 ? 'disabled' : ''} ${i.size === v.size ? 'selected' : ''}>${v.size}${v.stock_qty <= 0 ? ' — Out of Stock' : ''}</option>`).join('')}
+                    </select>
+                ` : '';
+                return `
+                <div class="flex gap-4 items-center">
+                    <a href="product.html?slug=${i.slug}" target="_blank" class="w-16 aspect-[3/4] bg-timexCharcoal overflow-hidden flex-shrink-0 hover:opacity-75 transition-opacity">
+                        <img src="${i.image || ''}" alt="${i.title}" class="w-full h-full object-cover">
+                    </a>
+                    <div class="flex-1 text-xs uppercase tracking-wider">
+                        <a href="product.html?slug=${i.slug}" target="_blank" class="font-bold hover:underline underline-offset-2">${i.title}</a>
+                        <p class="text-[10px] text-timexLightGrey mt-0.5 flex items-center gap-1.5">
+                            ${i.color_hex ? `<span class="inline-block w-2 h-2 rounded-full border border-timexDarkBorder flex-shrink-0" style="background:${i.color_hex}"></span>` : ''}
+                            ${i.color || 'One color'} (Qty: ${i.quantity})
+                        </p>
+                        ${sizeSelectHtml}
+                        <p class="font-semibold mt-1">${formatNPR(i.line_total)}</p>
+                    </div>
+                </div>`;
+            }));
+            document.getElementById('summary-items').innerHTML = rows.join('');
+            document.getElementById('summary-subtotal').textContent = formatNPR(cart.subtotal);
+            updateSummaryTotal();
+            updateSizeGate();
+        }
+
+        function qualifiesForFreeDelivery() {
+            return settings && settings.free_delivery_enabled && cart.subtotal >= settings.free_delivery_threshold;
+        }
+
+        function updateSummaryTotal() {
+            const effectiveShipping = qualifiesForFreeDelivery() ? 0 : selectedZoneFee;
+            const total = cart.subtotal + effectiveShipping - appliedDiscount;
+            document.getElementById('summary-total').textContent = formatNPR(Math.max(total, 0));
+            document.getElementById('summary-discount-row').classList.toggle('hidden', appliedDiscount <= 0);
+            if (appliedDiscount > 0) document.getElementById('summary-discount').textContent = `− ${formatNPR(appliedDiscount)}`;
+            renderFreeDeliveryBanner();
+        }
+
+        function renderFreeDeliveryBanner() {
+            const banner = document.getElementById('free-delivery-banner');
+            if (!banner) return;
+            if (!settings || !settings.free_delivery_enabled) {
+                banner.classList.add('hidden');
+                return;
+            }
+            banner.classList.remove('hidden');
+            if (qualifiesForFreeDelivery()) {
+                banner.textContent = '🎉 Your order qualifies for free delivery!';
+                banner.className = 'text-[11px] uppercase tracking-wider px-4 py-3 border border-green-800 bg-green-950/30 text-green-400';
+            } else {
+                const remaining = settings.free_delivery_threshold - cart.subtotal;
+                banner.textContent = `Add ${formatNPR(remaining)} more for free delivery`;
+                banner.className = 'text-[11px] uppercase tracking-wider px-4 py-3 border border-timexDarkBorder text-timexLightGrey';
+            }
+        }
+
+        async function loadDeliveryZones() {
+            const select = document.getElementById('delivery-zone-select');
+            try {
+                const zones = await apiGet('/api/delivery-zones');
+                select.innerHTML = '<option value="">Select your zone…</option>' +
+                    zones.map((z) => `<option value="${z.name}" data-fee="${z.fee}">${z.name} — ${formatNPR(z.fee)}</option>`).join('');
+            } catch (e) {
+                select.innerHTML = '<option value="">Could not load zones</option>';
+            }
+        }
+
+        function onDeliveryZoneChange() {
+            const select = document.getElementById('delivery-zone-select');
+            const selectedOption = select.options[select.selectedIndex];
+            selectedZoneFee = selectedOption && selectedOption.dataset.fee ? Number(selectedOption.dataset.fee) : 0;
+            if (qualifiesForFreeDelivery()) {
+                document.getElementById('summary-shipping').textContent = 'Free';
+            } else {
+                document.getElementById('summary-shipping').textContent = selectedZoneFee > 0 ? formatNPR(selectedZoneFee) : 'Select a zone';
+            }
+            updateSummaryTotal();
+        }
+
+        async function applyCoupon() {
+            const code = document.getElementById('coupon-input').value.trim();
+            const msgEl = document.getElementById('coupon-message');
+            if (!code) return;
+            try {
+                const emailValue = document.querySelector('#checkout-form [name="email"]')?.value.trim() || null;
+                const result = await apiJSON('POST', '/api/coupons/apply', { code, subtotal: cart.subtotal, email: emailValue });
+                appliedDiscount = result.valid ? result.discount_amount : 0;
+                appliedCouponCode = result.valid ? code : '';
+                msgEl.textContent = result.message;
+                msgEl.className = `text-[11px] uppercase tracking-wider ${result.valid ? 'text-green-700' : 'text-red-600'}`;
+                msgEl.classList.remove('hidden');
+                updateSummaryTotal();
+            } catch (e) {
+                appliedDiscount = 0;
+                msgEl.textContent = "Couldn't check that code right now.";
+                msgEl.className = 'text-[11px] uppercase tracking-wider text-red-600';
+                msgEl.classList.remove('hidden');
+                updateSummaryTotal();
+            }
+        }
+
+        function updateSizeGate() {
+            const missing = cart.items.filter((i) => {
+                const full = productDetailCache[i.slug];
+                return full && full.variants.length > 0 && !i.size;
+            });
+            const btn = document.getElementById('submit-btn');
+            const noticeEl = document.getElementById('size-gate-notice');
+            if (missing.length) {
+                btn.disabled = true;
+                btn.classList.add('opacity-40', 'cursor-not-allowed');
+                noticeEl.textContent = `Please select a size for: ${missing.map((i) => i.title).join(', ')}.`;
+                noticeEl.classList.remove('hidden');
+            } else {
+                btn.disabled = false;
+                btn.classList.remove('opacity-40', 'cursor-not-allowed');
+                noticeEl.classList.add('hidden');
+            }
+        }
+
+        async function handleSizeChange(itemId, size) {
+            try {
+                cart = await apiJSON('PATCH', `/api/cart/items/${itemId}`, { size });
+                await renderSummary();
+            } catch (e) {
+                alert(e.message || "Couldn't update size — please try again.");
+                await renderSummary();
+            }
+        }
+
+        function renderPaymentOptions() {
+            const wrap = document.getElementById('payment-options');
+            let html = '';
+            if (settings.cod_enabled) {
+                html += `<label class="flex items-center space-x-3 p-4 border border-timexDarkBorder bg-timexCharcoal cursor-pointer">
+                    <input type="radio" name="payment_method" value="cod" checked onchange="onPaymentChange()" class="accent-timexWhite">
+                    <span class="text-xs font-semibold uppercase tracking-wider">Cash on Delivery (COD) across Nepal</span>
+                </label>`;
+            }
+            if (settings.mobile_banking_enabled) {
+                const methods = [
+                    ['esewa', 'eSewa'], ['khalti', 'Khalti'], ['fonepay', 'Fonepay'],
+                    ['connectips', 'ConnectIPS'], ['bank_transfer', 'Bank Transfer'],
+                ];
+                methods.forEach(([value, label], idx) => {
+                    html += `<label class="flex items-center space-x-3 p-4 border border-timexDarkBorder bg-timexCharcoal cursor-pointer">
+                        <input type="radio" name="payment_method" value="${value}" ${!settings.cod_enabled && idx === 0 ? 'checked' : ''} onchange="onPaymentChange()" class="accent-timexWhite">
+                        <span class="text-xs font-semibold uppercase tracking-wider">${label}</span>
+                    </label>`;
+                });
+            }
+            wrap.innerHTML = html || '<p class="text-xs text-timexLightGrey uppercase">No payment methods are currently enabled — please contact us on WhatsApp.</p>';
+            onPaymentChange();
+        }
+
+        const QR_BASED_METHODS = ['mobile_banking', 'esewa', 'khalti', 'fonepay', 'connectips', 'bank_transfer'];
+
+        function onPaymentChange() {
+            const selected = document.querySelector('input[name="payment_method"]:checked');
+            const qrPanel = document.getElementById('qr-panel');
+            if (selected && QR_BASED_METHODS.includes(selected.value)) {
+                qrPanel.classList.remove('hidden');
+                const qrByMethod = settings.qr_images_by_method || {};
+                const qrUrl = qrByMethod[selected.value] || settings.qr_image_url;
+                document.getElementById('qr-image-wrap').innerHTML = qrUrl
+                    ? `<img src="${qrUrl}" alt="Payment QR" class="w-48 h-48 object-contain border border-timexDarkBorder p-2">`
+                    : `<p class="text-xs text-timexLightGrey uppercase text-center py-8">QR code not uploaded yet — enter your transaction reference and we'll confirm manually.</p>`;
+                document.getElementById('merchant-info').textContent = '';
+                document.getElementById('merchant-info').classList.add('hidden');
+            } else {
+                qrPanel.classList.add('hidden');
+            }
+        }
+
+        async function handleCheckoutSubmit(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('submit-btn');
+            const errorEl = document.getElementById('submit-error');
+            errorEl.classList.add('hidden');
+
+            const postalCode = form.elements.postal_code.value.trim();
+            if (postalCode && !/^\d{5}$/.test(postalCode)) {
+                document.getElementById('postal-code-error').classList.remove('hidden');
+                form.elements.postal_code.focus();
+                return;
+            }
+            document.getElementById('postal-code-error').classList.add('hidden');
+
+            btn.disabled = true;
+            btn.textContent = 'Placing Order…';
+
+            const formData = new FormData(form);
+            if (!formData.get('payment_method')) formData.set('payment_method', 'cod');
+            if (appliedCouponCode) formData.set('coupon_code', appliedCouponCode);
+
+            try {
+                const order = await apiForm('POST', '/api/orders', formData);
+                sessionStorage.setItem('timexnepal_last_order', JSON.stringify(order));
+                window.location.href = `order-confirmation.html?order=${order.order_number}&email=${encodeURIComponent(order.email)}`;
+            } catch (e) {
+                errorEl.textContent = e.message || 'Something went wrong placing your order. Please try again.';
+                errorEl.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = 'Complete Order';
+            }
+        }
+
+        async function loadNepalLocations() {
+            const provinceSelect = document.getElementById('province-select');
+            const districtSelect = document.getElementById('district-select');
+            let locations;
+            try {
+                locations = await apiGet('/api/nepal-locations');
+            } catch (e) {
+                provinceSelect.innerHTML = '<option value="">Could not load provinces</option>';
+                return;
+            }
+            provinceSelect.innerHTML = '<option value="">SELECT PROVINCE</option>' +
+                Object.keys(locations).map((p) => `<option value="${p}">${p}</option>`).join('');
+
+            provinceSelect.addEventListener('change', () => {
+                const districts = locations[provinceSelect.value] || [];
+                if (districts.length) {
+                    districtSelect.disabled = false;
+                    districtSelect.innerHTML = '<option value="">SELECT DISTRICT</option>' +
+                        districts.map((d) => `<option value="${d}">${d}</option>`).join('');
+                } else {
+                    districtSelect.disabled = true;
+                    districtSelect.innerHTML = '<option value="">SELECT PROVINCE FIRST</option>';
+                }
+            });
+        }
+
+        document.getElementById('postal-code-input').addEventListener('input', (e) => {
+            e.target.value = e.target.value.replace(/\D/g, '').slice(0, 5);
+            document.getElementById('postal-code-error').classList.add('hidden');
+        });
+
+        async function init() {
+            try {
+                [cart, settings] = await Promise.all([getCart(), apiGet('/api/settings')]);
+            } catch (e) {
+                document.getElementById('loading-state').textContent = 'Could not load checkout right now.';
+                return;
+            }
+            document.getElementById('loading-state').classList.add('hidden');
+            if (!cart.items.length) {
+                document.getElementById('empty-notice').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('checkout-form').classList.remove('hidden');
+            await renderSummary();
+            renderPaymentOptions();
+            loadNepalLocations();
+            loadDeliveryZones();
+        }
+        init();
+    </script>
+</body>
+</html>

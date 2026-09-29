@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Wishlist</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection { background-color: #0A0A0A; color: #FFFFFF; }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased page-fade">
+<header id="site-header" class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center justify-between">
+<a class="text-2xl font-black tracking-widest uppercase" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="shop.html">Shop</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collections</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase">
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hover:opacity-75 transition-opacity" href="cart.html">Cart</a>
+</div>
+
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none ml-2" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10"><span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span><button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button></div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a><a class="mobile-link mobile-nav-link" href="men.html">Men</a><a class="mobile-link mobile-nav-link" href="women.html">Women</a><a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a><a class="mobile-link mobile-nav-link" href="collections.html">Collections</a><a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a><a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a><a class="mobile-link mobile-nav-link" href="account.html">Account</a><a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10"><a class="mobile-link text-[10px] tracking-[0.22em] uppercase opacity-60" href="wishlist.html">Wishlist</a></div>
+</div></div>
+
+<section class="pt-32 pb-24">
+<div class="max-w-[1200px] mx-auto px-6 lg:px-12">
+<span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-2">Saved</span>
+<h1 class="text-4xl sm:text-5xl font-black tracking-tight uppercase mb-12">Your Wishlist.</h1>
+<div class="text-center py-24 text-xs uppercase tracking-widest text-timexLightGrey" id="loading-state">Loading…</div>
+<div class="hidden text-center py-24 space-y-4" id="empty-state">
+<p class="text-sm uppercase tracking-widest text-timexLightGrey">Your wishlist is empty.</p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="shop.html">Shop All Watches</a>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-x-6 gap-y-12" id="wishlist-grid"></div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite pt-20 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="pt-6 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        async function removeItem(productId) {
+            await apiJSON('DELETE', `/api/wishlist/${productId}`, {}).catch(() => {});
+            showToast('Removed from Wishlist');
+            await loadWishlist();
+        }
+
+        function itemCardHTML(item) {
+            return `
+            <div class="group">
+                <a href="product.html?slug=${item.slug}" class="block relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3 ${!item.in_stock ? 'opacity-50' : ''}">
+                    <img src="${item.image || ''}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center">
+                    ${!item.in_stock ? '<span class="absolute bottom-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1">Out of Stock</span>' : ''}
+                </a>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <a href="product.html?slug=${item.slug}" class="text-xs font-bold uppercase tracking-wider hover:underline underline-offset-2">${item.title}</a>
+                        <p class="text-xs font-semibold mt-1">${item.compare_at_price ? `${formatNPR(item.price)} <span class="text-timexLightGrey line-through font-normal text-[10px]">${formatNPR(item.compare_at_price)}</span>` : formatNPR(item.price)}</p>
+                    </div>
+                    <button onclick="removeItem(${item.product_id})" aria-label="Remove from wishlist" class="text-timexLightGrey hover:text-timexWhite transition-colors flex-shrink-0 mt-0.5">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                    </button>
+                </div>
+            </div>`;
+        }
+
+        async function loadWishlist() {
+            const grid = document.getElementById('wishlist-grid');
+            const loading = document.getElementById('loading-state');
+            const empty = document.getElementById('empty-state');
+            try {
+                const items = await apiGet('/api/wishlist');
+                loading.classList.add('hidden');
+                if (!items.length) {
+                    empty.classList.remove('hidden');
+                    grid.innerHTML = '';
+                    return;
+                }
+                empty.classList.add('hidden');
+                grid.innerHTML = items.map(itemCardHTML).join('');
+            } catch (e) {
+                loading.textContent = 'Could not load your wishlist right now.';
+            }
+        }
+        loadWishlist();
+    </script>
+</body>
+</html>

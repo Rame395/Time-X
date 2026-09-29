@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Your Shopping Cart</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>::selection { background-color: #FFFFFF; color: #111111; }</style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 flex-shrink-0" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
+<div class="relative w-full">
+<svg class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input class="w-full bg-white/5 border border-white/20 rounded-full pl-9 pr-4 py-2 text-xs tracking-wide placeholder:text-timexTextGrey focus:outline-none focus:border-timexWhite focus:bg-white/10 transition-colors" name="search" placeholder="Search watches, brands, collections…" type="text"/>
+</div>
+</form>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="new-arrivals.html">New Arrivals</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collection</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase flex-shrink-0">
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="gallery.html">Gallery</a>
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1 text-timexWhite font-bold underline underline-offset-4" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>
+<section class="pt-32 pb-24 bg-timexBlack text-timexWhite min-h-screen">
+<div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 border-b border-timexDarkBorder pb-6">
+<div>
+<span class="text-[10px] font-mono uppercase tracking-widest text-timexLightGrey block mb-1">Review Selection</span>
+<h1 class="text-3xl sm:text-4xl font-black uppercase tracking-tight">Your Cart</h1>
+</div>
+<a class="text-xs font-mono uppercase tracking-widest text-timexLightGrey underline underline-offset-4 hover:text-timexWhite mt-4 sm:mt-0" href="men.html">← Continue Shopping</a>
+</div>
+<div class="py-24 text-center text-xs uppercase tracking-widest text-timexLightGrey" id="loading-state">Loading your cart…</div>
+<div class="hidden grid grid-cols-1 lg:grid-cols-12 gap-12 items-start" id="cart-layout">
+<div class="lg:col-span-7 space-y-6">
+<div id="cart-items"></div>
+</div>
+<div class="lg:col-span-5 bg-timexCharcoal p-8 border border-timexDarkBorder space-y-6" id="summary-card">
+<h3 class="text-xs font-bold uppercase tracking-widest pb-4 border-b border-timexDarkBorder">Order Summary</h3>
+<div class="hidden text-[11px] uppercase tracking-wider px-4 py-3 border border-timexDarkBorder" id="free-delivery-banner"></div>
+<div class="space-y-3 text-xs uppercase tracking-wider text-timexLightGrey">
+<div class="flex justify-between"><span>Subtotal</span><span class="text-timexWhite font-semibold" id="subtotal-price"></span></div>
+<div class="flex justify-between"><span>Shipping</span><span class="text-timexWhite font-semibold" id="shipping-note">Calculated at checkout</span></div>
+<div class="flex justify-between pt-3 border-t border-timexDarkBorder text-sm font-bold text-timexWhite"><span>Total</span><span id="total-price"></span></div>
+</div>
+<div class="space-y-3 pt-4">
+<button class="w-full bg-timexWhite text-timexBlack py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" onclick="window.location.href='checkout.html'">
+                            Proceed to Checkout
+                        </button>
+<button class="w-full bg-[#25D366] text-white py-4 text-xs font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2" onclick="checkoutViaWhatsApp()">
+<span>Checkout via WhatsApp</span> 💬
+                        </button>
+</div>
+<p class="text-[10px] font-mono text-timexLightGrey text-center uppercase tracking-widest pt-2">Secure transactions</p>
+</div>
+</div>
+<div class="hidden py-24 text-center space-y-4" id="empty-cart-notice">
+<p class="text-sm uppercase tracking-widest text-timexLightGrey">Your cart is currently empty.</p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="men.html">Explore Collection</a>
+</div>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div class="md:col-span-1">
+<span class="text-2xl font-black tracking-widest uppercase block mb-3">TIME-X</span>
+<p class="text-[11px] text-timexLightGrey tracking-wider uppercase leading-relaxed">Wear your identity.<br/>Independent fashion label from Kathmandu.</p>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Shop</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="new-arrivals.html">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">About</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="index.html#story">Our Story</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="gallery.html">Gallery</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="#">Size Guide</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Social</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        if (mobileSearchTrigger) {
+            mobileSearchTrigger.addEventListener('click', () => { window.location.href = 'shop.html'; });
+        }
+    </script>
+<script>
+        let currentCart = null;
+
+        function itemRowHTML(item) {
+            const stockNote = (item.max_stock !== null && item.max_stock <= item.quantity)
+                ? `<p class="text-[10px] text-timexLightGrey mt-1">Only ${item.max_stock} left in stock</p>` : '';
+            return `
+            <div class="flex gap-6 pb-6 border-b border-timexDarkBorder items-center" data-item-id="${item.id}">
+                <a href="product.html?slug=${item.slug}" class="w-24 aspect-[3/4] bg-timexCharcoal overflow-hidden flex-shrink-0 block">
+                    <img src="${item.image || ''}" alt="${item.title}" class="w-full h-full object-cover object-center">
+                </a>
+                <div class="flex-1 space-y-2">
+                    <div class="flex justify-between items-start">
+                        <div>
+                            <a href="product.html?slug=${item.slug}"><h3 class="text-sm font-bold uppercase tracking-wider hover:opacity-70">${item.title}</h3></a>
+                            <p class="text-[11px] text-timexLightGrey uppercase mt-0.5 flex items-center gap-1.5">
+                                ${item.color_hex ? `<span class="inline-block w-2.5 h-2.5 rounded-full border border-timexDarkBorder flex-shrink-0" style="background:${item.color_hex}"></span>` : ''}
+                                ${[item.color, item.size].filter(Boolean).join(' / ') || 'One size'}
+                            </p>
+                        </div>
+                        <span class="text-sm font-semibold tracking-tight">${formatNPR(item.line_total)}</span>
+                    </div>
+                    <div class="flex justify-between items-center pt-2">
+                        <div class="flex items-center border border-timexDarkBorder">
+                            <button onclick="changeQty(${item.id}, ${item.quantity - 1})" class="px-3 py-1 text-xs hover:bg-timexCharcoal transition-colors">-</button>
+                            <span class="px-3 text-xs font-medium">${item.quantity}</span>
+                            <button onclick="changeQty(${item.id}, ${item.quantity + 1})" class="px-3 py-1 text-xs hover:bg-timexCharcoal transition-colors">+</button>
+                        </div>
+                        <button onclick="deleteItem(${item.id})" class="text-[11px] font-mono uppercase tracking-widest text-timexLightGrey hover:text-timexWhite underline underline-offset-4">Remove</button>
+                    </div>
+                    ${stockNote}
+                </div>
+            </div>`;
+        }
+
+        function renderCart(cart) {
+            currentCart = cart;
+            document.getElementById('loading-state').classList.add('hidden');
+
+            if (!cart.items.length) {
+                document.getElementById('cart-layout').classList.add('hidden');
+                document.getElementById('empty-cart-notice').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('empty-cart-notice').classList.add('hidden');
+            document.getElementById('cart-layout').classList.remove('hidden');
+            document.getElementById('cart-items').innerHTML = cart.items.map(itemRowHTML).join('');
+            document.getElementById('subtotal-price').textContent = formatNPR(cart.subtotal);
+            document.getElementById('total-price').textContent = formatNPR(cart.total);
+            renderFreeDeliveryBanner(cart.subtotal);
+        }
+
+        function renderFreeDeliveryBanner(subtotal) {
+            const banner = document.getElementById('free-delivery-banner');
+            const shippingNote = document.getElementById('shipping-note');
+            if (!siteSettings || !siteSettings.free_delivery_enabled) {
+                banner.classList.add('hidden');
+                return;
+            }
+            const threshold = siteSettings.free_delivery_threshold;
+            banner.classList.remove('hidden');
+            if (subtotal >= threshold) {
+                banner.textContent = '🎉 Your order qualifies for free delivery!';
+                banner.className = 'text-[11px] uppercase tracking-wider px-4 py-3 border border-green-800 bg-green-950/30 text-green-400';
+                shippingNote.textContent = 'Free';
+            } else {
+                const remaining = threshold - subtotal;
+                banner.textContent = `Add ${formatNPR(remaining)} more for free delivery`;
+                banner.className = 'text-[11px] uppercase tracking-wider px-4 py-3 border border-timexDarkBorder text-timexLightGrey';
+                shippingNote.textContent = 'Calculated at checkout';
+            }
+        }
+
+        async function changeQty(itemId, newQty) {
+            try {
+                const cart = newQty < 1 ? await removeCartItem(itemId) : await updateCartItem(itemId, newQty);
+                renderCart(cart);
+                await refreshCartBadge();
+            } catch (e) {
+                showToast(e.message || 'Could not update quantity', true);
+            }
+        }
+
+        async function deleteItem(itemId) {
+            try {
+                const cart = await removeCartItem(itemId);
+                renderCart(cart);
+                await refreshCartBadge();
+            } catch (e) {
+                showToast('Could not remove item', true);
+            }
+        }
+
+        async function checkoutViaWhatsApp() {
+            if (!currentCart || !currentCart.items.length) return;
+            const contact = await promptWhatsAppContact();
+            if (!contact) return;
+
+            const cartBeforeOrder = currentCart;
+            let orderNumber = null;
+            try {
+                const order = await createWhatsAppOrder(contact);
+                orderNumber = order.order_number;
+            } catch (e) {
+                showToast(e.message || "Couldn't start this order — please try again.", true);
+                return;
+            }
+
+            const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
+            await whatsAppOrderFromCart(cartBeforeOrder, settings, orderNumber);
+
+            // The order just consumed the cart server-side — refresh this page's view to match.
+            const freshCart = await getCart();
+            renderCart(freshCart);
+            await refreshCartBadge();
+        }
+
+        let siteSettings = null;
+
+        async function init() {
+            try {
+                siteSettings = await apiGet('/api/settings').catch(() => null);
+                const cart = await getCart();
+                renderCart(cart);
+            } catch (e) {
+                document.getElementById('loading-state').textContent = 'Could not load your cart right now.';
+            }
+        }
+        init();
+    </script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TIME-X Admin — Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#111111', timexWhite: '#FFFFFF', timexOffWhite: '#F7F7F5', timexLightGrey: '#EAEAEA', timexTextGrey: '#777777' },
+            fontFamily: { sans: ['Helvetica Neue', 'Inter', 'Manrope', 'sans-serif'] },
+            letterSpacing: { widest: '0.2em' }
+        } } }
+    </script>
+
+<style id="timex-light-theme-admin">
+/* TIME-X Nepal — unified light theme */
+html,body{background:#fff!important;color:#111!important}.bg-timexBlack{background:#fff!important}.bg-timexCharcoal{background:#fafaf8!important}.bg-timexDarkBorder{background:#e5e5e5!important}.text-timexWhite{color:#111!important}.text-timexLightGrey{color:#555!important}.text-timexTextGrey{color:#666!important}.border-timexDarkBorder{border-color:#e5e5e5!important}.border-timexWhite{border-color:#111!important}.bg-white\/5{background:#f8f8f6!important}.bg-white\/10{background:#f3f3f1!important}.bg-white\/20{background:#eee!important}.bg-timexBlack\/95{background:rgba(255,255,255,.96)!important}.border-black\/10,.border-black\/20,.border-black\/40{border-color:#e5e5e5!important}.hover\:text-timexWhite:hover{color:#111!important}.hover\:bg-timexWhite:hover{background:#111!important}.hover\:text-timexBlack:hover{color:#fff!important}.focus\:border-timexWhite:focus{border-color:#111!important}
+body{background:radial-gradient(circle at 50% -20%,rgba(176,138,69,.16),transparent 42%),#f7f7f5!important}
+#login-form{background:#fff!important;border:1px solid #e5e5e5!important;box-shadow:0 20px 60px rgba(20,19,17,.08)}
+#login-form input{background:#fff!important;color:#111!important;border-color:#d8d2c6!important}
+#login-form input:focus{border-color:#b08a45!important;box-shadow:0 0 0 3px rgba(176,138,69,.12)}
+#login-btn{background:linear-gradient(135deg,#b08a45,#e0c27b)!important;color:#111!important;border:1px solid #a17b3d!important}
+#login-btn:hover{background:linear-gradient(135deg,#c09a55,#ead08d)!important}
+.admin-login-brand{color:#b08a45!important}
+.admin-login-back{color:#8a6b32!important}
+</style>
+
+<link rel="stylesheet" href="../assets/admin_theme.css">
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased min-h-screen flex items-center justify-center px-6">
+    <div class="w-full max-w-sm">
+        <div class="text-center mb-10">
+            <span class="text-2xl font-black tracking-widest uppercase block admin-login-brand">TIME-X</span>
+            <span class="text-[11px] font-mono uppercase tracking-widest text-timexTextGrey">Admin Console</span>
+        </div>
+
+        <form id="login-form" onsubmit="handleLogin(event)" class="space-y-4 bg-white/5 border border-white/10 p-8">
+            <div>
+                <label class="block text-[10px] font-mono uppercase tracking-widest text-timexTextGrey mb-1">Username</label>
+                <input name="username" type="text" required autocomplete="username" class="w-full bg-transparent border border-white/20 px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-white">
+            </div>
+            <div>
+                <label class="block text-[10px] font-mono uppercase tracking-widest text-timexTextGrey mb-1">Password</label>
+                <input name="password" type="password" required autocomplete="current-password" class="w-full bg-transparent border border-white/20 px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-white">
+            </div>
+            <p id="login-error" class="hidden text-[11px] text-red-400 uppercase tracking-wider"></p>
+            <button id="login-btn" type="submit" class="w-full bg-timexWhite text-timexBlack py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexLightGrey transition-colors">
+                Sign In
+            </button>
+        </form>
+        <p class="text-center text-[10px] font-mono uppercase tracking-widest text-timexTextGrey mt-6">
+            <a href="../index.html" class="admin-login-back hover:opacity-70">← Back to storefront</a>
+        </p>
+    </div>
+
+    <script>
+        async function handleLogin(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('login-btn');
+            const errorEl = document.getElementById('login-error');
+            errorEl.classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Signing In…';
+
+            try {
+                const res = await fetch('/api/admin/login', {
+                    method: 'POST',
+                    credentials: 'same-origin',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: form.elements.username.value,
+                        password: form.elements.password.value,
+                    }),
+                });
+                if (!res.ok) {
+                    const detail = await res.json().catch(() => ({}));
+                    const message = detail.detail || `Sign in failed (HTTP ${res.status})`;
+                    throw new Error(message);
+                }
+                window.location.replace('dashboard.html');
+            } catch (e) {
+                errorEl.textContent = e.message;
+                errorEl.classList.remove('hidden');
+                btn.disabled = false;
+                btn.textContent = 'Sign In';
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+/* TIME-X Admin — clean production light console */
+:root{--atelier-admin-bg:#f7f7f5;--atelier-admin-panel:#fff;--atelier-admin-line:#e5e5e5;--atelier-admin-text:#111;--atelier-admin-muted:#666;--atelier-admin-brass:#b08a45}
+html,body{background:var(--atelier-admin-bg)!important;color:var(--atelier-admin-text)!important}
+.admin-sidebar,.mobile-admin-topbar{background:#fff!important;border-color:var(--atelier-admin-line)!important}
+.panel,.stat-card{background:#fff!important;border-color:var(--atelier-admin-line)!important;color:var(--atelier-admin-text)!important;border-radius:10px}
+.sidebar-link{color:var(--atelier-admin-muted)!important;border-radius:0 8px 8px 0;margin-right:10px}
+.sidebar-link:hover{background:#f3f3f1!important;color:#111!important}
+.sidebar-link.active{color:#111!important;border-left-color:var(--atelier-admin-brass)!important;background:#f3f3f1!important}
+.sidebar-link .dot{background:var(--atelier-admin-brass)!important}
+.field-input,.status-select{background:#fff!important;color:#111!important;border-color:var(--atelier-admin-line)!important;border-radius:7px}
+.field-input::placeholder{color:#999!important}
+.btn-dark{background:#111!important;color:#fff!important;border-radius:7px}
+.btn-outline{border-color:#111!important;color:#111!important;border-radius:7px}
+.btn-sm{border-color:#d5d5d5!important;color:#444!important;border-radius:6px;background:#fff!important}
+.btn-danger-sm{background:#fff!important}
+table th{color:#666!important;border-color:var(--atelier-admin-line)!important}
+table td{color:#222!important;border-color:var(--atelier-admin-line)!important}
+table tbody tr:hover{background:#fafaf8!important}
+.stat-figure{font-family:"Cormorant Garamond",Georgia,serif;font-size:34px;color:#111!important}
+.badge-solid{background:#111!important;color:#fff!important;border-radius:999px}
+.badge-outline{border-color:#bbb!important;color:#555!important;border-radius:999px}
+h1,h2,h3{letter-spacing:-.02em}
+.mobile-nav-overlay{background:#fff!important;color:#111!important}
+@media(max-width:1023px){.mobile-admin-topbar{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px)}}

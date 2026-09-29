@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title id="page-title">TIME-X — Product</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = { theme: { extend: {
+            colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+            fontFamily: { sans: ['Inter', 'Helvetica Neue', 'sans-serif'], serif: ['Cormorant Garamond', 'Georgia', 'serif'] },
+            letterSpacing: { widest: '0.2em', mega: '0.3em' }
+        } } }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection { background-color: #FFFFFF; color: #111111; }
+        .size-btn-active { border-color: #FFFFFF !important; background: #FFFFFF; color: #111111; }
+        .size-btn-disabled { opacity: 0.6; pointer-events: none; text-decoration: line-through; color: #DC2626; border-color: #DC2626 !important; }
+        select option { color: #111111; background-color: #FFFFFF; }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2 flex-shrink-0" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<form action="shop.html" class="hidden md:flex flex-1 max-w-xl items-center" method="get">
+<div class="relative w-full">
+<svg class="absolute left-3 top-1/2 -translate-y-1/2 opacity-60 pointer-events-none" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+<input class="w-full bg-white/5 border border-white/20 rounded-full pl-9 pr-4 py-2 text-xs tracking-wide placeholder:text-timexTextGrey focus:outline-none focus:border-timexWhite focus:bg-white/10 transition-colors" name="search" placeholder="Search watches, brands, collections…" type="text"/>
+</div>
+</form>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="new-arrivals.html">New Arrivals</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collection</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase flex-shrink-0">
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="gallery.html">Gallery</a>
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(0)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span><span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>
+<section class="pt-28 pb-20 bg-timexBlack text-timexWhite min-h-screen">
+<div class="max-w-[1280px] mx-auto px-6 lg:px-10">
+<div class="text-[11px] font-mono uppercase tracking-widest text-timexLightGrey mb-6" id="breadcrumb">
+<a class="hover:text-timexWhite" href="index.html">Home</a> / <span>Loading…</span>
+</div>
+<div class="hidden grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start" id="product-root">
+<div class="lg:col-span-7">
+<div class="grid grid-cols-2 gap-3" id="photo-grid"></div>
+</div>
+<div class="lg:col-span-5 lg:sticky lg:top-28 space-y-6">
+<div>
+<span class="text-xs font-bold uppercase tracking-widest text-timexLightGrey block mb-1" id="p-brand"></span>
+<span class="text-[10px] font-mono uppercase tracking-widest text-timexLightGrey block mb-1" id="p-eyebrow"></span>
+<div class="flex items-start justify-between gap-3">
+<h1 class="text-2xl sm:text-3xl font-black uppercase tracking-tight" id="p-title"></h1>
+<button aria-label="Add to wishlist" class="flex-shrink-0 mt-1 hover:opacity-60 transition-opacity" id="wishlist-btn" onclick="toggleWishlist()">
+<svg fill="none" height="22" id="wishlist-icon" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</button>
+</div>
+<p class="text-base font-semibold tracking-tight mt-1" id="p-price"></p>
+<a class="hidden text-[11px] text-timexLightGrey uppercase tracking-wider mt-1 hover:text-timexWhite" href="#reviews" id="p-rating-summary"></a>
+</div>
+<p class="text-[11px] text-timexLightGrey leading-relaxed uppercase tracking-wider" id="p-description"></p>
+<div id="color-block">
+<div class="flex justify-between text-[11px] font-semibold uppercase tracking-widest mb-2">
+<span>Color: <span class="font-normal text-timexLightGrey" id="selected-color-name"></span></span>
+</div>
+<div class="flex space-x-3" id="color-swatches"></div>
+</div>
+<div>
+<div class="flex justify-between text-[11px] font-semibold uppercase tracking-widest mb-2">
+<span>Available Sizes <span class="text-timexLightGrey font-normal normal-case">(chosen at checkout)</span></span>
+<a class="text-timexLightGrey underline underline-offset-4 font-normal" href="#">Size Guide</a>
+</div>
+<div class="grid grid-cols-5 gap-2" id="size-buttons"></div>
+<p class="text-[10px] text-timexLightGrey mt-2 uppercase tracking-wider" id="size-hint"></p>
+</div>
+<div class="space-y-2.5 pt-2">
+<button class="w-full bg-timexDarkBorder text-timexTextGrey py-3 text-[11px] font-semibold uppercase tracking-widest transition-colors cursor-not-allowed" disabled="" id="add-to-cart-btn" onclick="handleAddToCart()">
+                            Select A Size
+                        </button>
+<button class="w-full border border-timexDarkBorder text-timexLightGrey py-3 text-[11px] font-semibold uppercase tracking-widest transition-colors cursor-not-allowed" disabled="" id="buy-now-btn" onclick="handleBuyNow()">
+                            Buy It Now
+                        </button>
+<button class="w-full bg-[#25D366] text-white py-3 text-[11px] font-semibold uppercase tracking-widest hover:opacity-90 transition-opacity flex items-center justify-center gap-2" onclick="orderViaWhatsApp()">
+<span>Order via WhatsApp</span> 💬
+                        </button>
+</div>
+<div class="border-t border-timexDarkBorder pt-4">
+<h3 class="text-[11px] font-bold uppercase tracking-widest mb-3">Specifications</h3>
+<table class="w-full text-[11px] tracking-wider uppercase text-timexLightGrey">
+<tbody id="specs-table"></tbody>
+</table>
+</div>
+<div class="hidden border-t border-timexDarkBorder pt-4 space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey" id="certificate-block">
+<p class="text-timexWhite font-semibold flex items-center gap-2">
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1z"></path></svg>
+                            Includes Certificate Of Authenticity
+                        </p>
+<p>Ships with original box, papers, and warranty card.</p>
+</div>
+<div class="border-t border-timexDarkBorder pt-4 space-y-3 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<div class="flex justify-between py-1.5 border-b border-timexDarkBorder">
+<span class="text-timexWhite font-semibold">Manufacturing</span>
+<span></span>
+</div>
+<div class="flex justify-between py-1.5 border-b border-timexDarkBorder">
+<span class="text-timexWhite font-semibold">Shipping &amp; Returns</span>
+<span>Free standard shipping across Nepal</span>
+</div>
+</div>
+</div>
+</div>
+<div class="hidden text-center py-24 space-y-4" id="not-found">
+<p class="text-sm uppercase tracking-widest text-timexLightGrey">We couldn't find that product.</p>
+<a class="inline-block bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" href="men.html">Browse The Collection</a>
+</div>
+</div>
+</section>
+<section class="max-w-[1000px] mx-auto px-6 lg:px-12 py-16 border-t border-timexDarkBorder" id="reviews">
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-10">
+<div>
+<h2 class="text-xl font-black uppercase tracking-tight mb-1">Reviews</h2>
+<p class="text-xs text-timexLightGrey uppercase tracking-wider" id="reviews-summary-line"></p>
+</div>
+<button class="border border-timexWhite text-timexWhite px-6 py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors self-start" onclick="toggleReviewForm()">Write A Review</button>
+</div>
+<form class="hidden bg-timexCharcoal border border-timexDarkBorder p-6 mb-10 space-y-4" id="review-form" onsubmit="submitReview(event)">
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Your Rating</label>
+<div class="flex gap-1" id="rating-picker"></div>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Your Name</label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="customer_name" placeholder="YOUR NAME" required=""/>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Review</label>
+<textarea class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest focus:outline-none focus:border-timexWhite" name="comment" placeholder="What did you think?" rows="3"></textarea>
+</div>
+<div>
+<label class="block text-[10px] font-mono uppercase tracking-widest text-timexLightGrey mb-1">Order Number <span class="normal-case text-timexLightGrey">(optional — shows "Verified Purchase")</span></label>
+<input class="w-full bg-transparent border border-timexDarkBorder px-4 py-3 text-xs tracking-widest uppercase focus:outline-none focus:border-timexWhite" name="order_number" placeholder="TN-XXXXX"/>
+</div>
+<p class="hidden text-[11px] text-red-600 uppercase tracking-wider" id="review-error"></p>
+<button class="bg-timexWhite text-timexBlack px-8 py-3 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors" id="review-submit-btn" type="submit">Submit Review</button>
+</form>
+<div class="space-y-6" id="reviews-list"></div>
+</section>
+<div class="fixed inset-0 bg-timexBlack/95 z-50 hidden flex items-center justify-center px-4" id="lightbox-modal">
+<button class="absolute top-6 right-8 text-timexWhite text-xl font-mono uppercase tracking-widest hover:text-timexLightGrey" onclick="closeLightbox()">✕ Close</button>
+<button class="absolute left-6 text-timexWhite text-2xl px-4 py-2 hover:opacity-75" onclick="prevImage()">←</button>
+<button class="absolute right-6 text-timexWhite text-2xl px-4 py-2 hover:opacity-75" onclick="nextImage()">→</button>
+<div class="max-w-4xl max-h-[85vh] overflow-hidden">
+<img alt="Expanded Photo" class="max-w-full max-h-[85vh] object-contain mx-auto" id="lightbox-img" src=""/>
+</div>
+</div>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div class="md:col-span-1">
+<span class="text-2xl font-black tracking-widest uppercase block mb-3" data-site-brand-name="">TIME-X</span>
+<p class="text-[11px] text-timexLightGrey tracking-wider uppercase leading-relaxed" data-site-tagline="">Precision, crafted. Timeless. Premium watches from Kathmandu.</p>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Shop</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="new-arrivals.html">New Arrivals</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">About</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="index.html#story">Our Story</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="gallery.html">Gallery</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="#">Size Guide</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Social</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        if (mobileSearchTrigger) {
+            mobileSearchTrigger.addEventListener('click', () => { window.location.href = 'shop.html'; });
+        }
+    </script>
+<script>
+        const slug = new URLSearchParams(window.location.search).get('slug');
+        let product = null;
+        let selectedColor = null;
+        let selectedSize = null;
+        let images = [];
+        let lightboxIndex = 0;
+
+        function buildPhotoGrid() {
+            const grid = document.getElementById('photo-grid');
+            const urls = images.map((i) => i.url);
+            const VISIBLE = 4;
+            let html = '';
+            urls.forEach((url, idx) => {
+                if (idx < 3 || urls.length <= VISIBLE) {
+                    if (idx === 0 && product.video_url) {
+                        html += `<div id="primary-photo-wrap" class="relative w-full aspect-[4/5] bg-timexCharcoal overflow-hidden cursor-pointer">
+                            <img id="primary-photo-img" src="${url}" alt="${product.title} ${idx + 1}" class="w-full h-full object-cover object-center transition-opacity duration-500">
+                            <video id="primary-photo-video" muted loop playsinline preload="metadata" src="${product.video_url}" class="absolute inset-0 w-full h-full object-cover object-center opacity-0 transition-opacity duration-500 pointer-events-none"></video>
+                            <div id="primary-photo-hint" class="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-mono uppercase tracking-widest text-timexWhite bg-black/50 px-3 py-1.5 pointer-events-none">Hover To See It In Motion</div>
+                        </div>`;
+                    } else {
+                        html += `<div class="w-full aspect-[4/5] bg-timexCharcoal overflow-hidden cursor-pointer" onclick="openLightbox(${idx})">
+                            <img src="${url}" alt="${product.title} ${idx + 1}" class="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500">
+                        </div>`;
+                    }
+                }
+            });
+            if (urls.length > VISIBLE) {
+                html += `<div id="more-card" class="relative w-full aspect-[4/5] bg-timexCharcoal overflow-hidden cursor-pointer group" onclick="expandPhotos()">
+                    <img src="${urls[3]}" alt="${product.title} more" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    <div class="absolute inset-0 bg-black/50 flex flex-col items-center justify-center text-timexWhite transition-colors group-hover:bg-black/60">
+                        <span class="text-3xl font-light mb-1">+${urls.length - 3}</span>
+                        <span class="text-[10px] font-mono uppercase tracking-widest underline underline-offset-4">View All Photos</span>
+                    </div>
+                </div>`;
+                for (let idx = 3; idx < urls.length; idx++) {
+                    html += `<div class="hidden-photo hidden w-full aspect-[4/5] bg-timexCharcoal overflow-hidden cursor-pointer" onclick="openLightbox(${idx})">
+                        <img src="${urls[idx]}" alt="${product.title} ${idx + 1}" class="w-full h-full object-cover object-center hover:scale-105 transition-transform duration-500">
+                    </div>`;
+                }
+                html += `<div id="collapse-container" class="col-span-2 mt-1 text-center hidden">
+                    <button onclick="collapsePhotos()" class="text-[11px] font-mono uppercase tracking-widest text-timexLightGrey underline underline-offset-4 hover:text-timexWhite">Show Fewer Photos</button>
+                </div>`;
+            }
+            grid.innerHTML = html;
+            if (product.video_url) wireUpPrimaryPhotoVideo();
+        }
+
+        function wireUpPrimaryPhotoVideo() {
+            const wrap = document.getElementById('primary-photo-wrap');
+            const img = document.getElementById('primary-photo-img');
+            const video = document.getElementById('primary-photo-video');
+            const hint = document.getElementById('primary-photo-hint');
+            if (!wrap) return;
+
+            const isTouchDevice = window.matchMedia('(hover: none)').matches;
+            hint.textContent = isTouchDevice ? 'Tap To See It In Motion' : 'Hover To See It In Motion';
+
+            function showVideo() {
+                video.currentTime = 0;
+                video.play().catch(() => {});
+                video.classList.remove('opacity-0');
+                img.classList.add('opacity-0');
+                hint.classList.add('opacity-0');
+            }
+            function hideVideo() {
+                video.pause();
+                video.classList.add('opacity-0');
+                img.classList.remove('opacity-0');
+                hint.classList.remove('opacity-0');
+            }
+
+            if (isTouchDevice) {
+                let playing = false;
+                wrap.addEventListener('click', () => {
+                    playing = !playing;
+                    playing ? showVideo() : hideVideo();
+                });
+            } else {
+                wrap.addEventListener('mouseenter', showVideo);
+                wrap.addEventListener('mouseleave', hideVideo);
+            }
+        }
+
+        function expandPhotos() {
+            document.querySelectorAll('.hidden-photo').forEach((el) => el.classList.remove('hidden'));
+            document.getElementById('more-card').style.display = 'none';
+            document.getElementById('collapse-container').classList.remove('hidden');
+        }
+        function collapsePhotos() {
+            document.querySelectorAll('.hidden-photo').forEach((el) => el.classList.add('hidden'));
+            document.getElementById('more-card').style.display = 'block';
+            document.getElementById('collapse-container').classList.add('hidden');
+        }
+        function openLightbox(index) {
+            lightboxIndex = index;
+            document.getElementById('lightbox-img').src = images[index].url;
+            document.getElementById('lightbox-modal').classList.remove('hidden');
+        }
+        function closeLightbox() { document.getElementById('lightbox-modal').classList.add('hidden'); }
+        function nextImage() { lightboxIndex = (lightboxIndex + 1) % images.length; document.getElementById('lightbox-img').src = images[lightboxIndex].url; }
+        function prevImage() { lightboxIndex = (lightboxIndex - 1 + images.length) % images.length; document.getElementById('lightbox-img').src = images[lightboxIndex].url; }
+
+        function variantsForColor(colorName) {
+            return product.variants.filter((v) => v.color_name === colorName);
+        }
+
+        function renderColors() {
+            const block = document.getElementById('color-block');
+            if (!product.colors.length) { block.classList.add('hidden'); return; }
+            document.getElementById('selected-color-name').textContent = selectedColor;
+            document.getElementById('color-swatches').innerHTML = product.colors.map((c) => {
+                const active = c.name === selectedColor ? 'ring-2 ring-timexBlack' : 'ring-1 ring-transparent hover:ring-timexBlack';
+                const border = c.hex_code.toLowerCase() === '#ffffff' || c.hex_code.toLowerCase() === '#f7f7f5' ? 'border border-timexDarkBorder' : '';
+                return `<button onclick="selectColor('${c.name.replace(/'/g, "\\'")}')" class="color-btn w-6 h-6 rounded-full ${border} ${active} ring-offset-2 focus:outline-none transition-all" style="background:${c.hex_code}" title="${c.name}"></button>`;
+            }).join('');
+        }
+
+        function imagesForColor(colorName) {
+            if (!product.images.length) return [{ url: '' }];
+            if (!colorName) return product.images;
+            const tagged = product.images.filter((img) => img.color_name === colorName);
+            if (tagged.length) return tagged;
+            const untagged = product.images.filter((img) => !img.color_name);
+            return untagged.length ? untagged : product.images;
+        }
+
+        function selectColor(name) {
+            selectedColor = name;
+            selectedSize = null;
+            renderColors();
+            renderSizes();
+            updateActionButtons();
+            images = imagesForColor(name);
+            lightboxIndex = 0;
+            buildPhotoGrid();
+        }
+
+        function renderSizes() {
+            const variants = variantsForColor(selectedColor);
+            const wrap = document.getElementById('size-buttons');
+            wrap.innerHTML = variants.map((v) => {
+                const outOfStock = v.stock_qty <= 0;
+                const active = selectedSize === v.size ? 'size-btn-active' : 'border-timexDarkBorder hover:border-timexWhite';
+                const disabled = outOfStock ? 'size-btn-disabled' : '';
+                return `<button ${outOfStock ? 'disabled' : ''} onclick="selectSize('${v.size}')" class="size-btn border ${active} ${disabled} py-2 text-[11px] font-medium uppercase focus:outline-none transition-colors">${v.size}</button>`;
+            }).join('');
+            const hint = document.getElementById('size-hint');
+            const allOutOfStock = variants.length > 0 && variants.every((v) => v.stock_qty <= 0);
+            hint.textContent = allOutOfStock ? 'Currently out of stock in this color.' : '';
+            hint.classList.toggle('text-red-600', allOutOfStock);
+            hint.classList.toggle('text-timexLightGrey', !allOutOfStock);
+        }
+
+        function selectSize(size) {
+            selectedSize = size;
+            renderSizes();
+        }
+
+        function updateActionButtons() {
+            const addBtn = document.getElementById('add-to-cart-btn');
+            const buyBtn = document.getElementById('buy-now-btn');
+            const ready = !product.colors.length || !!selectedColor;
+            if (ready) {
+                addBtn.disabled = false;
+                addBtn.className = 'w-full bg-timexWhite text-timexBlack py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors';
+                addBtn.textContent = `Add To Cart — ${formatNPR(product.price)}`;
+                buyBtn.disabled = false;
+                buyBtn.className = 'w-full border border-timexWhite text-timexWhite py-3 text-[11px] font-semibold uppercase tracking-widest hover:bg-timexWhite hover:text-timexBlack transition-colors';
+                buyBtn.textContent = 'Buy It Now';
+            } else {
+                addBtn.disabled = true;
+                addBtn.className = 'w-full bg-timexLightGrey text-timexLightGrey py-3 text-[11px] font-semibold uppercase tracking-widest transition-colors cursor-not-allowed';
+                addBtn.textContent = 'Select A Color';
+                buyBtn.disabled = true;
+                buyBtn.className = 'w-full border border-timexDarkBorder text-timexLightGrey py-3 text-[11px] font-semibold uppercase tracking-widest transition-colors cursor-not-allowed';
+                buyBtn.textContent = 'Select A Color';
+            }
+        }
+
+        async function handleAddToCart() {
+            try {
+                await addToCart(product.id, selectedColor || '', selectedSize || '');
+                await refreshCartBadge();
+                showToast(`Added: ${product.title}${selectedColor ? ' (' + selectedColor + ')' : ''} — choose your size at checkout`);
+            } catch (e) {
+                showToast(e.message || 'Could not add to cart', true);
+            }
+        }
+
+        async function handleBuyNow() {
+            try {
+                await addToCart(product.id, selectedColor || '', selectedSize || '');
+                window.location.href = 'checkout.html';
+            } catch (e) {
+                showToast(e.message || 'Could not add to cart', true);
+            }
+        }
+
+        async function orderViaWhatsApp() {
+            const contact = await promptWhatsAppContact();
+            if (!contact) return;
+
+            let orderNumber = null;
+            try {
+                await addToCart(product.id, selectedColor || '', selectedSize || '', 1);
+                const order = await createWhatsAppOrder(contact);
+                orderNumber = order.order_number;
+                await refreshCartBadge();
+            } catch (e) {
+                showToast(e.message || "Couldn't start this order — please try again.", true);
+                return;
+            }
+
+            const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
+            const lines = [
+                'Hello TIME-X, I would like to place an order:', '',
+                `*Order:* #${orderNumber}`,
+                `*Product:* ${product.title}`,
+                `*Color:* ${selectedColor || 'N/A'}`,
+                `*Size:* ${selectedSize || 'N/A'}`,
+                `*Price:* ${formatNPR(product.price)}`, '',
+                'Please confirm availability and shipping details.',
+            ];
+            const message = encodeURIComponent(lines.join('\n'));
+            window.open(`https://wa.me/${settings.whatsapp_number}?text=${message}`, '_blank');
+        }
+
+        async function loadProduct() {
+            if (!slug) { document.getElementById('not-found').classList.remove('hidden'); return; }
+            try {
+                product = await apiGet(`/api/products/${encodeURIComponent(slug)}`);
+            } catch (e) {
+                document.getElementById('not-found').classList.remove('hidden');
+                return;
+            }
+            images = product.images.length ? product.images : [{ url: '' }];
+            document.title = `TIME-X — ${product.title}`;
+            document.getElementById('breadcrumb').innerHTML = `
+                <a href="index.html" class="hover:text-timexWhite">Home</a> /
+                <a href="${product.category_slug === 'unisex' ? 'men' : product.category_slug}.html" class="hover:text-timexWhite">${{men:'Men',women:'Women',unisex:'Unisex'}[product.category_slug] || product.category_slug}</a> /
+                <span class="text-timexWhite font-semibold">${product.title}</span>`;
+            document.getElementById('p-eyebrow').textContent = `${product.subcategory}${product.collection_tag ? ' / Drop' : ''}`;
+            document.getElementById('p-brand').textContent = product.brand_name || '';
+            document.getElementById('p-title').textContent = product.title;
+            document.getElementById('p-price').innerHTML = product.compare_at_price
+                ? `<span class="whitespace-nowrap">${formatNPR(product.price)} <span class="text-timexLightGrey text-sm font-normal line-through ml-2">${formatNPR(product.compare_at_price)}</span></span> <span class="discount-badge text-[10px] px-2 py-0.5 ml-1 align-middle uppercase tracking-widest">${getDiscountPercent(product.price, product.compare_at_price)}% OFF</span>`
+                : formatNPR(product.price);
+            document.getElementById('p-description').textContent = product.description;
+            renderSpecsTable();
+            document.getElementById('certificate-block').classList.toggle('hidden', !product.has_certificate);
+            checkWishlistState();
+
+            renderRatingSummary();
+
+            selectedColor = product.colors.length ? product.colors[0].name : null;
+            images = imagesForColor(selectedColor);
+            buildPhotoGrid();
+            renderColors();
+            renderSizes();
+            updateActionButtons();
+            initRatingPicker();
+            loadReviews();
+
+            document.getElementById('product-root').classList.remove('hidden');
+        }
+
+        function renderRatingSummary() {
+            const ratingEl = document.getElementById('p-rating-summary');
+            if (product.review_count > 0) {
+                ratingEl.textContent = `★ ${product.avg_rating} (${product.review_count} review${product.review_count === 1 ? '' : 's'})`;
+                ratingEl.classList.remove('hidden');
+            } else {
+                ratingEl.classList.add('hidden');
+            }
+        }
+
+        function renderSpecsTable() {
+            const genderLabel = { men: 'Men', women: 'Women', unisex: 'Unisex' }[product.category_slug] || product.category_slug;
+            const rows = [
+                ['Brand', product.brand_name],
+                ['Model', product.model_name],
+                ['Reference No.', product.reference_number],
+                ['SKU', product.sku],
+                ['Movement', product.movement],
+                ['Case Material', product.case_material],
+                ['Dial Color', product.dial_color],
+                ['Strap', product.strap_material],
+                ['Water Resistance', product.water_resistance],
+                ['Glass', product.glass_type],
+                ['Material', product.material],
+                ['Gender', genderLabel],
+                ['Warranty', product.warranty],
+                ['Condition', product.condition === 'pre-owned' ? 'Pre-Owned' : null],
+            ].filter(([, value]) => value);
+
+            document.getElementById('specs-table').innerHTML = rows.map(([label, value]) => `
+                <tr class="border-b border-timexDarkBorder">
+                    <td class="py-1.5 text-timexWhite font-semibold w-1/2">${label}</td>
+                    <td class="py-1.5 text-right">${value}</td>
+                </tr>
+            `).join('');
+        }
+
+        let isWishlisted = false;
+        async function checkWishlistState() {
+            try {
+                const list = await apiGet('/api/wishlist');
+                isWishlisted = list.some((item) => item.product_id === product.id);
+                renderWishlistIcon();
+            } catch (e) { /* not signed in or no wishlist yet — leave as unfilled */ }
+        }
+
+        function renderWishlistIcon() {
+            const icon = document.getElementById('wishlist-icon');
+            icon.setAttribute('fill', isWishlisted ? 'currentColor' : 'none');
+        }
+
+        async function toggleWishlist() {
+            try {
+                if (isWishlisted) {
+                    await apiJSON('DELETE', `/api/wishlist/${product.id}`);
+                    isWishlisted = false;
+                    showToast('Removed from Wishlist');
+                } else {
+                    await apiJSON('POST', `/api/wishlist/${product.id}`);
+                    isWishlisted = true;
+                    showToast('Added to Wishlist');
+                }
+                renderWishlistIcon();
+            } catch (e) {
+                showToast('Could not update your wishlist right now', true);
+            }
+        }
+
+        let selectedRating = 5;
+        function initRatingPicker() {
+            renderRatingPicker();
+        }
+        function renderRatingPicker() {
+            document.getElementById('rating-picker').innerHTML = [1, 2, 3, 4, 5].map((n) => `
+                <button type="button" onclick="setRating(${n})" class="text-2xl leading-none ${n <= selectedRating ? 'text-timexWhite' : 'text-timexDarkBorder'}">★</button>
+            `).join('');
+        }
+        function setRating(n) {
+            selectedRating = n;
+            renderRatingPicker();
+        }
+
+        function toggleReviewForm() {
+            document.getElementById('review-form').classList.toggle('hidden');
+        }
+
+        async function loadReviews() {
+            const listEl = document.getElementById('reviews-list');
+            let reviews = [];
+            try {
+                reviews = await apiGet(`/api/products/${encodeURIComponent(slug)}/reviews`);
+            } catch (e) {
+                listEl.innerHTML = '';
+                return;
+            }
+            document.getElementById('reviews-summary-line').textContent = reviews.length
+                ? `${product.avg_rating} average · ${reviews.length} review${reviews.length === 1 ? '' : 's'}`
+                : 'No reviews yet — be the first.';
+            listEl.innerHTML = reviews.map((r) => `
+                <div class="border-b border-timexDarkBorder pb-6">
+                    <div class="flex items-center gap-2 mb-1">
+                        <span class="text-timexWhite text-sm">${'★'.repeat(r.rating)}${'☆'.repeat(5 - r.rating)}</span>
+                        ${r.is_verified ? '<span class="text-[9px] bg-timexWhite text-timexBlack px-1.5 py-0.5 uppercase tracking-widest">Verified Purchase</span>' : ''}
+                    </div>
+                    <p class="text-xs font-bold uppercase tracking-wide">${r.customer_name}</p>
+                    ${r.comment ? `<p class="text-xs text-timexLightGrey mt-1.5 leading-relaxed">${r.comment}</p>` : ''}
+                    <p class="text-[10px] font-mono text-timexLightGrey mt-2">${new Date(r.created_at).toLocaleDateString(undefined, { year: 'numeric', month: 'short', day: 'numeric' })}</p>
+                </div>
+            `).join('');
+        }
+
+        async function submitReview(event) {
+            event.preventDefault();
+            const form = event.target;
+            const btn = document.getElementById('review-submit-btn');
+            const errorEl = document.getElementById('review-error');
+            errorEl.classList.add('hidden');
+            btn.disabled = true;
+            btn.textContent = 'Submitting…';
+            try {
+                await apiJSON('POST', `/api/products/${encodeURIComponent(slug)}/reviews`, {
+                    customer_name: form.elements.customer_name.value.trim(),
+                    rating: selectedRating,
+                    comment: form.elements.comment.value.trim(),
+                    order_number: form.elements.order_number.value.trim(),
+                });
+                form.reset();
+                selectedRating = 5;
+                renderRatingPicker();
+                form.classList.add('hidden');
+                product = await apiGet(`/api/products/${encodeURIComponent(slug)}`); // refresh avg_rating/count
+                renderRatingSummary();
+                await loadReviews();
+                showToast('Thanks for your review!');
+            } catch (e) {
+                errorEl.textContent = e.message || 'Could not submit your review — please try again.';
+                errorEl.classList.remove('hidden');
+            } finally {
+                btn.disabled = false;
+                btn.textContent = 'Submit Review';
+            }
+        }
+
+        loadProduct();
+    </script>
+</body>
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+
+<html class="scroll-smooth" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TIME-X — Blog</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&amp;family=Inter:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { timexBlack: '#0A0A0A', timexWhite: '#FFFFFF', timexOffWhite: '#FAFAF8', timexCharcoal: '#161616', timexDarkBorder: '#2A2A2A', timexLightGrey: '#E3E3E1', timexTextGrey: '#6B6B6B', timexSilver: '#B8B8B8' },
+                    fontFamily: {
+                        sans: ['Inter', 'Helvetica Neue', 'sans-serif'],
+                        serif: ['Cormorant Garamond', 'Georgia', 'serif'],
+                    },
+                    letterSpacing: {
+                        widest: '0.2em',
+                        mega: '0.3em',
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .font-black { font-family: 'Cormorant Garamond', Georgia, serif; font-weight: 600; letter-spacing: 0.01em; }
+        ::selection {
+            background-color: #FFFFFF;
+            color: #111111;
+        }
+        .editorial-image-zoom {
+            transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        .group:hover .editorial-image-zoom {
+            transform: scale(1.04);
+        }
+    </style>
+<link href="assets/css_theme.css" rel="stylesheet"/>
+</head>
+<body class="bg-timexBlack text-timexWhite font-sans antialiased selection:bg-timexWhite selection:text-timexBlack page-fade">
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500 bg-timexBlack text-timexWhite border-b border-white/10" id="site-header">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-20 flex items-center gap-6">
+<a class="text-2xl font-black tracking-widest uppercase flex items-center gap-2" href="index.html"><img alt="TIME-X" class="hidden h-9 w-auto" data-site-logo="" src="assets/logo-timex-nepal-gold.png"/><span data-site-logo-text="">TIME-X</span></a>
+<nav class="hidden lg:flex items-center space-x-10 text-xs font-medium tracking-widest uppercase flex-shrink-0">
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="men.html">Men</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="women.html">Women</a>
+<a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="gallery.html">Gallery</a>
+<a class="hover:text-gray-500 transition-colors" href="new-arrivals.html">New Arrivals</a><a class="text-timexLightGrey hover:text-timexWhite transition-colors" href="collections.html">Collection</a>
+<a class="text-timexWhite font-bold underline underline-offset-4" href="blog.html">Blog</a>
+</nav>
+<div class="flex items-center space-x-6 text-xs font-medium tracking-wider uppercase flex-shrink-0">
+<button aria-label="Search" class="md:hidden hover:opacity-75 transition-opacity" id="mobile-search-trigger">
+<svg fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><circle cx="11" cy="11" r="7"></circle><line x1="21" x2="16.65" y1="21" y2="16.65"></line></svg>
+</button>
+<a aria-label="Wishlist" class="hover:opacity-75 transition-opacity" href="wishlist.html">
+<svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+</a>
+<a class="hidden sm:block hover:opacity-75 transition-opacity" href="account.html">Account</a>
+<a class="hover:opacity-75 transition-opacity flex items-center gap-1" href="cart.html">Cart <span class="text-[10px] font-normal" id="cart-counter">(1)</span></a>
+<button aria-label="Open Menu" class="flex flex-col justify-between w-6 h-4 focus:outline-none" id="menu-toggle">
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+<span class="w-full h-[2px] bg-current"></span>
+</button>
+</div>
+</div>
+</header>
+<div class="fixed inset-0 bg-timexBlack text-timexWhite z-[60] transform translate-x-full transition-transform duration-500 overflow-y-auto" id="mobile-menu">
+<div class="min-h-full px-6 sm:px-10 pt-28 pb-10 flex flex-col">
+<div class="flex items-center justify-between mb-10">
+<span class="text-[10px] tracking-[0.35em] uppercase opacity-60">Navigate</span>
+<button aria-label="Close Menu" class="w-10 h-10 rounded-full border border-current/20 flex items-center justify-center text-2xl leading-none" id="mobile-menu-close" type="button">×</button>
+</div>
+<nav class="grid grid-cols-1 sm:grid-cols-2 gap-0 border-t border-white/10">
+<a class="mobile-link mobile-nav-link" href="index.html">Home</a>
+<a class="mobile-link mobile-nav-link" href="men.html">Men</a>
+<a class="mobile-link mobile-nav-link" href="women.html">Women</a>
+<a class="mobile-link mobile-nav-link" href="new-arrivals.html">New Arrivals</a>
+<a class="mobile-link mobile-nav-link" href="collections.html">Collections</a>
+<a class="mobile-link mobile-nav-link" href="blog.html">Blogs</a>
+<a class="mobile-link mobile-nav-link" href="gallery.html">Gallery</a>
+<a class="mobile-link mobile-nav-link" href="account.html">Account</a>
+<a class="mobile-link mobile-nav-link" href="cart.html">Cart <span class="text-xs opacity-60" id="mobile-cart-counter">(0)</span></a>
+</nav>
+<div class="mt-auto pt-10 border-t border-white/10 flex flex-col gap-3 text-[10px] tracking-[0.22em] uppercase opacity-60">
+<a class="mobile-link" href="wishlist.html">Wishlist</a>
+<span>TIME-X · Kathmandu</span>
+</div>
+</div>
+</div>
+<section class="relative h-[65vh] w-full flex items-end justify-start bg-timexBlack text-timexWhite overflow-hidden pt-20">
+<div class="absolute inset-0 z-0">
+<img alt="TIME-X Journal" class="w-full h-full object-cover object-center opacity-60 filter grayscale contrast-125 editorial-image-zoom" id="hero-bg-img" src="https://images.unsplash.com/photo-1704783339057-3fb087d3bc98?q=80&amp;w=2000&amp;auto=format&amp;fit=crop"/>
+<div class="absolute inset-0 bg-gradient-to-t from-timexBlack via-black/20 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-[1440px] w-full mx-auto px-6 lg:px-12 pb-16">
+<span class="text-xs font-mono tracking-mega text-timexLightGrey uppercase block mb-3">Notes / 2026</span>
+<h1 class="text-5xl sm:text-7xl font-black tracking-tighter uppercase">
+                Journal.
+            </h1>
+<p class="text-sm text-timexLightGrey font-light mt-4 max-w-lg">
+                Stories behind the drops — process, materials, and the ideas that shape TIME-X.
+            </p>
+</div>
+</section>
+<section class="py-28 bg-timexBlack text-timexWhite">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12 space-y-32" id="blog-posts">
+<p class="text-center text-xs uppercase tracking-widest text-timexLightGrey py-16">Loading journal entries…</p>
+</div>
+</section>
+<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<div class="max-w-[1440px] mx-auto px-6 lg:px-12">
+<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+<div class="md:col-span-1">
+<span class="text-2xl font-black tracking-widest uppercase block mb-3">TIME-X</span>
+<p class="text-[11px] text-timexLightGrey tracking-wider uppercase leading-relaxed">
+                        Wear your identity.<br/>Independent fashion label from Kathmandu.
+                    </p>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Shop</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="blog.html">Blog</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">About</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="hover:text-timexWhite transition-colors" href="index.html#story">Our Story</a></li>
+<li><a class="hover:text-timexWhite transition-colors" href="#">Size Guide</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Social</h4>
+<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+</ul>
+</div>
+</div>
+<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<p>© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
+</div>
+</div>
+</footer>
+<script src="assets/js/api.js"></script>
+<script src="assets/js/shared.js"></script>
+<script>
+        const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
+        if (mobileSearchTrigger) {
+            mobileSearchTrigger.addEventListener('click', () => { window.location.href = 'shop.html'; });
+        }
+    </script>
+<script>
+        async function loadHeroOverride() {
+            try {
+                const images = await apiGet('/api/site-images/blog_hero');
+                if (images.length) document.getElementById('hero-bg-img').src = images[0].url;
+            } catch (e) { /* keep the default */ }
+        }
+
+        function postCardHTML(post, index) {
+            const reversed = index % 2 === 1;
+            const ratio = (post.width && post.height) ? `${post.width} / ${post.height}` : '16 / 10';
+            return `
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                <div class="lg:col-span-7 bg-timexCharcoal overflow-hidden group ${reversed ? 'order-1 lg:order-2' : ''}" style="aspect-ratio: ${ratio}">
+                    <img src="${post.url}" alt="${post.heading || 'TIME-X Journal'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                </div>
+                <div class="lg:col-span-5 space-y-6 ${reversed ? 'order-2 lg:order-1' : ''}">
+                    <h2 class="text-3xl sm:text-4xl font-black uppercase tracking-tight">${post.heading || 'Untitled Entry'}</h2>
+                    ${post.subheading ? `<p class="text-xs text-timexLightGrey leading-relaxed uppercase tracking-wider">${post.subheading}</p>` : ''}
+                    ${post.link_url ? `
+                        <div class="pt-4">
+                            <a href="${post.link_url}" class="inline-block bg-timexWhite text-timexBlack px-8 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors">
+                                Read More →
+                            </a>
+                        </div>` : ''}
+                </div>
+            </div>`;
+        }
+
+        async function loadBlogPosts() {
+            const container = document.getElementById('blog-posts');
+            try {
+                const posts = await apiGet('/api/site-images/blog_posts');
+                container.innerHTML = posts.length
+                    ? posts.map((p, i) => postCardHTML(p, i)).join('')
+                    : '<p class="text-center text-xs uppercase tracking-widest text-timexLightGrey py-16">No journal entries yet — check back soon.</p>';
+            } catch (e) {
+                container.innerHTML = '<p class="text-center text-xs uppercase tracking-widest text-timexLightGrey py-16">Could not load journal entries right now.</p>';
+            }
+        }
+
+        loadHeroOverride();
+        loadBlogPosts();
+    </script>
+</body>
+</html>
