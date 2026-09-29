@@ -65,9 +65,9 @@
   <!-- Right side -->
   <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
     <!-- Search bar (desktop, compact pill) -->
-    <div class="hidden md:flex tx-search-bar" style="width:200px;">
+    <div class="hidden md:flex tx-search-bar" style="width:280px;">
       <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="flex-shrink:0;color:rgba(0,0,0,0.35);"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-      <input name="search" type="text" placeholder="Search watches…" autocomplete="off"/>
+      <input name="search" type="text" placeholder="Search watches..." autocomplete="off"/>
     </div>
     <!-- Search icon (mobile) -->
     <button id="mobile-search-trigger" aria-label="Search" class="md:hidden txicon" style="background:none;border:none;cursor:pointer;padding:2px;">
@@ -264,40 +264,49 @@
 <p class="text-xs font-mono uppercase tracking-widest text-timexLightGrey" id="lightbox-caption"></p>
 </div>
 </div>
-<footer class="bg-timexBlack text-timexWhite border-t border-white/10 pt-16 pb-10">
+<footer class="bg-white text-black border-t border-black/10 pt-20 pb-12">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
-<div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
-<div class="md:col-span-1">
-<span class="text-2xl font-black tracking-widest uppercase block mb-3">TIME-X</span>
-<p class="text-[11px] text-timexLightGrey tracking-wider uppercase leading-relaxed">
-                        Wear your identity.<br/>Independent fashion label from Kathmandu.
-                    </p>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-12 mb-16">
+<div class="col-span-2 md:col-span-1">
+<span class="text-2xl font-black tracking-widest uppercase block mb-4" data-site-brand-name="">TIME-X</span>
+<p class="text-xs text-gray-500 tracking-wider uppercase leading-relaxed" data-site-tagline="">Precision, crafted. Timeless. Premium watches from Kathmandu.</p>
 </div>
 <div>
-<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Shop</h4>
-<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
-<li><a class="hover:text-timexWhite transition-colors" href="men.html">Men</a></li>
-<li><a class="hover:text-timexWhite transition-colors" href="women.html">Women</a></li>
-<li><a class="hover:text-timexWhite transition-colors" href="gallery.html">Gallery</a></li>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Shop</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="men.html">Men</a></li>
+<li><a class="hover:text-black transition-colors" href="women.html">Women</a></li>
+<li><a class="hover:text-black transition-colors" href="new-arrivals.html">New Arrivals</a></li>
+<li><a class="hover:text-black transition-colors" href="collections.html">Collections</a></li>
 </ul>
 </div>
 <div>
-<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">About</h4>
-<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
-<li><a class="hover:text-timexWhite transition-colors" href="index.html#story">Our Story</a></li>
-<li><a class="hover:text-timexWhite transition-colors" href="#">Size Guide</a></li>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">About</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="index.html#story">Our Story</a></li>
+<li><a class="hover:text-black transition-colors" href="gallery.html">Gallery</a></li>
+<li><a class="hover:text-black transition-colors" href="#">Size Guide</a></li>
 </ul>
 </div>
 <div>
-<h4 class="text-[11px] font-semibold tracking-widest uppercase mb-3 text-timexLightGrey">Social</h4>
-<ul class="space-y-2 text-[11px] tracking-wider uppercase text-timexLightGrey">
-<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
-<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
-<li><a class="flex items-center gap-2 hover:text-timexWhite transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Policies</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="hover:text-black transition-colors" href="shipping-policy.html">Shipping &amp; Order Policy</a></li>
+<li><a class="hover:text-black transition-colors" href="warranty-policy.html">Warranty Policy</a></li>
+<li><a class="hover:text-black transition-colors" href="privacy-notice.html">Privacy Notice</a></li>
+<li><a class="hover:text-black transition-colors" href="exercise-your-rights.html">Exercise Your Rights</a></li>
+</ul>
+</div>
+<div>
+<h4 class="text-xs font-semibold tracking-widest uppercase mb-4 text-gray-600">Social</h4>
+<ul class="space-y-3 text-xs tracking-wider uppercase text-gray-500">
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="instagram" href="#"><svg class="flex-shrink-0" fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="14"><rect height="20" rx="5" width="20" x="2" y="2"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"></line></svg>Instagram</a></li>
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="tiktok" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M16.6 5.82s.51.5 0 0A4.278 4.278 0 0 1 15.54 3h-3.09v12.4a2.592 2.592 0 0 1-2.59 2.5c-1.42 0-2.6-1.16-2.6-2.6 0-1.72 1.66-3.01 3.37-2.48V9.66c-3.45-.46-6.47 2.22-6.47 5.64 0 3.33 2.76 5.7 5.69 5.7 3.14 0 5.69-2.55 5.69-5.7V9.01a7.35 7.35 0 0 0 4.3 1.38V7.3s-1.88.09-3.24-1.48z"></path></svg>TikTok</a></li>
+<li><a class="flex items-center gap-2 hover:text-black transition-colors" data-social="facebook" href="#"><svg class="flex-shrink-0" fill="currentColor" height="14" viewbox="0 0 24 24" width="14"><path d="M9.101 23.691v-7.98H6.627v-3.667h2.474v-1.58c0-4.085 1.848-5.978 5.858-5.978.401 0 .955.042 1.468.103a8.68 8.68 0 0 1 1.141.195v3.325a8.623 8.623 0 0 0-.653-.036 26.805 26.805 0 0 0-.733-.009c-.707 0-1.259.096-1.675.309a1.686 1.686 0 0 0-.679.622c-.258.42-.374.995-.374 1.752v1.297h3.919l-.386 1.879-.287 1.788h-3.246v8.245C19.396 23.238 24 18.179 24 12.044c0-6.628-5.373-12-12-12s-12 5.372-12 12c0 6.135 4.604 11.194 10.101 11.647Z"></path></svg>Facebook</a></li>
 </ul>
 </div>
 </div>
-<div class="pt-6 border-t border-white/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-timexLightGrey uppercase">
+<div class="pt-8 border-t border-black/10 flex flex-col sm:flex-row justify-between items-center gap-4 text-[10px] font-mono tracking-widest text-gray-500 uppercase">
 <p>Â© 2026 TIME-X. ALL RIGHTS RESERVED.</p>
 </div>
 </div>
@@ -411,6 +420,9 @@
     </script>
 </body>
 </html>
+
+
+
 
 
 
