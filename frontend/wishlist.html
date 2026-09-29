@@ -112,17 +112,22 @@
         }
 
         function itemCardHTML(item) {
+            const displayPrice = item.price ? formatNPR(item.price) : '';
             return `
-            <div class="group">
-                <a href="product.html?slug=${item.slug}" class="block relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3 ${!item.in_stock ? 'opacity-50' : ''}">
-                    <img src="${item.image || ''}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center">
-                    ${!item.in_stock ? '<span class="absolute bottom-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1">Out of Stock</span>' : ''}
+            <div class="group relative">
+                <a href="product.html?slug=${item.slug}" class="block relative w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-3 ${!item.in_stock ? 'opacity-50' : ''}">
+                    <img src="${item.image || ''}" alt="${item.title}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500">
+                    ${!item.in_stock ? '<span class="absolute bottom-3 left-3 bg-white text-black text-[10px] font-semibold uppercase tracking-widest px-2 py-1">Out of Stock</span>' : ''}
                 </a>
-                <div class="flex flex-col text-left gap-1">
-                    <h3 class="text-xs font-bold uppercase tracking-widest text-timexBlack leading-relaxed">${p.title}</h3>
-                    <p class="text-[9px] text-gray-500 uppercase tracking-widest font-mono">${p.subcategory || p.department || 'TIME-X'}</p>
-                    <div class="mt-1">${priceHTML}</div>
-                </div>`;
+                <button onclick="removeItem(${item.product_id || item.id})" class="absolute top-2 right-2 w-8 h-8 bg-white/80 backdrop-blur-sm rounded-full flex items-center justify-center text-black hover:bg-black hover:text-white transition-colors z-10" aria-label="Remove from Wishlist">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+                </button>
+                <div class="flex flex-col text-left gap-1 mt-3">
+                    <a href="product.html?slug=${item.slug}" class="text-xs font-bold uppercase tracking-widest text-timexWhite leading-relaxed hover:opacity-70">${item.title}</a>
+                    <p class="text-[9px] text-gray-500 uppercase tracking-widest font-mono">${item.subcategory || item.department || 'TIME-X'}</p>
+                    <div class="mt-1 text-[11px] font-semibold text-black">${displayPrice}</div>
+                </div>
+            </div>`;
         }
 
         async function loadWishlist() {
@@ -147,6 +152,8 @@
     </script>
 </body>
 </html>
+
+
 
 
 
