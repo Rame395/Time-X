@@ -512,7 +512,7 @@ function initAutocompleteSearch() {
     wrapper.style.position = 'relative';
     
     const dropdown = document.createElement('div');
-    dropdown.style.cssText = 'position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;color:#111;border:1px solid rgba(0,0,0,0.1);border-radius:10px;box-shadow:0 20px 60px rgba(0,0,0,0.15);z-index:9999;overflow:hidden;display:none;flex-direction:column;max-height:70vh;overflow-y:auto;';
+    dropdown.style.cssText = 'position:absolute;top:calc(100% + 16px);right:0;width:500px;background:#fff;color:#111;border:1px solid rgba(0,0,0,0.08);border-radius:16px;box-shadow:0 30px 80px rgba(0,0,0,0.12);z-index:9999;overflow:hidden;display:none;flex-direction:column;max-height:75vh;overflow-y:auto;';
     wrapper.appendChild(dropdown);
     
     let debounceTimer;
@@ -529,33 +529,34 @@ function initAutocompleteSearch() {
       debounceTimer = setTimeout(async () => {
         try {
           dropdown.style.display = 'flex';
-          dropdown.innerHTML = '<div style="padding:16px;text-align:center;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:#999;">Searching...</div>';
+          dropdown.innerHTML = '<div style="padding:40px;text-align:center;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#999;font-weight:600;">Searching Catalog...</div>';
           
           const results = await apiGet('/api/products?search=' + encodeURIComponent(query));
           
           if (!results || results.length === 0) {
-            dropdown.innerHTML = '<div style="padding:20px;text-align:center;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#999;">No results for &ldquo;' + query + '&rdquo;</div>';
+            dropdown.innerHTML = '<div style="padding:40px;text-align:center;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#999;font-weight:600;">No results for &ldquo;' + query + '&rdquo;</div>';
             return;
           }
           
-          const topResults = results.slice(0, 6);
+          const topResults = results.slice(0, 5);
+          const highlight = (text) => text.replace(new RegExp('(' + query.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&') + ')', 'gi'), '<span style="color:#a8813c;font-weight:900;">$1</span>');
           
-          let html = '<div style="padding:10px 16px 8px;border-bottom:1px solid #f0f0f0;"><span style="font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:#aaa;font-family:monospace;">' + results.length + ' results found</span></div>';
+          let html = '<div style="padding:16px 24px;border-bottom:1px solid #f0f0f0;background:#fafafa;"><span style="font-size:10px;font-weight:700;letter-spacing:.2em;text-transform:uppercase;color:#777;">' + results.length + ' Product Matches</span></div>';
           
           html += topResults.map(p => `
-            <a href="product.html?slug=${p.slug}" style="display:flex;align-items:center;gap:12px;padding:12px 16px;border-bottom:1px solid #f5f5f5;text-decoration:none;color:inherit;transition:background .15s;" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background=''">
-              <div style="width:44px;height:44px;background:#f5f5f5;border-radius:6px;overflow:hidden;flex-shrink:0;">
+            <a href="product.html?slug=${p.slug}" style="display:flex;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid #f5f5f5;text-decoration:none;color:inherit;transition:all .2s;" onmouseover="this.style.background='#fafafa';this.style.paddingLeft='30px'" onmouseout="this.style.background='';this.style.paddingLeft='24px'">
+              <div style="width:64px;height:64px;background:#f8f8f8;border-radius:8px;overflow:hidden;flex-shrink:0;">
                 <img src="${p.primary_image || ''}" style="width:100%;height:100%;object-fit:contain;" alt="">
               </div>
               <div style="flex:1;min-width:0;">
-                <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;">${p.title}</div>
-                <div style="font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:#aaa;margin-top:2px;font-family:monospace;">${p.brand_name || 'TIME-X'}</div>
+                <div style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;">${highlight(p.title)}</div>
+                <div style="font-size:10px;font-weight:600;letter-spacing:.18em;text-transform:uppercase;color:#999;margin-top:6px;">${highlight(p.brand_name || 'TIME-X')}</div>
               </div>
-              <div style="font-size:11px;font-weight:700;color:#111;flex-shrink:0;">${fmtNPR(p.price)}</div>
+              <div style="font-size:13px;font-weight:800;color:#111;flex-shrink:0;">${fmtNPR(p.price)}</div>
             </a>
           `).join('');
           
-          html += `<a href="shop.html?search=${encodeURIComponent(query)}" style="display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 16px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:#666;text-decoration:none;background:#fafafa;border-top:1px solid #f0f0f0;transition:all .15s;" onmouseover="this.style.color='#111';this.style.background='#f0f0f0'" onmouseout="this.style.color='#666';this.style.background='#fafafa'">
+          html += `<a href="shop.html?search=${encodeURIComponent(query)}" style="display:flex;align-items:center;justify-content:center;gap:8px;padding:20px;font-size:11px;font-weight:800;letter-spacing:.2em;text-transform:uppercase;color:#111;text-decoration:none;background:#fafafa;border-top:1px solid #eee;transition:all .2s;" onmouseover="this.style.background='#f0f0f0'" onmouseout="this.style.background='#fafafa'">
             View All ${results.length} Results &rarr;
           </a>`;
           
@@ -564,7 +565,7 @@ function initAutocompleteSearch() {
         } catch (err) {
           dropdown.style.display = 'none';
         }
-      }, 180);
+      }, 150);
     });
     
     document.addEventListener('click', (e) => {
@@ -581,6 +582,8 @@ function initAutocompleteSearch() {
   });
 }
 document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
+
+
 
 
 
