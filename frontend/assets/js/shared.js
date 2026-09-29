@@ -328,7 +328,7 @@ function injectMegaMenuStyles() {
   const style = document.createElement('style');
   style.textContent = `
     .mega-menu-panel {
-      position: fixed; top: 80px; left: 0; right: 0; z-index: 45;
+      position: fixed; top: 158px; left: 0; right: 0; z-index: 45;
       background: #FFFFFF; color: #111111;
       border-bottom: 1px solid #EAEAEA;
       box-shadow: 0 12px 24px -8px rgba(0,0,0,0.15);

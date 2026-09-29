@@ -399,10 +399,10 @@ img {
 
 /* Hamburger: hide on desktop, show on mobile */
 @media(min-width:1024px){
-  #menu-toggle{display:none!important}
+  body header#site-header button#menu-toggle{display:none!important}
 }
 @media(max-width:1023px){
-  #menu-toggle{display:flex!important;flex-shrink:0;z-index:9999}
+  body header#site-header button#menu-toggle{display:flex!important;flex-shrink:0;z-index:9999}
 }
 #mobile-menu{display:block!important}
 

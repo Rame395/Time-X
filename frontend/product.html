@@ -441,24 +441,9 @@
         }
 
         async function orderViaWhatsApp() {
-            const contact = await promptWhatsAppContact();
-            if (!contact) return;
-
-            let orderNumber = null;
-            try {
-                await addToCart(product.id, selectedColor || '', selectedSize || '', 1);
-                const order = await createWhatsAppOrder(contact);
-                orderNumber = order.order_number;
-                await refreshCartBadge();
-            } catch (e) {
-                showToast(e.message || "Couldn't start this order — please try again.", true);
-                return;
-            }
-
             const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
             const lines = [
-                'Hello TIME-X, I would like to place an order:', '',
-                `*Order:* #${orderNumber}`,
+                'Hello TIME-X, I am interested in this watch:', '',
                 `*Product:* ${product.title}`,
                 `*Color:* ${selectedColor || 'N/A'}`,
                 `*Size:* ${selectedSize || 'N/A'}`,

@@ -253,28 +253,10 @@
         }
 
         async function checkoutViaWhatsApp() {
-            if (!currentCart || !currentCart.items.length) return;
-            const contact = await promptWhatsAppContact();
-            if (!contact) return;
-
-            const cartBeforeOrder = currentCart;
-            let orderNumber = null;
-            try {
-                const order = await createWhatsAppOrder(contact);
-                orderNumber = order.order_number;
-            } catch (e) {
-                showToast(e.message || "Couldn't start this order — please try again.", true);
-                return;
-            }
-
-            const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
-            await whatsAppOrderFromCart(cartBeforeOrder, settings, orderNumber);
-
-            // The order just consumed the cart server-side — refresh this page's view to match.
-            const freshCart = await getCart();
-            renderCart(freshCart);
-            await refreshCartBadge();
-        }
+    if (!currentCart || !currentCart.items.length) return;
+    const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
+    await whatsAppOrderFromCart(currentCart, settings, null);
+}
 
         let siteSettings = null;
 
@@ -291,3 +273,4 @@
     </script>
 </body>
 </html>
+
