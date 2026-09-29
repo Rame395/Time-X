@@ -162,7 +162,6 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
 @media(max-width:1023px){
   body header#site-header button#menu-toggle{display:flex!important;flex-shrink:0;z-index:9999}
 }
-#mobile-menu{display:block!important}
 
 /* Gallery filters stay in the document flow and scroll away with the page. */
 .gallery-filter-bar{position:relative!important;top:auto!important;z-index:auto!important;background:rgba(255,255,255,.96)!important;backdrop-filter:blur(16px);border-bottom:1px solid var(--lux-line)!important}
@@ -215,3 +214,4 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
     animation: marquee 15s linear infinite;
   }
 }
+

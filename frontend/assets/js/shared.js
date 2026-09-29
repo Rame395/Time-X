@@ -5,12 +5,12 @@ document.addEventListener("DOMContentLoaded", () => {
   const mobileMenu = document.getElementById("mobile-menu");
   if (menuToggle && mobileMenu) {
     const closeMenu = () => {
-      mobileMenu.classList.add("translate-x-full");
+      mobileMenu.classList.add('translate-x-full'); setTimeout(() => mobileMenu.classList.add('hidden'), 500);
       document.body.classList.remove("mobile-menu-open");
       menuToggle.setAttribute("aria-expanded", "false");
     };
     const openMenu = () => {
-      mobileMenu.classList.remove("translate-x-full");
+      mobileMenu.classList.remove('hidden'); void mobileMenu.offsetWidth; mobileMenu.classList.remove('translate-x-full');
       document.body.classList.add("mobile-menu-open");
       menuToggle.setAttribute("aria-expanded", "true");
     };
@@ -581,6 +581,8 @@ function initAutocompleteSearch() {
   });
 }
 document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
+
+
 
 
 
