@@ -436,23 +436,23 @@
                 
                 slider.innerHTML = featured.map(p => {
                     const priceHTML = p.compare_at_price
-                        ? <span class="sm:whitespace-nowrap"><span class="text-sm font-semibold tracking-tight"> + formatNPR(p.price) + </span> <span class="text-[10px] text-gray-400 line-through"> + formatNPR(p.compare_at_price) + </span></span>
-                        : <span class="text-sm font-semibold tracking-tight"> + formatNPR(p.price) + </span>;
+                        ? `<span class="sm:whitespace-nowrap"><span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-[10px] text-gray-400 line-through">${formatNPR(p.compare_at_price)}</span></span>`
+                        : `<span class="text-sm font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
                     
-                    return 
-                    <a href="product.html?slug=+p.slug+" class="group relative snap-start shrink-0 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] bg-white border border-black/5 flex flex-col hover:border-black/20 transition-colors">
+                    return `
+                    <a href="product.html?slug=${p.slug}" class="group relative snap-start shrink-0 min-w-[85vw] sm:min-w-[350px] md:min-w-[400px] bg-white border border-black/5 flex flex-col hover:border-black/20 transition-colors">
                         <div class="relative w-full aspect-[3/4] bg-gray-50 overflow-hidden">
-                            <img src="+(p.primary_image || '')+" alt="+p.title+" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
+                            <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700">
                         </div>
                         <div class="p-6 flex flex-col justify-between flex-1">
                             <div>
-                                <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-2">+(p.brand_name || 'TIME-X')+</p>
-                                <h3 class="text-lg font-black uppercase tracking-tight mb-2">+p.title+</h3>
+                                <p class="text-[10px] text-timexTextGrey font-mono tracking-widest uppercase mb-2">${p.brand_name || 'TIME-X'}</p>
+                                <h3 class="text-lg font-black uppercase tracking-tight mb-2">${p.title}</h3>
                             </div>
-                            <div class="mt-4">+priceHTML+</div>
+                            <div class="mt-4">${priceHTML}</div>
                         </div>
                     </a>
-                    ;
+                    `;
                 }).join('');
                 
                 // Setup slider buttons
