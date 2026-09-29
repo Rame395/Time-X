@@ -444,12 +444,36 @@
         }
 
         async function handleAddToCart() {
+            const btn = document.getElementById('add-to-cart-btn');
+            const originalText = btn.textContent;
+            
             try {
+                // Change button state
+                btn.disabled = true;
+                btn.innerHTML = `<span class="inline-block animate-pulse">Adding to Cart...</span>`;
+                btn.classList.add('bg-gray-100', 'text-gray-400');
+                btn.classList.remove('bg-timexWhite', 'text-timexBlack', 'hover:bg-timexSilver');
+                
                 await addToCart(product.id, selectedColor || '', selectedSize || '');
                 await refreshCartBadge();
-                showToast(`Added: ${product.title}${selectedColor ? ' (' + selectedColor + ')' : ''} — choose your size at checkout`);
+                
+                // Success state
+                btn.innerHTML = `<span class="inline-flex items-center gap-2"><span>Added to Cart</span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="text-green-600"><polyline points="20 6 9 17 4 12"></polyline></svg></span>`;
+                btn.classList.remove('bg-gray-100', 'text-gray-400');
+                btn.classList.add('bg-green-50', 'text-green-700', 'border', 'border-green-200');
+                
+                showToast(`Added: ${product.title}${selectedColor ? ' (' + selectedColor + ')' : ''}`);
+                
             } catch (e) {
+                btn.innerHTML = `<span>Error - Try Again</span>`;
+                btn.classList.remove('bg-gray-100', 'text-gray-400');
+                btn.classList.add('bg-red-50', 'text-red-700');
                 showToast(e.message || 'Could not add to cart', true);
+            } finally {
+                // Reset button after 2.5 seconds
+                setTimeout(() => {
+                    updateActionButtons(); // Restores original state based on selection
+                }, 2500);
             }
         }
 
@@ -662,6 +686,7 @@
     </script>
 </body>
 </html>
+
 
 
 
