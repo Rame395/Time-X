@@ -77,7 +77,8 @@
     <a href="women.html" class="txnav">Women</a>
     <a href="new-arrivals.html" class="txnav">New Arrivals</a>
     <a href="collections.html" class="txnav">Collections</a>
-    <a href="blog.html" class="txnav">Blog</a>
+    <a href="gallery.html" class="txnav">Gallery</a>
+      <a href="blog.html" class="txnav">Blog</a>
   </nav>
   <!-- Right side -->
   <div style="display:flex;align-items:center;gap:12px;flex-shrink:0;">
@@ -151,7 +152,7 @@
 <div class="gallery-filter-bar border-b border-timexDarkBorder bg-timexCharcoal">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12 h-16 flex items-center justify-between text-xs font-semibold uppercase tracking-widest overflow-x-auto">
 <div class="flex items-center space-x-8 whitespace-nowrap">
-<button class="gallery-filter-btn text-timexWhite font-bold underline underline-offset-4" onclick="filterGallery('all')">All Series (<span id="gallery-all-count">9</span>)</button>
+<button class="gallery-filter-btn text-timexWhite font-bold underline underline-offset-4" onclick="filterGallery('all')">All Series (<span id="gallery-all-count">0</span>)</button>
 <button class="gallery-filter-btn text-timexLightGrey hover:text-timexWhite transition-colors" onclick="filterGallery('studio')">Studio Product Shoot</button>
 <button class="gallery-filter-btn text-timexLightGrey hover:text-timexWhite transition-colors" onclick="filterGallery('editorial')">On The Wrist</button>
 <button class="gallery-filter-btn text-timexLightGrey hover:text-timexWhite transition-colors" onclick="filterGallery('details')">Movement &amp; Craft</button>
@@ -161,117 +162,7 @@
 </div>
 <section class="py-24 bg-timexBlack text-timexWhite">
 <div class="max-w-[1440px] mx-auto px-6 lg:px-12">
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid">
-<div class="gallery-item studio group cursor-pointer" onclick="openGalleryLightbox(0)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="TIME-X Automatic Movement Studio" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1762708052123-7332966eaecb?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Studio Series 01 — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">TIME-X Automatic Movement (Studio Series 01)</span>
-<span class="text-timexLightGrey font-mono text-[10px]">480 GSM COTTON</span>
-</div>
-</div>
-<div class="gallery-item editorial group cursor-pointer" onclick="openGalleryLightbox(1)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Case Assembly, Kathmandu Workshop" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1600003014608-c2ccc1570a65?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Editorial Series — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Case Assembly, Kathmandu Workshop</span>
-<span class="text-timexLightGrey font-mono text-[10px]">DROP 01</span>
-</div>
-</div>
-<div class="gallery-item details group cursor-pointer" onclick="openGalleryLightbox(2)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Sapphire Crystal Macro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1623998021450-85c29c644e0d?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Craft Detail — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Sapphire Crystal Macro</span>
-<span class="text-timexLightGrey font-mono text-[10px]">CRAFT</span>
-</div>
-</div>
-<div class="gallery-item studio group cursor-pointer" onclick="openGalleryLightbox(3)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Annapurna Diver on Wrist" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1548171838-b3d4c18a3a67?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Studio Series — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Annapurna Diver on Wrist</span>
-<span class="text-timexLightGrey font-mono text-[10px]">STUDIO SHOT</span>
-</div>
-</div>
-<div class="gallery-item editorial group cursor-pointer" onclick="openGalleryLightbox(4)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Steel Bracelet Detail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1618215649872-6e3143a716ec?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Editorial Series — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Steel Bracelet Detail</span>
-<span class="text-timexLightGrey font-mono text-[10px]">OUTDOOR</span>
-</div>
-</div>
-<div class="gallery-item details group cursor-pointer" onclick="openGalleryLightbox(5)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Hand-Finished Case Back" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1704783339057-3fb087d3bc98?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Craft Detail — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Hand-Finished Case Back</span>
-</div>
-</div>
-<div class="gallery-item studio group cursor-pointer" onclick="openGalleryLightbox(6)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="TIME-X Dial Signature" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1600003014608-c2ccc1570a65?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Studio Series — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">TIME-X Dial Signature</span>
-<span class="text-timexLightGrey font-mono text-[10px]">STUDIO SHOT</span>
-</div>
-</div>
-<div class="gallery-item editorial group cursor-pointer" onclick="openGalleryLightbox(7)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Three Generations of Timekeeping" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1548171838-b3d4c18a3a67?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Editorial Series — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Three Generations of Timekeeping</span>
-<span class="text-timexLightGrey font-mono text-[10px]">KATHMANDU</span>
-</div>
-</div>
-<div class="gallery-item details group cursor-pointer" onclick="openGalleryLightbox(8)">
-<div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-<img alt="Ceramic Bezel Detail" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" src="https://images.unsplash.com/photo-1623998021450-85c29c644e0d?q=80&amp;w=1000&amp;auto=format&amp;fit=crop"/>
-<div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-<span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Craft Detail — Expand ↗</span>
-</div>
-</div>
-<div class="flex justify-between items-center text-xs uppercase tracking-wider">
-<span class="font-medium">Ceramic Bezel Detail</span>
-<span class="text-timexLightGrey font-mono text-[10px]">DETAIL</span>
-</div>
-</div>
-</div>
-</div>
-</section>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="gallery-grid"></div></div></section>
 <div class="fixed inset-0 bg-timexBlack/95 z-50 hidden flex items-center justify-center px-4" id="gallery-lightbox">
 <button class="absolute top-6 right-8 text-timexWhite text-xl font-mono uppercase tracking-widest hover:text-timexLightGrey" onclick="closeGalleryLightbox()">✕ Close</button>
 <button class="absolute left-6 text-timexWhite text-2xl px-4 py-2 hover:opacity-75" onclick="prevGalleryImage()">←</button>
@@ -366,17 +257,7 @@
     </script>
 <script>
         // Lightbox Array
-        const galleryData = [
-            { src: "https://images.unsplash.com/photo-1762708052123-7332966eaecb?q=80&w=1400&auto=format&fit=crop", caption: "TIME-X Automatic Movement (Studio Series 01)" },
-            { src: "https://images.unsplash.com/photo-1600003014608-c2ccc1570a65?q=80&w=1400&auto=format&fit=crop", caption: "Case Assembly, Kathmandu Workshop (On The Wrist)" },
-            { src: "https://images.unsplash.com/photo-1623998021450-85c29c644e0d?q=80&w=1400&auto=format&fit=crop", caption: "Sapphire Crystal Macro (Craft Detail)" },
-            { src: "https://images.unsplash.com/photo-1548171838-b3d4c18a3a67?q=80&w=1400&auto=format&fit=crop", caption: "Annapurna Diver on Wrist (Studio Shot)" },
-            { src: "https://images.unsplash.com/photo-1618215649872-6e3143a716ec?q=80&w=1400&auto=format&fit=crop", caption: "Steel Bracelet Detail (Outdoor Editorial)" },
-            { src: "https://images.unsplash.com/photo-1704783339057-3fb087d3bc98?q=80&w=1400&auto=format&fit=crop", caption: "Hand-Finished Case Back (Craft Detail)" },
-            { src: "https://images.unsplash.com/photo-1600003014608-c2ccc1570a65?q=80&w=1400&auto=format&fit=crop", caption: "TIME-X Dial Signature (Studio Shot)" },
-            { src: "https://images.unsplash.com/photo-1548171838-b3d4c18a3a67?q=80&w=1400&auto=format&fit=crop", caption: "Three Generations of Timekeeping (Kathmandu Street Culture)" },
-            { src: "https://images.unsplash.com/photo-1623998021450-85c29c644e0d?q=80&w=1400&auto=format&fit=crop", caption: "Ceramic Bezel Detail (Detail)" }
-        ];
+        const galleryData = [];
 
         let activeGalleryIndex = 0;
 
@@ -435,55 +316,6 @@
 
         (async function loadGalleryGridOverride() {
             let images = [];
-            try {
-                images = await apiGet('/api/site-images/gallery_grid');
-            } catch (e) {
-                return; // keep the 9 hardcoded defaults + their existing galleryData
-            }
-            if (!images.length) return; // no admin photos added yet — defaults stay exactly as they were
-
-            // Custom photos replace both the visible grid and the lightbox data together,
-            // so clicking any tile still opens the matching enlarged image + caption.
-            galleryData.length = 0;
-            images.forEach((img) => galleryData.push({ src: img.url, caption: img.heading || '' }));
-
-            document.getElementById('gallery-all-count').textContent = images.length;
-            document.getElementById('gallery-grid').innerHTML = images.map((img, i) => `
-                <div class="gallery-item ${img.tag || ''} group cursor-pointer" onclick="openGalleryLightbox(${i})">
-                    <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3">
-                        <img src="${img.url}" alt="${img.heading || 'TIME-X Gallery'}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
-                        <div class="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
-                            <span class="text-timexWhite text-xs font-semibold uppercase tracking-widest">Expand ↗</span>
-                        </div>
-                    </div>
-                    <div class="flex justify-between items-center text-xs uppercase tracking-wider">
-                        <span class="font-medium">${img.heading || ''}</span>
-                        <span class="text-timexLightGrey font-mono text-[10px]">${img.subheading || ''}</span>
-                    </div>
-                </div>`).join('');
-        })();
-    </script>
-</body>
-</html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            try { images = await apiGet('/api/site-images/gallery_grid'); } catch(e) { }
+            if (!images.length) { document.getElementById("gallery-grid").innerHTML = "<p class=`"col-span-full text-center text-xs uppercase tracking-widest text-timexLightGrey py-16`">No images in gallery.</p>"; return; }
 
