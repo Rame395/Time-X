@@ -259,9 +259,14 @@ def list_products(
             q = q.filter(models.ProductVariant.strap_material == strap_material)
         if in_stock:
             q = q.filter(models.ProductVariant.stock_qty > 0)
+    relevance_col = None
     if search:
+        from sqlalchemy import case
         q = q.outerjoin(models.Brand)
-        like = f"%{search.strip()}%"
+        clean_search = search.strip()
+        like = f"%{clean_search}%"
+        prefix_like = f"{clean_search}%"
+        
         q = q.filter(
             (models.Product.title.ilike(like))
             | (models.Product.subcategory.ilike(like))
@@ -269,15 +274,30 @@ def list_products(
             | (models.Product.description.ilike(like))
             | (models.Brand.name.ilike(like))
         )
+        
+        relevance_col = case(
+            [
+                (models.Product.title.ilike(prefix_like), 1),
+                (models.Brand.name.ilike(prefix_like), 2),
+                (models.Product.title.ilike(like), 3)
+            ],
+            else_=4
+        )
 
     if sort == "price_asc":
         q = q.order_by(models.Product.price.asc())
     elif sort == "price_desc":
         q = q.order_by(models.Product.price.desc())
     elif sort == "popularity":
-        q = q.order_by(models.Product.display_rank.asc(), models.Product.is_best_seller.desc(), models.Product.created_at.desc())
+        if relevance_col is not None:
+            q = q.order_by(relevance_col.asc(), models.Product.display_rank.asc(), models.Product.is_best_seller.desc(), models.Product.created_at.desc())
+        else:
+            q = q.order_by(models.Product.display_rank.asc(), models.Product.is_best_seller.desc(), models.Product.created_at.desc())
     else:
-        q = q.order_by(models.Product.display_rank.asc(), models.Product.created_at.desc())
+        if relevance_col is not None:
+            q = q.order_by(relevance_col.asc(), models.Product.display_rank.asc(), models.Product.created_at.desc())
+        else:
+            q = q.order_by(models.Product.display_rank.asc(), models.Product.created_at.desc())
 
     products = q.distinct().all()
     return [_card_from_product(p) for p in products]
@@ -362,4 +382,5 @@ def create_product_review(slug: str, payload: schemas.ReviewIn, db: Session = De
     db.commit()
     db.refresh(review)
     return schemas.ReviewOut.from_model(review)
+
 
