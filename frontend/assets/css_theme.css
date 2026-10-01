@@ -125,7 +125,7 @@ select option{background:#fff;color:#141311}
 
 #toast-container>div{border-radius:0!important;background:#ffffff!important;color:#141311!important;border:1px solid var(--lux-gold)!important;box-shadow:0 16px 45px rgba(20,19,17,.15)!important}
 .page-fade{animation:atelierFade .42s ease both}
-@keyframes atelierFade{from{opacity:.35;transform:translateY(5px)}to{opacity:1;transform:none}}
+@keyframes atelierFade{from{opacity:.35}to{opacity:1}}
 .product-card-video{pointer-events:none}.video-active .product-card-video{opacity:1!important}.video-active>img{opacity:0!important}
 
 /* Secondary storefront pages with a 40vh hero — light */
@@ -214,5 +214,7 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
     animation: marquee 15s linear infinite;
   }
 }
+
+
 
 
