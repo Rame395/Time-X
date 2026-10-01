@@ -16,7 +16,7 @@ from sqlalchemy import text
 
 from . import models, config
 from .database import engine, SessionLocal
-from .seed import seed_if_empty, ensure_unisex_category, ensure_default_departments, ensure_default_delivery_zones, ensure_default_brand_assets, ensure_carried_brands
+from .seed import seed_if_empty, ensure_unisex_category, ensure_default_departments, ensure_default_delivery_zones, ensure_default_brand_assets, ensure_carried_brands, ensure_display_rank_column
 from .routers import products, cart, orders, admin, customers
 
 FRONTEND_DIR = os.path.join(os.path.dirname(config.BASE_DIR), "frontend")
@@ -65,6 +65,7 @@ async def lifespan(app: FastAPI):
             ensure_default_delivery_zones(db)
             ensure_default_brand_assets(db)
             ensure_carried_brands(db)
+            ensure_display_rank_column(db)
         finally:
             db.close()
     yield
@@ -124,3 +125,4 @@ app.mount("/media", StaticFiles(directory=config.MEDIA_DIR), name="media")
 # Mounted last so it never shadows the /api/* and /media/* routes above.
 if os.path.isdir(FRONTEND_DIR):
     app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+

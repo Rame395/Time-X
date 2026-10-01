@@ -376,3 +376,17 @@ def seed_if_empty(db: Session) -> None:
         db.add(models.SiteSetting(key=key, value=value))
 
     db.commit()
+
+def ensure_display_rank_column(db: Session):
+    from sqlalchemy import text
+    try:
+        db.execute(text("SELECT display_rank FROM products LIMIT 1"))
+    except Exception:
+        db.rollback()
+        try:
+            db.execute(text("ALTER TABLE products ADD COLUMN display_rank INTEGER DEFAULT 0;"))
+            db.commit()
+            print("Added display_rank column to products table.")
+        except Exception as e:
+            db.rollback()
+            print(f"Could not add display_rank column: {e}")
