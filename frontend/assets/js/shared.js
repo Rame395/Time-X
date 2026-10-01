@@ -69,7 +69,7 @@ async function showAdminReturnLinkIfLoggedIn() {
     const badge = document.createElement("a");
     badge.href = "/admin/dashboard.html";
     badge.className =
-      "fixed bottom-6 right-6 z-[80] bg-timexBlack text-timexWhite text-[11px] font-semibold uppercase tracking-widest px-4 py-3 shadow-lg hover:bg-timexTextGrey transition-colors flex items-center gap-2";
+      "fixed bottom-6 left-6 z-[80] bg-timexBlack text-timexWhite text-[11px] font-semibold uppercase tracking-widest px-4 py-3 shadow-lg hover:bg-timexTextGrey transition-colors flex items-center gap-2";
     badge.innerHTML = `<span>⚙</span><span>Back to Admin</span>`;
     document.body.appendChild(badge);
   } catch (e) {
@@ -597,4 +597,5 @@ async function openWhatsAppChat() {
     const phone = settings.whatsapp_number || '9779768785693';
     window.open(phone.startsWith('http') ? phone : 'https://wa.me/' + phone.replace(/[^0-9]/g, ''), '_blank');
 }
+
 

@@ -164,16 +164,20 @@
 </div>
 </div>
 </div>
-<section class="relative h-screen w-full overflow-hidden cursor-pointer bg-[#fdfdfd]" id="hero-section">
-
+<section class="relative min-h-[100vh] lg:h-screen w-full flex flex-col lg:block overflow-hidden cursor-pointer bg-[#fdfdfd]" id="hero-section">
+  
   <!-- Background image / video -->
-  <div class="absolute inset-0 z-0">
+  <div class="relative lg:absolute h-[50vh] lg:h-auto lg:inset-0 z-0 w-full flex-shrink-0">
     <img alt="TIME-X Hero" id="hero-bg-img" src=""
-      class="hidden w-full h-full object-cover object-[75%_center] lg:object-[80%_center] opacity-95 scale-105 editorial-image-zoom transition-opacity duration-700"/>
+      class="hidden w-full h-full object-cover object-center lg:object-[80%_center] opacity-95 lg:scale-105 editorial-image-zoom transition-opacity duration-700"/>
     <video id="hero-bg-video" loop muted playsinline preload="metadata"
-      class="absolute inset-0 w-full h-full object-cover object-[75%_center] lg:object-[80%_center] opacity-0 transition-opacity duration-700 pointer-events-none"></video>
-    <!-- Soft gradient to ensure text readability -->
-    <div class="absolute inset-0 bg-gradient-to-r from-white/80 via-white/40 to-transparent lg:w-2/3"></div>
+      class="absolute inset-0 w-full h-full object-cover object-center lg:object-[80%_center] opacity-0 transition-opacity duration-700 pointer-events-none"></video>
+    
+    <!-- Soft fade at the bottom on desktop to fix shadow clipping, and full gradient on desktop for text readability -->
+    <div class="hidden lg:block absolute inset-0 bg-gradient-to-r from-white/90 via-white/50 to-transparent w-2/3"></div>
+    <div class="hidden lg:block absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#fdfdfd] to-transparent"></div>
+    <!-- Soft fade at the bottom on mobile to blend into the text section smoothly -->
+    <div class="lg:hidden absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-[#fdfdfd] to-transparent"></div>
   </div>
 
   <!-- Video hint -->
@@ -191,23 +195,22 @@
     <span class="text-[8px] uppercase tracking-[0.3em] text-black rotate-90 origin-center mt-2">Scroll</span>
   </div>
 
-  <!-- Main content: bottom-left, tightly grouped -->
-  <div class="absolute bottom-0 left-0 right-0 z-10 max-w-[1440px] mx-auto px-6 lg:px-16 pb-16 lg:pb-24">
+  <!-- Main content: below image on mobile, bottom-left on desktop -->
+  <div class="relative lg:absolute lg:bottom-0 lg:left-0 lg:right-0 z-10 flex-grow flex flex-col justify-center max-w-[1440px] mx-auto px-6 lg:px-16 pt-8 pb-16 lg:pb-24 w-full">
     <div class="flex gap-5 items-start">
       <!-- Gold vertical accent line -->
       <div class="hidden lg:block w-[2px] h-40 mt-6 flex-shrink-0" style="background: linear-gradient(to bottom, transparent, #a8813c 40%, #a8813c);"></div>
 
       <div class="flex flex-col">
         <p id="hero-eyebrow" class="text-[10px] font-mono tracking-[0.3em] text-[#a8813c] mb-5 uppercase font-bold">Premium Timepieces</p>
-        <h1 class="font-black tracking-tighter uppercase leading-[0.88] text-[#111]" style="font-size: clamp(2.2rem, 11vw, 7rem); font-family: 'Cormorant Garamond', Georgia, serif;">
-          <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision</span></span>
-          <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Crafted</span></span>
-          <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless.</span></span>
+        <h1 class="font-black tracking-tighter uppercase leading-[0.95] text-[#111]" style="font-size: clamp(2rem, 9vw, 6.5rem); font-family: 'Cormorant Garamond', Georgia, serif;">
+          <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Precision Crafted.</span></span>
+          <span class="hero-word block overflow-hidden"><span class="hero-word-inner">Timeless Design.</span></span>
         </h1>
         <p id="hero-subheading" class="hidden text-sm text-gray-800 mt-4 max-w-sm uppercase tracking-wider font-medium"></p>
 
-        <!-- Buttons directly under text (both desktop and mobile) -->
-        <div class="flex flex-col sm:flex-row gap-4 mt-10">
+        <!-- Buttons directly under text -->
+        <div class="flex flex-col sm:flex-row gap-4 mt-8 lg:mt-10">
           <a id="hero-cta" href="new-arrivals.html"
             class="inline-flex items-center justify-center w-full sm:w-auto px-8 py-4 text-[11px] font-semibold tracking-widest uppercase text-black transition-all hover:opacity-90"
             style="background:#a8813c; min-width:200px;">
@@ -223,7 +226,7 @@
     </div>
   </div>
 
-  <div class="hidden absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
+  <div class="hidden lg:flex absolute bottom-6 left-1/2 -translate-x-1/2 z-10 gap-2" id="hero-dots"></div>
 </section>
 
 
@@ -742,6 +745,12 @@
   </a>
 </body>
 </html>
+
+
+
+
+
+
 
 
 
