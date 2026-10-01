@@ -59,13 +59,13 @@ async def lifespan(app: FastAPI):
         models.Base.metadata.create_all(bind=engine)
         db = SessionLocal()
         try:
+            ensure_display_rank_column(db)
             seed_if_empty(db)
             ensure_unisex_category(db)
             ensure_default_departments(db)
             ensure_default_delivery_zones(db)
             ensure_default_brand_assets(db)
             ensure_carried_brands(db)
-            ensure_display_rank_column(db)
         finally:
             db.close()
     yield
@@ -125,4 +125,6 @@ app.mount("/media", StaticFiles(directory=config.MEDIA_DIR), name="media")
 # Mounted last so it never shadows the /api/* and /media/* routes above.
 if os.path.isdir(FRONTEND_DIR):
     app.mount("/", StaticFiles(directory=FRONTEND_DIR, html=True), name="frontend")
+
+
 
