@@ -67,7 +67,7 @@ section.py-14,section.py-16,section.py-24,section.py-32,section.py-36{background
 section#story{background:#f7f5f1!important}
 section#story:after{background:linear-gradient(90deg,rgba(255,255,255,.9),rgba(255,255,255,.4))}
 section#on-sale,section#best-sellers{background:#ffffff!important}
-section#on-sale>div>div:first-child h2,section#best-sellers>div>div:first-child h2{font-family:"Cormorant Garamond",Georgia,serif!important;font-size:clamp(2.6rem,5vw,5rem)!important;font-weight:500!important;letter-spacing:-.035em!important;color:#141311!important}
+section#on-sale>div>div:first-child h2,section#best-sellers>div>div:first-child h2{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important;letter-spacing:-.035em!important;color:#141311!important}
 section h2{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important}
 section span.text-xs.font-mono,section .font-mono{color:var(--lux-gold)!important}
 
@@ -214,6 +214,7 @@ body>section.relative.h-\[40vh\] h1,body>section.relative.h-\[45vh\] h1{font-fam
     animation: marquee 15s linear infinite;
   }
 }
+
 
 
 
