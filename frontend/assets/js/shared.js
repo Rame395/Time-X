@@ -228,7 +228,7 @@ async function applySiteSettingsToPage() {
     contactEls.forEach((el) => {
       if (settings.contact_phone) {
         el.textContent = `Contact — ${settings.contact_phone}`;
-        el.href = `https://wa.me/${settings.contact_phone.replace(/\D/g, "")}`;
+        el.href = `'https://wa.me/'${settings.contact_phone.replace(/\D/g, "")}`;
         el.target = "_blank";
       }
     });
@@ -589,4 +589,12 @@ document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
 
 
 
+
+
+/* ---------------- WhatsApp Global Chat ---------------- */
+async function openWhatsAppChat() {
+    const settings = await apiGet('/api/settings').catch(() => ({ whatsapp_number: '9779768785693' }));
+    const phone = settings.whatsapp_number || '9779768785693';
+    window.open(phone.startsWith('http') ? phone : 'https://wa.me/' + phone.replace(/[^0-9]/g, ''), '_blank');
+}
 
