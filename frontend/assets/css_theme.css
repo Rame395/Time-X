@@ -55,7 +55,7 @@ button.border-timexBlack,a.border-timexBlack{border-color:#141311!important;colo
 #hero-section{min-height:calc(100svh - 0px)!important;background:#ffffff!important;color:#141311!important;padding-top:158px;box-sizing:border-box}
 #hero-section>div:first-child:after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(255,255,255,.88),rgba(255,255,255,.12) 65%),linear-gradient(0deg,rgba(255,255,255,.9),transparent 55%)}
 #hero-section .relative.z-10{padding-bottom:clamp(70px,9vw,110px)}
-#hero-section h1{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important;letter-spacing:-.045em!important;line-height:.82!important;color:#141311!important}
+#hero-section h1{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important;letter-spacing:-.045em!important;line-height:.82!important;color:#141311!important;font-size:clamp(2rem, 5vw, 4.25rem)!important}
 .hero-word-inner{font-family:"Cormorant Garamond",Georgia,serif!important;font-weight:500!important;letter-spacing:-.045em!important}
 #hero-eyebrow{color:var(--lux-gold-bright)!important;letter-spacing:.35em!important}
 #hero-subheading{color:var(--lux-muted)!important}
