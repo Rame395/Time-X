@@ -275,9 +275,9 @@ def list_products(
     elif sort == "price_desc":
         q = q.order_by(models.Product.price.desc())
     elif sort == "popularity":
-        q = q.order_by(models.Product.is_best_seller.desc(), models.Product.created_at.desc())
+        q = q.order_by(models.Product.display_rank.asc(), models.Product.is_best_seller.desc(), models.Product.created_at.desc())
     else:
-        q = q.order_by(models.Product.created_at.desc())
+        q = q.order_by(models.Product.display_rank.asc(), models.Product.created_at.desc())
 
     products = q.distinct().all()
     return [_card_from_product(p) for p in products]
@@ -362,3 +362,4 @@ def create_product_review(slug: str, payload: schemas.ReviewIn, db: Session = De
     db.commit()
     db.refresh(review)
     return schemas.ReviewOut.from_model(review)
+

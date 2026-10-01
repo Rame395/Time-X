@@ -134,6 +134,7 @@ class ProductCardOut(BaseModel):
     is_best_seller: bool = False
     is_featured: bool = False
     is_limited_edition: bool = False
+    display_rank: int = 0
     collection_tag: str
     brand_name: Optional[str] = None
     movement: str = ""
@@ -164,6 +165,7 @@ class ProductDetailOut(BaseModel):
     is_best_seller: bool = False
     is_featured: bool = False
     is_limited_edition: bool = False
+    display_rank: int = 0
     brand_id: Optional[int] = None
     brand_name: Optional[str] = None
     model_name: str = ""
@@ -201,6 +203,7 @@ class ProductIn(BaseModel):
     is_best_seller: bool = False
     is_featured: bool = False
     is_limited_edition: bool = False
+    display_rank: int = 0
     is_active: bool = True
     brand_id: Optional[int] = None
     model_name: str = ""
@@ -234,6 +237,7 @@ class ProductUpdateIn(BaseModel):
     is_best_seller: Optional[bool] = None
     is_featured: Optional[bool] = None
     is_limited_edition: Optional[bool] = None
+    display_rank: Optional[int] = None
     is_active: Optional[bool] = None
     brand_id: Optional[int] = None
     model_name: Optional[str] = None
@@ -647,3 +651,4 @@ class StockAdjustIn(BaseModel):
     new_stock_qty: int
     reason: str = "manual_adjustment"   # manual_adjustment | damaged | restock
     note: str = ""
+

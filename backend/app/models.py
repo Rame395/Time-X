@@ -57,6 +57,7 @@ class Product(Base):
     is_best_seller = Column(Boolean, default=False)
     is_featured = Column(Boolean, default=False)
     is_limited_edition = Column(Boolean, default=False)
+    display_rank = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
 
@@ -506,3 +507,4 @@ class DeliveryZone(Base):
     fee = Column(Integer, nullable=False, default=100)
     sort_order = Column(Integer, default=0)
     is_active = Column(Boolean, default=True)
+
