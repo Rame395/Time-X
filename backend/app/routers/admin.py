@@ -137,6 +137,7 @@ def _product_detail(p: models.Product) -> schemas.ProductDetailOut:
         department=p.department or "Classic", subcategory=p.subcategory or "", category_slug=p.category.slug,
         collection_tag=p.collection_tag or "", is_new_arrival=p.is_new_arrival,
         is_best_seller=p.is_best_seller, is_featured=p.is_featured, is_limited_edition=p.is_limited_edition,
+        display_rank=p.display_rank,
         brand_id=p.brand_id, brand_name=p.brand.name if p.brand else None,
         model_name=p.model_name or "", reference_number=p.reference_number or "", sku=p.sku or "",
         movement=p.movement or "", case_material=p.case_material or "", dial_color=p.dial_color or "",
