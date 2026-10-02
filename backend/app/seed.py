@@ -381,12 +381,13 @@ def ensure_display_rank_column(db: Session):
     from sqlalchemy import text
     try:
         db.execute(text("SELECT display_rank FROM products LIMIT 1"))
-    except Exception:
+    except Exception as e:
         db.rollback()
+        print("display_rank not found, attempting to add it...", e)
         try:
-            db.execute(text("ALTER TABLE products ADD COLUMN display_rank INTEGER DEFAULT 0;"))
+            db.execute(text("ALTER TABLE products ADD COLUMN display_rank INTEGER DEFAULT 0"))
             db.commit()
             print("Added display_rank column to products table.")
-        except Exception as e:
+        except Exception as e2:
             db.rollback()
-            print(f"Could not add display_rank column: {e}")
+            print(f"Could not add display_rank column: {e2}")

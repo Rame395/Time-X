@@ -115,6 +115,7 @@ def create_product(payload: schemas.ProductIn, db: Session = Depends(get_db), ad
         strap_material=payload.strap_material, water_resistance=payload.water_resistance,
         glass_type=payload.glass_type, warranty=payload.warranty, condition=payload.condition,
         has_certificate=payload.has_certificate, video_url=payload.video_url,
+        display_rank=payload.display_rank,
     )
     db.add(product)
     db.flush()
