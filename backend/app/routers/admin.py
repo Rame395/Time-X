@@ -194,12 +194,12 @@ def delete_product(product_id: int, db: Session = Depends(get_db), admin: models
 
 
 @router.post("/products/{product_id}/images", response_model=schemas.ProductDetailOut)
-async def upload_product_image(product_id: int, file: UploadFile = File(...), color_name: str = Form(""), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
+def upload_product_image(product_id: int, file: UploadFile = File(...), color_name: str = Form(""), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     product = _get_product_or_404(db, product_id)
     color_name = color_name.strip()
     if color_name and not any(c.name == color_name for c in product.colors):
         raise HTTPException(status_code=400, detail=f"'{color_name}' isn't one of this product's colors yet — add it as a color first.")
-    content = await file.read()
+    content = file.file.read()
     url = save_image_to_db(db, content, file.content_type)
 
     next_order = max([i.sort_order for i in product.images], default=-1) + 1
@@ -227,13 +227,13 @@ def delete_product_image(product_id: int, image_id: int, db: Session = Depends(g
 
 
 @router.post("/products/{product_id}/video", response_model=schemas.ProductDetailOut)
-async def upload_product_video(product_id: int, file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
+def upload_product_video(product_id: int, file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     """Uploads a short companion video for this product — plays when the
     customer touches/hovers the primary photo on the product page."""
     product = _get_product_or_404(db, product_id)
     delete_image_by_url(db, product.video_url)
 
-    content = await file.read()
+    content = file.file.read()
     url = save_image_to_db(db, content, file.content_type)
     product.video_url = url
     db.commit()
@@ -530,7 +530,7 @@ QR_PAYMENT_METHODS = {"esewa", "khalti", "fonepay", "connectips", "bank_transfer
 
 
 @router.post("/settings/qr")
-async def upload_qr(method: str = Form(""), file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
+def upload_qr(method: str = Form(""), file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     """Uploads a QR code. If `method` is one of the known payment methods, it's
     saved as that method's own QR (settings key qr_image_path_<method>) so each
     payment option can show its correct code at checkout. With no method given,
@@ -543,7 +543,7 @@ async def upload_qr(method: str = Form(""), file: UploadFile = File(...), db: Se
     old_url = get_setting(db, setting_key, "")
     delete_image_by_url(db, old_url)
 
-    content = await file.read()
+    content = file.file.read()
     url = save_image_to_db(db, content, file.content_type)
     set_setting(db, setting_key, url)
     db.commit()
@@ -551,11 +551,11 @@ async def upload_qr(method: str = Form(""), file: UploadFile = File(...), db: Se
 
 
 @router.post("/settings/logo")
-async def upload_logo(file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
+def upload_logo(file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     old_url = get_setting(db, "site_logo_path", "")
     delete_image_by_url(db, old_url)
 
-    content = await file.read()
+    content = file.file.read()
     url = save_image_to_db(db, content, file.content_type)
     set_setting(db, "site_logo_path", url)
     db.commit()
@@ -737,7 +737,7 @@ def list_site_images(slot: str | None = None, db: Session = Depends(get_db), adm
 
 
 @router.post("/site-images", response_model=schemas.SiteImageOut)
-async def upload_site_image(
+def upload_site_image(
     slot: str = Form(...),
     file: UploadFile = File(...),
     heading: str = Form(""),
@@ -759,7 +759,7 @@ async def upload_site_image(
     else:
         tag = None  # tag is only meaningful for gallery_grid — ignore it elsewhere
 
-    content = await file.read()
+    content = file.file.read()
 
     # If the admin didn't type dimensions, read the real ones from the file itself —
     # asked for, not required, and never wrong since it comes from the actual upload.
@@ -1017,13 +1017,13 @@ def create_brand(payload: schemas.BrandIn, db: Session = Depends(get_db), admin:
 
 
 @router.post("/brands/{brand_id}/logo", response_model=schemas.BrandOut)
-async def upload_brand_logo(brand_id: int, file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
+def upload_brand_logo(brand_id: int, file: UploadFile = File(...), db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     brand = db.query(models.Brand).filter(models.Brand.id == brand_id).first()
     if not brand:
         raise HTTPException(status_code=404, detail="Brand not found")
     if brand.logo_url:
         delete_image_by_url(db, brand.logo_url)
-    content = await file.read()
+    content = file.file.read()
     brand.logo_url = save_image_to_db(db, content, file.content_type)
     db.commit()
     db.refresh(brand)
@@ -1178,3 +1178,4 @@ def send_offer(payload: schemas.SendOfferIn, db: Session = Depends(get_db), admi
             failed.append(sub.email)
 
     return {"requested": len(payload.subscriber_ids), "found": len(subscribers), "sent": sent, "failed": failed}
+
