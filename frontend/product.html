@@ -5,6 +5,32 @@
 <meta charset="utf-8"/>
 <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
 <title id="page-title">TIME-X — Product</title>
+    <!-- SEO & Metadata -->
+    <meta name="description" content="Authentic luxury timepiece from TIME-X Nepal. View specifications, details, and order online with warranty."/>
+
+    <!-- Open Graph / Facebook / WhatsApp -->
+    <meta property="og:type" content="website"/>
+    <meta property="og:url" content="https://timexnepal.com/product.html"/>
+    <meta property="og:site_name" content="TIME-X Nepal"/>
+    <meta property="og:title" content="TIME-X — Product"/>
+    <meta property="og:description" content="Authentic luxury timepiece from TIME-X Nepal. View specifications, details, and order online with warranty."/>
+    <meta property="og:image" content="https://timexnepal.com/assets/og-image.jpg"/>
+    <meta property="og:image:secure_url" content="https://timexnepal.com/assets/og-image.jpg"/>
+    <meta property="og:image:type" content="image/jpeg"/>
+    <meta property="og:image:width" content="1200"/>
+    <meta property="og:image:height" content="630"/>
+
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary_large_image"/>
+    <meta name="twitter:url" content="https://timexnepal.com/product.html"/>
+    <meta name="twitter:title" content="TIME-X — Product"/>
+    <meta name="twitter:description" content="Authentic luxury timepiece from TIME-X Nepal. View specifications, details, and order online with warranty."/>
+    <meta name="twitter:image" content="https://timexnepal.com/assets/og-image.jpg"/>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico"/>
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.png"/>
+    <link rel="apple-touch-icon" href="/assets/favicon.png"/>
 <script src="https://cdn.tailwindcss.com"></script>
 <link href="https://fonts.googleapis.com" rel="preconnect"/>
 <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
@@ -615,6 +641,30 @@
             }
             images = product.images.length ? product.images : [{ url: '' }];
             document.title = `TIME-X — ${product.title}`;
+
+            // Dynamically update Open Graph & Twitter metadata
+            try {
+                const updateMeta = (prop, val) => {
+                    if (!val) return;
+                    let el = document.querySelector(`meta[property="${prop}"]`) || document.querySelector(`meta[name="${prop}"]`);
+                    if (el) el.setAttribute('content', val);
+                };
+                updateMeta('og:title', `TIME-X — ${product.title}`);
+                updateMeta('twitter:title', `TIME-X — ${product.title}`);
+                if (product.description) {
+                    const cleanDesc = product.description.replace(/\s+/g, ' ').trim().slice(0, 200);
+                    updateMeta('og:description', cleanDesc);
+                    updateMeta('twitter:description', cleanDesc);
+                    updateMeta('description', cleanDesc);
+                }
+                const firstImg = images.find(img => img.url && img.url.trim());
+                if (firstImg && firstImg.url) {
+                    const fullImg = firstImg.url.startsWith('http') ? firstImg.url : `https://timexnepal.com${firstImg.url}`;
+                    updateMeta('og:image', fullImg);
+                    updateMeta('og:image:secure_url', fullImg);
+                    updateMeta('twitter:image', fullImg);
+                }
+            } catch (metaErr) {}
             document.getElementById('breadcrumb').innerHTML = `
                 <a href="index.html" class="hover:text-timexWhite">Home</a> /
                 <a href="${product.category_slug === 'unisex' ? 'men' : product.category_slug}.html" class="hover:text-timexWhite">${{men:'Men',women:'Women',unisex:'Unisex'}[product.category_slug] || product.category_slug}</a> /
