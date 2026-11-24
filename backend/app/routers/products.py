@@ -1,26 +1,56 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query
-from sqlalchemy.orm import Session, joinedload
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
+from fastapi.responses import FileResponse
+from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import func
 
 from .. import models, schemas, config, nepal_geo
-from ..database import get_db
-from ..settings_utils import get_setting
+from ..database import get_db, SessionLocal
+from ..image_utils import get_cached_image_file, write_image_cache, optimize_image_bytes
+from ..settings_utils import get_all_settings
 
 router = APIRouter(prefix="/api", tags=["catalog"])
 
 
 @router.get("/media/image/{image_id}")
-def get_image(image_id: int, db: Session = Depends(get_db)):
-    from fastapi import Response
-    image = db.query(models.Image).filter(models.Image.id == image_id).first()
-    if not image:
-        raise HTTPException(status_code=404, detail="Image not found")
-    return Response(
-        content=image.data, media_type=image.content_type,
-        headers={"Cache-Control": "public, max-age=31536000, immutable"},
-    )
+def get_image(image_id: int):
+    cached = get_cached_image_file(image_id)
+    if cached:
+        bin_path, content_type = cached
+        return FileResponse(
+            bin_path,
+            media_type=content_type,
+            headers={"Cache-Control": "public, max-age=31536000, immutable"},
+        )
+
+    db = SessionLocal()
+    try:
+        image = db.query(models.Image).filter(models.Image.id == image_id).first()
+        if not image:
+            raise HTTPException(status_code=404, detail="Image not found")
+        data = image.data
+        content_type = image.content_type or "image/jpeg"
+    finally:
+        db.close()
+
+    # Lazily optimize oversized legacy images on first miss before caching to disk.
+    if content_type.startswith("image/") and len(data) > 100_000:
+        data, content_type = optimize_image_bytes(data, content_type)
+
+    try:
+        bin_path = write_image_cache(image_id, data, content_type)
+        return FileResponse(
+            bin_path,
+            media_type=content_type,
+            headers={"Cache-Control": "public, max-age=31536000, immutable"},
+        )
+    except OSError:
+        return Response(
+            content=data,
+            media_type=content_type,
+            headers={"Cache-Control": "public, max-age=31536000, immutable"},
+        )
 
 
 @router.post("/subscribe", response_model=schemas.SubscriberOut)
@@ -50,8 +80,27 @@ def get_nepal_locations():
     return nepal_geo.NEPAL_PROVINCES
 
 
+@router.get("/site-images", response_model=dict[str, list[schemas.SiteImageOut]])
+def get_active_site_images_batch(
+    response: Response,
+    slots: Optional[str] = Query(None, description="Comma-separated slot names"),
+    db: Session = Depends(get_db),
+):
+    q = db.query(models.SiteImage).filter(models.SiteImage.is_active == True)  # noqa: E712
+    slot_list = [s.strip() for s in slots.split(",") if s.strip()] if slots else []
+    if slot_list:
+        q = q.filter(models.SiteImage.slot.in_(slot_list))
+    rows = q.order_by(models.SiteImage.sort_order).all()
+    grouped: dict[str, list[schemas.SiteImageOut]] = {s: [] for s in slot_list}
+    for row in rows:
+        grouped.setdefault(row.slot, []).append(schemas.SiteImageOut.model_validate(row))
+    response.headers["Cache-Control"] = "public, max-age=60"
+    return grouped
+
+
 @router.get("/site-images/{slot}", response_model=list[schemas.SiteImageOut])
-def get_active_site_images(slot: str, db: Session = Depends(get_db)):
+def get_active_site_images(slot: str, response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=60"
     return (
         db.query(models.SiteImage)
         .filter(models.SiteImage.slot == slot, models.SiteImage.is_active == True)  # noqa: E712
@@ -61,28 +110,31 @@ def get_active_site_images(slot: str, db: Session = Depends(get_db)):
 
 
 @router.get("/settings", response_model=schemas.PublicSettingsOut)
-def get_public_settings(db: Session = Depends(get_db)):
+def get_public_settings(response: Response, db: Session = Depends(get_db)):
     """Storefront-facing settings: WhatsApp number, payment QR, which payment methods are on."""
+    s = get_all_settings(db)
+    response.headers["Cache-Control"] = "public, max-age=60"
+    default_qr = s.get("qr_image_path", "")
     return schemas.PublicSettingsOut(
-        whatsapp_number=get_setting(db, "whatsapp_number", config.WHATSAPP_DEFAULT),
-        merchant_name=get_setting(db, "merchant_name", "TIME-X"),
-        merchant_number=get_setting(db, "merchant_number", ""),
-        qr_image_url=get_setting(db, "qr_image_path", "") or None,
+        whatsapp_number=s.get("whatsapp_number") or config.WHATSAPP_DEFAULT,
+        merchant_name=s.get("merchant_name") or "TIME-X",
+        merchant_number=s.get("merchant_number", ""),
+        qr_image_url=default_qr or None,
         qr_images_by_method={
-            method: get_setting(db, f"qr_image_path_{method}", "") or get_setting(db, "qr_image_path", "") or None
+            method: s.get(f"qr_image_path_{method}", "") or default_qr or None
             for method in ("esewa", "khalti", "fonepay", "connectips", "bank_transfer")
         },
-        site_logo_url=get_setting(db, "site_logo_path", "") or None,
-        brand_showcase_url=get_setting(db, "brand_showcase_path", "") or None,
-        site_brand_name=get_setting(db, "site_brand_name", "TIME-X"),
-        site_tagline=get_setting(db, "site_tagline", "Precision, crafted. Timeless. Premium watches from Kathmandu."),
-        cod_enabled=get_setting(db, "cod_enabled", "true") == "true",
-        mobile_banking_enabled=get_setting(db, "mobile_banking_enabled", "true") == "true",
-        contact_phone=get_setting(db, "contact_phone", config.WHATSAPP_DEFAULT),
-        instagram_url=get_setting(db, "instagram_url", ""),
-        tiktok_url=get_setting(db, "tiktok_url", ""),
-        free_delivery_enabled=get_setting(db, "free_delivery_enabled", "false") == "true",
-        free_delivery_threshold=int(get_setting(db, "free_delivery_threshold", "5000")),
+        site_logo_url=s.get("site_logo_path", "") or None,
+        brand_showcase_url=s.get("brand_showcase_path", "") or None,
+        site_brand_name=s.get("site_brand_name") or "TIME-X",
+        site_tagline=s.get("site_tagline") or "Precision, crafted. Timeless. Premium watches from Kathmandu.",
+        cod_enabled=s.get("cod_enabled", "true") == "true",
+        mobile_banking_enabled=s.get("mobile_banking_enabled", "true") == "true",
+        contact_phone=s.get("contact_phone") or config.WHATSAPP_DEFAULT,
+        instagram_url=s.get("instagram_url", ""),
+        tiktok_url=s.get("tiktok_url", ""),
+        free_delivery_enabled=s.get("free_delivery_enabled", "false") == "true",
+        free_delivery_threshold=int(s.get("free_delivery_threshold") or "5000"),
     )
 
 
@@ -106,12 +158,19 @@ def _card_from_product(p: models.Product) -> schemas.ProductCardOut:
 
 
 @router.get("/brands", response_model=list[schemas.BrandOut])
-def list_brands(db: Session = Depends(get_db)):
+def list_brands(response: Response, db: Session = Depends(get_db)):
     brands = db.query(models.Brand).all()
+    counts = dict(
+        db.query(models.Product.brand_id, func.count(models.Product.id))
+        .filter(models.Product.is_active == True)  # noqa: E712
+        .group_by(models.Product.brand_id)
+        .all()
+    )
+    response.headers["Cache-Control"] = "public, max-age=60"
     return [
         schemas.BrandOut(
             id=b.id, slug=b.slug, name=b.name, logo_url=b.logo_url,
-            count=db.query(models.Product).filter(models.Product.brand_id == b.id, models.Product.is_active == True).count(),  # noqa: E712
+            count=counts.get(b.id, 0),
         )
         for b in brands
     ]
@@ -213,12 +272,19 @@ def list_products(
     is_featured: Optional[bool] = None,
     is_limited_edition: Optional[bool] = None,
     sort: Optional[str] = Query(None, description="price_asc | price_desc | latest | popularity"),
+    limit: Optional[int] = Query(None, ge=1, le=200),
+    offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
 ):
     q = (
         db.query(models.Product)
         .join(models.Category)
-        .options(joinedload(models.Product.images), joinedload(models.Product.category), joinedload(models.Product.brand), joinedload(models.Product.variants))
+        .options(
+            selectinload(models.Product.images),
+            joinedload(models.Product.category),
+            joinedload(models.Product.brand),
+            selectinload(models.Product.variants),
+        )
         .filter(models.Product.is_active == True)  # noqa: E712
     )
     if category:
@@ -282,7 +348,14 @@ def list_products(
     else:
         q = q.order_by(models.Product.display_rank.asc(), models.Product.created_at.desc())
 
-    products = q.distinct().all()
+    q = q.distinct()
+    if not _search_term:
+        if offset:
+            q = q.offset(offset)
+        if limit is not None:
+            q = q.limit(limit)
+
+    products = q.all()
     cards = [_card_from_product(p) for p in products]
 
     # Relevance sorting: prefix matches first, then contains matches
@@ -301,6 +374,10 @@ def list_products(
             return 3
 
         cards.sort(key=_relevance)
+        if limit is not None:
+            cards = cards[offset : offset + limit]
+        elif offset:
+            cards = cards[offset:]
 
     return cards
 

@@ -84,7 +84,28 @@ app = FastAPI(
 if config.TRUSTED_HOSTS:
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=config.TRUSTED_HOSTS)
 
-app.add_middleware(GZipMiddleware, minimum_size=1000)
+SKIP_GZIP_EXTS = (
+    ".jpg", ".jpeg", ".png", ".webp", ".gif", ".ico",
+    ".mp4", ".webm", ".mov", ".woff2", ".woff", ".pdf",
+)
+
+
+class SmartGZipMiddleware:
+    """Skip GZip on already-compressed media (images/videos) so CPU isn't wasted."""
+    def __init__(self, app, minimum_size: int = 1000):
+        self.app = app
+        self.gzip_app = GZipMiddleware(app, minimum_size=minimum_size)
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") == "http":
+            path = (scope.get("path") or "").lower()
+            if path.startswith(("/api/media/", "/media/")) or path.endswith(SKIP_GZIP_EXTS):
+                await self.app(scope, receive, send)
+                return
+        await self.gzip_app(scope, receive, send)
+
+
+app.add_middleware(SmartGZipMiddleware, minimum_size=1000)
 
 @app.middleware("http")
 async def security_headers(request, call_next):

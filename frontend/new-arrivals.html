@@ -260,7 +260,7 @@
 </div>
 </footer>
 <script src="assets/js/api.js"></script>
-<script src="assets/js/shared.js"></script>
+<script src="assets/js/shared.js?v=4"></script>
 <script>
         const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
         if (mobileSearchTrigger) {
@@ -273,16 +273,17 @@
         let currentPage = 1;
 
         function productCardHTML(p) {
-            const secondary = p.secondary_image || p.primary_image;
+            const hasSecondary = Boolean(p.secondary_image && p.secondary_image !== p.primary_image);
+            const hasHoverMedia = Boolean(hasSecondary || p.video_url);
             const priceHTML = p.compare_at_price
                 ? `<span class="sm:whitespace-nowrap"><span class="text-xs font-semibold tracking-tight">${formatNPR(p.price)}</span> <span class="text-[10px] text-timexLightGrey line-through">${formatNPR(p.compare_at_price)}</span></span>`
                 : `<span class="text-xs font-semibold tracking-tight">${formatNPR(p.price)}</span>`;
             return `
             <a href="product.html?slug=${p.slug}" class="group cursor-pointer block">
-                <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3"${p.video_url ? ` onmouseenter="this.querySelector('.product-card-video').play()" onmouseleave="this.querySelector('.product-card-video').pause()" ontouchstart="this.querySelector('.product-card-video')?.play().catch(()=>{})"` : ''}>
-                    <img src="${p.primary_image || ''}" alt="${p.title}" class="absolute inset-0 w-full h-full object-cover object-center">
-                    <img src="${secondary}" alt="${p.title}" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">
-                    ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="metadata" src="${p.video_url}"></video>` : ''}
+                <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3"${hasHoverMedia ? ` onmouseenter="activateCardHoverMedia(this)" onmouseleave="pauseCardHoverMedia(this)" ontouchstart="activateCardHoverMedia(this)"` : ''}>
+                    <img src="${p.primary_image || ''}" alt="${p.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover object-center">
+                    ${hasSecondary ? `<img data-src="${p.secondary_image}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
+                    ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="none" data-src="${p.video_url}"></video>` : ''}
                     ${getDiscountPercent(p.price, p.compare_at_price) ? `<span class="absolute top-3 left-3 discount-badge text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${getDiscountPercent(p.price, p.compare_at_price)}% OFF</span>` : ''}
                     <div class="absolute inset-x-0 bottom-0 p-3 product-quick-action bg-gradient-to-t from-black/60 to-transparent">
                         <button onclick="event.preventDefault(); quickAdd(${p.id}, '${p.slug}', '${p.title.replace(/'/g, "\\'")}')" class="w-full bg-timexWhite text-timexBlack py-2.5 text-[10px] font-semibold uppercase tracking-widest hover:bg-timexSilver transition-colors">

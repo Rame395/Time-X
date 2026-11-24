@@ -4,7 +4,7 @@ import uuid
 from datetime import date, datetime, time
 
 from fastapi import APIRouter, Depends, HTTPException, Request, Response, UploadFile, File, Form
-from sqlalchemy.orm import Session, joinedload
+from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import func
 
 from .. import models, schemas, config, auth
@@ -49,6 +49,10 @@ def login(payload: schemas.AdminLoginIn, response: Response, db: Session = Depen
         key=config.SESSION_COOKIE_NAME, value=token,
         httponly=True, samesite="lax", secure=config.COOKIE_SECURE, domain=config.COOKIE_DOMAIN, path="/", max_age=60 * 60 * 24 * config.SESSION_TTL_DAYS,
     )
+    response.set_cookie(
+        key="timexnepal_is_admin", value="1",
+        httponly=False, samesite="lax", secure=config.COOKIE_SECURE, domain=config.COOKIE_DOMAIN, path="/", max_age=60 * 60 * 24 * config.SESSION_TTL_DAYS,
+    )
     return {"ok": True, "username": admin.username}
 
 
@@ -58,6 +62,7 @@ def logout(request: Request, response: Response, db: Session = Depends(get_db)):
     if token:
         auth.destroy_session(db, token)
     response.delete_cookie(config.SESSION_COOKIE_NAME, path="/", domain=config.COOKIE_DOMAIN)
+    response.delete_cookie("timexnepal_is_admin", path="/", domain=config.COOKIE_DOMAIN)
     return {"ok": True}
 
 
@@ -72,8 +77,8 @@ def me(admin: models.AdminUser = Depends(auth.get_current_admin)):
 def list_all_products(db: Session = Depends(get_db), admin: models.AdminUser = Depends(auth.get_current_admin)):
     products = (
         db.query(models.Product)
-        .options(joinedload(models.Product.images), joinedload(models.Product.variants),
-                  joinedload(models.Product.colors), joinedload(models.Product.category))
+        .options(selectinload(models.Product.images), selectinload(models.Product.variants),
+                  selectinload(models.Product.colors), joinedload(models.Product.category))
         .order_by(models.Product.created_at.desc())
         .all()
     )

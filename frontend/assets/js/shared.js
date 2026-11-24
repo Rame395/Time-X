@@ -62,6 +62,7 @@ async function showAdminReturnLinkIfLoggedIn() {
   // This file is only loaded by storefront pages (the admin pages have their own
   // scripts), so this never runs while actually inside /admin/ — exactly where a
   // "back to admin" link would be redundant anyway.
+  if (!document.cookie.includes("timexnepal_is_admin=1")) return;
   try {
     const res = await fetch("/api/admin/me", { credentials: "same-origin" });
     if (!res.ok) return; // not an admin session — show nothing, silently
@@ -162,7 +163,7 @@ function initSiteSearch() {
       const cardHtml = (p) => `
         <a href="product.html?slug=${p.slug}" class="flex items-center gap-4 py-3 border-b border-white/10 hover:bg-white/5 px-2 -mx-2 transition-colors">
           <div class="w-12 h-16 bg-white/10 overflow-hidden flex-shrink-0">
-            ${p.primary_image ? `<img src="${p.primary_image}" class="w-full h-full object-cover">` : ""}
+            ${p.primary_image ? `<img src="${p.primary_image}" loading="lazy" decoding="async" class="w-full h-full object-cover">` : ""}
           </div>
           <div class="flex-1 text-left">
             <p class="text-timexWhite text-sm uppercase tracking-wide">${p.title}</p>
@@ -546,7 +547,7 @@ function initAutocompleteSearch() {
           html += topResults.map(p => `
             <a href="product.html?slug=${p.slug}" style="display:flex;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid #f5f5f5;text-decoration:none;color:inherit;transition:all .2s;" onmouseover="this.style.background='#fafafa';this.style.paddingLeft='30px'" onmouseout="this.style.background='';this.style.paddingLeft='24px'">
               <div style="width:64px;height:64px;background:#f8f8f8;border-radius:8px;overflow:hidden;flex-shrink:0;">
-                <img src="${p.primary_image || ''}" style="width:100%;height:100%;object-fit:contain;" alt="">
+                <img src="${p.primary_image || ''}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;" alt="">
               </div>
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;">${highlight(p.title)}</div>
@@ -590,6 +591,30 @@ document.addEventListener("DOMContentLoaded", initAutocompleteSearch);
 
 
 
+
+/* ---------------- On-hover card media loader ---------------- */
+window.activateCardHoverMedia = function(container) {
+  if (!container) return;
+  const secImg = container.querySelector('.product-secondary-img[data-src]');
+  if (secImg) {
+    secImg.src = secImg.dataset.src;
+    secImg.removeAttribute('data-src');
+  }
+  const vid = container.querySelector('.product-card-video');
+  if (vid) {
+    if (vid.dataset.src) {
+      vid.src = vid.dataset.src;
+      vid.removeAttribute('data-src');
+    }
+    vid.play().catch(() => {});
+  }
+};
+
+window.pauseCardHoverMedia = function(container) {
+  if (!container) return;
+  const vid = container.querySelector('.product-card-video');
+  if (vid) vid.pause();
+};
 
 /* ---------------- WhatsApp Global Chat ---------------- */
 async function openWhatsAppChat() {
