@@ -50,4 +50,8 @@ jobs:
             cd backend
             source venv/bin/activate
             pip install -r requirements.txt
-            pm2 restart timex-backend
+            if ! pm2 restart timex-backend --update-env; then
+              pm2 delete timex-backend || true
+              pm2 start venv/bin/python --name timex-backend --interpreter none -- -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2
+              pm2 save
+            fi
