@@ -9,6 +9,7 @@ module.exports = {
       interpreter: path.join(__dirname, "venv", "bin", "python"),
       exec_mode: "fork",
       autorestart: true,
+      kill_timeout: 5000,
       max_restarts: 10,
       restart_delay: 2000,
     },

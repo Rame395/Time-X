@@ -73,6 +73,12 @@ jobs:
 
           echo "=== RESTARTING TIMEX-BACKEND UNDER PM2 ==="
           pm2 delete timex-backend || true
+          pkill -TERM -f "[T]ime-X/backend" || true
+          pkill -TERM -f "[a]pp\.main:app" || true
+          sleep 2
+          pkill -KILL -f "[T]ime-X/backend" || true
+          pkill -KILL -f "[a]pp\.main:app" || true
+          sleep 1
           pm2 start ecosystem.config.js
           pm2 save
           pm2 status
@@ -87,7 +93,10 @@ jobs:
             sleep 2
           done
 
-          echo "ERROR: Backend failed to become healthy on port 8000! Dumping PM2 logs:"
+          echo "ERROR: Backend failed to become healthy on port 8000! Checking port 8000 & nginx:"
+          ss -tulpn 2>/dev/null | grep ':8000 ' || true
+          grep -rn "proxy_pass" /etc/nginx/sites-enabled/ 2>/dev/null || true
+          echo "Dumping PM2 logs:"
           pm2 logs timex-backend --lines 80 --nostream || true
           exit 1
           REMOTE_SCRIPT
