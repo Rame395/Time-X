@@ -14,7 +14,7 @@ def _sync_version() -> None:
     global _LAST_VERSION_MTIME
     try:
         mtime = os.stat(VERSION_FILE).st_mtime_ns
-    except FileNotFoundError:
+    except Exception:
         mtime = 0
     if mtime != _LAST_VERSION_MTIME:
         _CACHE.clear()
@@ -46,5 +46,5 @@ def invalidate_catalog_cache() -> None:
         with open(VERSION_FILE, "w", encoding="utf-8") as f:
             f.write(str(time.time_ns()))
         _LAST_VERSION_MTIME = os.stat(VERSION_FILE).st_mtime_ns
-    except OSError:
+    except Exception:
         pass

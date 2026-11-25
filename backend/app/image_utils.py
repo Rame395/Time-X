@@ -58,14 +58,14 @@ def _cache_paths(image_id: int, width: int | None = None) -> tuple[str, str]:
 
 
 def get_cached_image_file(image_id: int, width: int | None = None) -> tuple[str, str] | None:
-    bin_path, ct_path = _cache_paths(image_id, width)
-    if os.path.isfile(bin_path) and os.path.isfile(ct_path):
-        try:
+    try:
+        bin_path, ct_path = _cache_paths(image_id, width)
+        if os.path.isfile(bin_path) and os.path.isfile(ct_path):
             with open(ct_path, "r", encoding="utf-8") as f:
                 ct = f.read().strip() or "image/jpeg"
             return bin_path, ct
-        except OSError:
-            return None
+    except Exception:
+        return None
     return None
 
 

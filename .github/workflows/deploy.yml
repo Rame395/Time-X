@@ -45,13 +45,25 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            set -e
             cd ~/Time-X
             git pull origin main
             cd backend
+            chmod +x start.sh || true
             source venv/bin/activate
             pip install -r requirements.txt
-            if ! pm2 restart timex-backend --update-env; then
-              pm2 delete timex-backend || true
-              pm2 start venv/bin/python --name timex-backend --interpreter none -- -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --workers 2
-              pm2 save
-            fi
+            pm2 delete timex-backend || true
+            pm2 start ecosystem.config.js
+            pm2 save
+            pm2 status
+            for i in {1..10}; do
+              if curl -f -s http://127.0.0.1:8000/api/health > /dev/null 2>&1; then
+                echo "TIME-X backend is UP and HEALTHY on port 8000!"
+                exit 0
+              fi
+              echo "Waiting for port 8000 (attempt $i/10)..."
+              sleep 2
+            done
+            echo "Backend failed to become healthy on port 8000! Dumping logs:"
+            pm2 logs timex-backend --lines 60 --nostream || true
+            exit 1
