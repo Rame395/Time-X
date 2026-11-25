@@ -1,3 +1,5 @@
+import html
+import json
 import os
 import sys
 from contextlib import asynccontextmanager, contextmanager
@@ -8,6 +10,7 @@ from dotenv import load_dotenv
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), ".env"))
 
 from fastapi import FastAPI
+from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -85,24 +88,74 @@ app = FastAPI(
 if config.TRUSTED_HOSTS:
     app.add_middleware(TrustedHostMiddleware, allowed_hosts=config.TRUSTED_HOSTS)
 
-app.add_middleware(GZipMiddleware, minimum_size=1000)
+SKIP_GZIP_EXTS = (
+    ".jpg", ".jpeg", ".png", ".webp", ".gif", ".ico",
+    ".mp4", ".webm", ".mov", ".woff2", ".woff", ".pdf",
+)
 
 
-@app.middleware("http")
-async def security_and_cache_middleware(request, call_next):
-    response = await call_next(request)
-    response.headers.setdefault("X-Content-Type-Options", "nosniff")
-    response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
-    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
-    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
-    if config.IS_PRODUCTION:
-        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-    if request.method in ("POST", "PUT", "PATCH", "DELETE") and request.url.path.startswith("/api/admin/") and 200 <= response.status_code < 300:
-        try:
-            invalidate_catalog_cache()
-        except Exception:
-            pass
-    return response
+class SmartGZipMiddleware:
+    """Skip GZip on already-compressed media (images/videos) so CPU isn't wasted."""
+    def __init__(self, app, minimum_size: int = 1000):
+        self.app = app
+        self.gzip_app = GZipMiddleware(app, minimum_size=minimum_size)
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") == "http":
+            path = (scope.get("path") or "").lower()
+            if path.startswith(("/api/media/", "/media/")) or path.endswith(SKIP_GZIP_EXTS):
+                await self.app(scope, receive, send)
+                return
+        await self.gzip_app(scope, receive, send)
+
+
+app.add_middleware(SmartGZipMiddleware, minimum_size=1000)
+
+
+class SecurityAndCacheMiddleware:
+    """Pure ASGI security headers + admin mutation cache invalidation (zero streaming buffer overhead)."""
+    _SECURITY_HEADERS = [
+        (b"x-content-type-options", b"nosniff"),
+        (b"x-frame-options", b"SAMEORIGIN"),
+        (b"referrer-policy", b"strict-origin-when-cross-origin"),
+        (b"permissions-policy", b"camera=(), microphone=(), geolocation=()"),
+    ]
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http":
+            await self.app(scope, receive, send)
+            return
+
+        method = (scope.get("method") or "GET").upper()
+        path = scope.get("path") or ""
+        is_admin_mutation = method in ("POST", "PUT", "PATCH", "DELETE") and path.startswith("/api/admin/")
+
+        async def send_wrapper(message):
+            if message["type"] == "http.response.start":
+                headers = list(message.get("headers") or [])
+                existing = {k.lower() for k, _ in headers}
+                for k, v in self._SECURITY_HEADERS:
+                    if k not in existing:
+                        headers.append((k, v))
+                if config.IS_PRODUCTION and b"strict-transport-security" not in existing:
+                    headers.append((b"strict-transport-security", b"max-age=31536000; includeSubDomains"))
+                message = {**message, "headers": headers}
+
+                status = message.get("status", 0)
+                if is_admin_mutation and 200 <= status < 300:
+                    try:
+                        invalidate_catalog_cache()
+                    except Exception:
+                        pass
+            await send(message)
+
+        await self.app(scope, receive, send_wrapper)
+
+
+app.add_middleware(SecurityAndCacheMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
@@ -127,6 +180,67 @@ def health():
 
 os.makedirs(config.MEDIA_DIR, exist_ok=True)
 app.mount("/media", StaticFiles(directory=config.MEDIA_DIR), name="media")
+
+_INDEX_HTML_PATH = os.path.join(FRONTEND_DIR, "index.html")
+_INDEX_HTML_CACHE: tuple[int, str] | None = None
+
+
+def _read_index_html() -> str:
+    global _INDEX_HTML_CACHE
+    mtime = os.stat(_INDEX_HTML_PATH).st_mtime_ns
+    if _INDEX_HTML_CACHE is not None and _INDEX_HTML_CACHE[0] == mtime:
+        return _INDEX_HTML_CACHE[1]
+    with open(_INDEX_HTML_PATH, "r", encoding="utf-8") as f:
+        content = f.read()
+    _INDEX_HTML_CACHE = (mtime, content)
+    return content
+
+
+def _thumb_href(url: str, width: int = 480) -> str:
+    if "/api/media/image/" in url and "?" not in url:
+        return f"{url}?w={width}"
+    return url
+
+
+@app.get("/", include_in_schema=False)
+@app.get("/index.html", include_in_schema=False)
+def serve_homepage():
+    base_html = _read_index_html()
+    try:
+        db = SessionLocal()
+        try:
+            payload = products.build_homepage_payload(db)
+        finally:
+            db.close()
+
+        preloads: list[str] = []
+        heroes = (payload.get("site_images") or {}).get("homepage_hero") or []
+        if heroes and heroes[0].get("url"):
+            hero_url = html.escape(str(heroes[0]["url"]), quote=True)
+            preloads.append(f'<link rel="preload" as="image" href="{hero_url}" fetchpriority="high"/>')
+
+        for card in (payload.get("featured") or [])[:4]:
+            img_url = card.get("primary_image")
+            if img_url:
+                thumb = html.escape(_thumb_href(str(img_url), 480), quote=True)
+                preloads.append(f'<link rel="preload" as="image" href="{thumb}"/>')
+
+        serialized = json.dumps(payload, separators=(",", ":")).replace("</", "<\\/")
+        injection = "".join(preloads) + f"<script>window.__INITIAL_HOMEPAGE__={serialized};</script>"
+        if "<head>" in base_html:
+            injected_html = base_html.replace("<head>", f"<head>\n{injection}", 1)
+        else:
+            injected_html = base_html
+        return HTMLResponse(
+            injected_html,
+            headers={"Cache-Control": "public, max-age=30, stale-while-revalidate=60"},
+        )
+    except Exception:
+        return HTMLResponse(
+            base_html,
+            headers={"Cache-Control": "public, max-age=30, stale-while-revalidate=60"},
+        )
+
 
 # Serves the whole static frontend (index.html, men.html, cart.html, admin/, ...).
 # Mounted last so it never shadows the /api/* and /media/* routes above.

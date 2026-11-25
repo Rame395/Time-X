@@ -84,12 +84,12 @@ jobs:
           pm2 status
 
           echo "=== WAITING FOR PORT 8035 ==="
-          for i in $(seq 1 15); do
+          for i in $(seq 1 30); do
             if curl -f -s http://127.0.0.1:8035/api/health > /dev/null 2>&1; then
               echo "SUCCESS: TIME-X backend is UP and HEALTHY on port 8035!"
               exit 0
             fi
-            echo "Waiting for port 8035 (attempt $i/15)..."
+            echo "Waiting for port 8035 (attempt $i/30)..."
             sleep 2
           done
 

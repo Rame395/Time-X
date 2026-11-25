@@ -482,7 +482,7 @@
             }
         });
 
-        function productCardHTML(p) {
+        function productCardHTML(p, eager = false) {
             const hasSecondary = Boolean(p.secondary_image && p.secondary_image !== p.primary_image);
             const hasHoverMedia = Boolean(hasSecondary || p.video_url);
             const priceHTML = p.compare_at_price
@@ -491,7 +491,7 @@
             return `
             <a href="product.html?slug=${p.slug}" class="group cursor-pointer block">
                 <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-4"${hasHoverMedia ? ` onmouseenter="activateCardHoverMedia(this)" onmouseleave="pauseCardHoverMedia(this)" ontouchstart="activateCardHoverMedia(this)"` : ''}>
-                    <img src="${thumbUrl(p.primary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
+                    <img src="${thumbUrl(p.primary_image, 480)}" alt="${p.title}" loading="${eager ? 'eager' : 'lazy'}" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
                     ${hasSecondary ? `<img data-src="${thumbUrl(p.secondary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
                     ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="none" data-src="${p.video_url}"></video>` : ''}
                     ${getDiscountPercent(p.price, p.compare_at_price) ? `<span class="absolute top-3 left-3 discount-badge text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${getDiscountPercent(p.price, p.compare_at_price)}% OFF</span>` : ''}
@@ -533,9 +533,9 @@
             `).join('');
         }
 
-        function renderProductSection(gridId, sectionId, products) {
+        function renderProductSection(gridId, sectionId, products, eager = false) {
             if (!products || !products.length) return;
-            document.getElementById(gridId).innerHTML = products.slice(0, 4).map(productCardHTML).join('');
+            document.getElementById(gridId).innerHTML = products.slice(0, 4).map((p) => productCardHTML(p, eager)).join('');
             document.getElementById(sectionId).classList.remove('hidden');
         }
 
@@ -593,7 +593,7 @@
         function applyStoryOverride(images) {
             if (!images || !images.length) return;
             const img = images[0];
-            document.getElementById('story-img').src = img.url;
+            document.getElementById('story-img').src = thumbUrl(img.url, 800);
             document.getElementById('story-img').classList.remove('hidden');
             if (img.heading) document.getElementById('story-heading').textContent = img.heading;
             if (img.subheading) document.getElementById('story-subheading').textContent = img.subheading;
@@ -605,7 +605,7 @@
                 const images = siteImages[slot];
                 if (!images || !images.length) return;
                 const img = images[0];
-                document.getElementById(`${prefix}-img`).src = img.url;
+                document.getElementById(`${prefix}-img`).src = thumbUrl(img.url, 800);
                 document.getElementById(`${prefix}-img`).classList.remove('hidden');
                 if (img.heading) document.getElementById(`${prefix}-heading`).textContent = img.heading;
                 if (prefix !== 'tile-new' && img.link_url) document.getElementById(`${prefix}-link`).href = img.link_url;
@@ -694,7 +694,9 @@
             }
         }
 
-        const homepagePromise = apiGet('/api/homepage');
+        const homepagePromise = window.__INITIAL_HOMEPAGE__
+            ? Promise.resolve(window.__INITIAL_HOMEPAGE__)
+            : apiGet('/api/homepage');
         window.__SITE_SETTINGS_PROMISE__ = homepagePromise.then((d) => d.settings).catch(() => apiGet('/api/settings'));
 
         async function loadHomepage() {
@@ -707,7 +709,7 @@
                 applyTileOverrides(siteImages);
                 applyInstagramGrid(siteImages.instagram_grid);
                 renderBrandsWeCarry(data.brands);
-                renderProductSection('featured-grid', 'featured-section', data.featured);
+                renderProductSection('featured-grid', 'featured-section', data.featured, true);
                 renderProductSection('on-sale-grid', 'on-sale', data.on_sale);
                 renderProductSection('best-sellers-grid', 'best-sellers', data.best_sellers);
             } catch (e) {

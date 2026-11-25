@@ -229,10 +229,8 @@ HOMEPAGE_SLOTS = (
 )
 
 
-@router.get("/homepage")
-def get_homepage_bundle(response: Response, db: Session = Depends(get_db)):
-    """Single cached bootstrap payload for the homepage — avoids 6+ separate requests."""
-    response.headers["Cache-Control"] = "public, max-age=60"
+def build_homepage_payload(db: Session) -> dict:
+    """Build and cache the homepage bootstrap payload for both `/api/homepage` and SSR inline bootstrap."""
     cached = cache_get("homepage")
     if cached is not None:
         return cached
@@ -260,6 +258,13 @@ def get_homepage_bundle(response: Response, db: Session = Depends(get_db)):
     }
     cache_set("homepage", payload, ttl=300.0)
     return payload
+
+
+@router.get("/homepage")
+def get_homepage_bundle(response: Response, db: Session = Depends(get_db)):
+    """Single cached bootstrap payload for the homepage — avoids 6+ separate requests."""
+    response.headers["Cache-Control"] = "public, max-age=60"
+    return build_homepage_payload(db)
 
 
 @router.get("/delivery-zones", response_model=list[schemas.DeliveryZoneOut])
