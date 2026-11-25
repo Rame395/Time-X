@@ -39,36 +39,67 @@ jobs:
 
     steps:
       - name: Deploy to Hostinger VPS
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.VPS_HOST }}
-          username: ${{ secrets.VPS_USERNAME }}
-          key: ${{ secrets.VPS_SSH_KEY }}
-          script: |
-            set -e
-            cd ~/Time-X
-            git pull origin main
-            cd backend
-            source venv/bin/activate
-            pip install -r requirements.txt
+        env:
+          SSH_KEY: ${{ secrets.VPS_SSH_KEY }}
+          SSH_HOST: ${{ secrets.VPS_HOST }}
+          SSH_USER: ${{ secrets.VPS_USERNAME }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "$SSH_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          
+          FAILED=0
+          ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" 'bash -s' << 'REMOTE_SCRIPT' > deploy.log 2>&1 || FAILED=1
+          set -e
+          cd ~/Time-X
+          git pull origin main
+          cd backend
+          source venv/bin/activate
+          pip install -r requirements.txt
 
-            # Stop and delete any existing process, start fresh with ecosystem config
-            pm2 delete timex-backend || true
-            pm2 start ecosystem.config.js
-            pm2 save
-            pm2 status
+          echo "=== TESTING APPLICATION STARTUP WITH PYTHON ==="
+          venv/bin/python -c "
+          from app.main import app
+          print('APP IMPORT SUCCESS')
+          "
 
-            # Wait for backend to come up and verify health
-            echo "Checking backend health on port 8000..."
-            for i in $(seq 1 15); do
-              if curl -f -s http://127.0.0.1:8000/api/health > /dev/null 2>&1; then
-                echo "SUCCESS: TIME-X backend is UP and HEALTHY on port 8000!"
-                exit 0
-              fi
-              echo "Waiting for port 8000 (attempt $i/15)..."
-              sleep 2
-            done
+          echo "=== TESTING DATABASE CONNECTION ==="
+          venv/bin/python -c "
+          from app.database import engine
+          from sqlalchemy import text
+          with engine.connect() as conn:
+              res = conn.execute(text('SELECT 1')).scalar()
+              print('DB TEST SUCCESS, result:', res)
+          "
 
-            echo "ERROR: Backend failed to become healthy on port 8000! Dumping PM2 logs:"
-            pm2 logs timex-backend --lines 80 --nostream || true
+          echo "=== RESTARTING TIMEX-BACKEND UNDER PM2 ==="
+          pm2 delete timex-backend || true
+          pm2 start ecosystem.config.js
+          pm2 save
+          pm2 status
+
+          echo "=== WAITING FOR PORT 8000 ==="
+          for i in $(seq 1 15); do
+            if curl -f -s http://127.0.0.1:8000/api/health > /dev/null 2>&1; then
+              echo "SUCCESS: TIME-X backend is UP and HEALTHY on port 8000!"
+              exit 0
+            fi
+            echo "Waiting for port 8000 (attempt $i/15)..."
+            sleep 2
+          done
+
+          echo "ERROR: Backend failed to become healthy on port 8000! Dumping PM2 logs:"
+          pm2 logs timex-backend --lines 80 --nostream || true
+          exit 1
+          REMOTE_SCRIPT
+
+          cat deploy.log
+          echo "### Deploy Output" >> $GITHUB_STEP_SUMMARY
+          echo '```text' >> $GITHUB_STEP_SUMMARY
+          tail -n 100 deploy.log >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+          if [ "$FAILED" = "1" ]; then
+            echo "Deployment failed! See logs above."
             exit 1
+          fi
