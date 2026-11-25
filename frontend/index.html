@@ -468,8 +468,8 @@
 </div>
 </div>
 </footer>
-<script src="assets/js/api.js"></script>
-<script src="assets/js/shared.js?v=4"></script>
+<script src="assets/js/api.js?v=5"></script>
+<script src="assets/js/shared.js?v=5"></script>
 <script>
         const header = document.getElementById('site-header');
         window.addEventListener('scroll', () => {
@@ -491,8 +491,8 @@
             return `
             <a href="product.html?slug=${p.slug}" class="group cursor-pointer block">
                 <div class="relative w-full aspect-[3/4] bg-gray-100 overflow-hidden mb-4"${hasHoverMedia ? ` onmouseenter="activateCardHoverMedia(this)" onmouseleave="pauseCardHoverMedia(this)" ontouchstart="activateCardHoverMedia(this)"` : ''}>
-                    <img src="${p.primary_image || ''}" alt="${p.title}" loading="lazy" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
-                    ${hasSecondary ? `<img data-src="${p.secondary_image}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
+                    <img src="${thumbUrl(p.primary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
+                    ${hasSecondary ? `<img data-src="${thumbUrl(p.secondary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
                     ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="none" data-src="${p.video_url}"></video>` : ''}
                     ${getDiscountPercent(p.price, p.compare_at_price) ? `<span class="absolute top-3 left-3 discount-badge text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${getDiscountPercent(p.price, p.compare_at_price)}% OFF</span>` : ''}
                     <div class="absolute inset-x-0 bottom-0 p-3 product-quick-action bg-gradient-to-t from-black/60 to-transparent">
@@ -520,59 +520,23 @@
             }
         }
 
-        async function loadBrandsWeCarry() {
+        function renderBrandsWeCarry(brands) {
             const container = document.getElementById('brands-we-carry');
-            if (!container) return;
-            try {
-                const brands = await apiGet('/api/brands');
-                const carried = brands.filter((b) => b.slug !== 'timex-nepal' && b.logo_url).slice(0, 6);
-                if (!carried.length) return;
-                container.innerHTML = carried.map((b) => `
-                    <a href="shop.html?brand=${encodeURIComponent(b.name)}" class="atelier-brand" title="Shop ${b.name}">
-                        <span class="atelier-brand-logo"><img src="${b.logo_url}" alt="${b.name}" loading="lazy" decoding="async"></span>
-                        <span class="atelier-brand-name">${b.name}</span>
-                    </a>
-                `).join('');
-            } catch (e) {
-                // Keep the six built-in logos visible if the API is temporarily unavailable.
-            }
+            if (!container || !brands || !brands.length) return;
+            const carried = brands.filter((b) => b.slug !== 'timex-nepal' && b.logo_url).slice(0, 6);
+            if (!carried.length) return;
+            container.innerHTML = carried.map((b) => `
+                <a href="shop.html?brand=${encodeURIComponent(b.name)}" class="atelier-brand" title="Shop ${b.name}">
+                    <span class="atelier-brand-logo"><img src="${thumbUrl(b.logo_url, 480)}" alt="${b.name}" loading="lazy" decoding="async"></span>
+                    <span class="atelier-brand-name">${b.name}</span>
+                </a>
+            `).join('');
         }
 
-        async function loadOnSaleSection() {
-            try {
-                const products = await apiGet('/api/products?on_sale=true&limit=4');
-                if (!products.length) return; // section stays hidden — no sale live right now
-                document.getElementById('on-sale-grid').innerHTML = products.slice(0, 4).map(productCardHTML).join('');
-                document.getElementById('on-sale').classList.remove('hidden');
-            } catch (e) {
-                // fails silently — an empty/missing sale section is not worth showing an error for
-            }
-        }
-
-        async function loadBestSellers() {
-            try {
-                const products = await apiGet('/api/products?is_best_seller=true&sort=popularity&limit=4');
-                if (!products.length) return; // section stays hidden until admin marks some as best-sellers
-                document.getElementById('best-sellers-grid').innerHTML = products.slice(0, 4).map(productCardHTML).join('');
-                document.getElementById('best-sellers').classList.remove('hidden');
-            } catch (e) {
-                // fails silently, same as on-sale
-            }
-        }
-
-        loadBrandsWeCarry();
-        loadOnSaleSection();
-        loadBestSellers();
-        async function loadFeaturedWatches() {
-            try {
-                const products = await apiGet('/api/products?is_featured=true&limit=4');
-                if (!products || products.length === 0) return;
-                const featured = products.slice(0, 4);
-                document.getElementById('featured-grid').innerHTML = featured.map(productCardHTML).join('');
-                document.getElementById('featured-section').classList.remove('hidden');
-            } catch (e) {
-                // fail silently
-            }
+        function renderProductSection(gridId, sectionId, products) {
+            if (!products || !products.length) return;
+            document.getElementById(gridId).innerHTML = products.slice(0, 4).map(productCardHTML).join('');
+            document.getElementById(sectionId).classList.remove('hidden');
         }
 
         function applyHeroImages(heroes) {
@@ -585,14 +549,20 @@
             const dotsWrap = document.getElementById('hero-dots');
             const defaultEyebrow = eyebrow.textContent;
 
-            function applyHero(index) {
+            function applyHero(index, immediate = false) {
                 const h = heroes[index];
-                bgImg.style.opacity = '0';
-                setTimeout(() => {
+                if (immediate) {
                     bgImg.src = h.url;
                     bgImg.classList.remove('hidden');
                     bgImg.style.opacity = '';
-                }, 350);
+                } else {
+                    bgImg.style.opacity = '0';
+                    setTimeout(() => {
+                        bgImg.src = h.url;
+                        bgImg.classList.remove('hidden');
+                        bgImg.style.opacity = '';
+                    }, 350);
+                }
                 eyebrow.textContent = h.heading || defaultEyebrow;
                 if (h.subheading) {
                     subheading.textContent = h.subheading;
@@ -617,7 +587,7 @@
                     applyHero(current);
                 }, 5000);
             }
-            applyHero(0);
+            applyHero(0, true);
         }
 
         function applyStoryOverride(images) {
@@ -652,7 +622,7 @@
             if (!grid) return;
             grid.innerHTML = images.map((img) => `
                 <div class="relative aspect-square bg-gray-100 overflow-hidden group cursor-pointer">
-                    <img src="${img.url}" alt="Instagram Post" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    <img src="${thumbUrl(img.url, 480)}" alt="Instagram Post" loading="lazy" decoding="async" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
                 </div>`).join('');
         }
 
@@ -724,22 +694,28 @@
             }
         }
 
-        async function loadHomepageSiteImages() {
+        const homepagePromise = apiGet('/api/homepage');
+        window.__SITE_SETTINGS_PROMISE__ = homepagePromise.then((d) => d.settings).catch(() => apiGet('/api/settings'));
+
+        async function loadHomepage() {
             try {
-                const slots = 'homepage_hero,homepage_hero_video,homepage_story,homepage_tile_men,homepage_tile_women,homepage_tile_new,instagram_grid';
-                const siteImages = await apiGet(`/api/site-images?slots=${encodeURIComponent(slots)}`);
+                const data = await homepagePromise;
+                const siteImages = data.site_images || {};
                 applyHeroImages(siteImages.homepage_hero);
                 initHeroVideo(siteImages.homepage_hero_video);
                 applyStoryOverride(siteImages.homepage_story);
                 applyTileOverrides(siteImages);
                 applyInstagramGrid(siteImages.instagram_grid);
+                renderBrandsWeCarry(data.brands);
+                renderProductSection('featured-grid', 'featured-section', data.featured);
+                renderProductSection('on-sale-grid', 'on-sale', data.on_sale);
+                renderProductSection('best-sellers-grid', 'best-sellers', data.best_sellers);
             } catch (e) {
                 // Keep hardcoded defaults if API is temporarily unavailable.
             }
         }
 
-        loadHomepageSiteImages();
-        loadFeaturedWatches();
+        loadHomepage();
 
         const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
         if (mobileSearchTrigger) {

@@ -75,8 +75,13 @@ def _serialize_cart(cart: models.Cart, db: Session) -> schemas.CartOut:
 
 
 @router.get("", response_model=schemas.CartOut)
-def get_cart(request: Request, response: Response, db: Session = Depends(get_db)):
-    cart = get_or_create_cart(request, response, db)
+def get_cart(request: Request, db: Session = Depends(get_db)):
+    token = request.cookies.get(config.CART_COOKIE_NAME)
+    if not token:
+        return schemas.CartOut(items=[], subtotal=0, shipping_fee=0, total=0, item_count=0)
+    cart = db.query(models.Cart).filter(models.Cart.token == token).first()
+    if not cart or not cart.items:
+        return schemas.CartOut(items=[], subtotal=0, shipping_fee=0, total=0, item_count=0)
     return _serialize_cart(cart, db)
 
 

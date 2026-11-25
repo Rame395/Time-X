@@ -15,6 +15,7 @@ from sqlalchemy.orm import Session
 from . import models, config
 
 MEDIA_CACHE_DIR = os.path.join(config.MEDIA_DIR, "cache")
+ALLOWED_THUMB_WIDTHS = (480, 800)
 
 
 def optimize_image_bytes(
@@ -48,15 +49,16 @@ def optimize_image_bytes(
         return content, ct
 
 
-def _cache_paths(image_id: int) -> tuple[str, str]:
+def _cache_paths(image_id: int, width: int | None = None) -> tuple[str, str]:
+    suffix = f"_w{width}" if width else ""
     return (
-        os.path.join(MEDIA_CACHE_DIR, f"{image_id}.bin"),
-        os.path.join(MEDIA_CACHE_DIR, f"{image_id}.ct"),
+        os.path.join(MEDIA_CACHE_DIR, f"{image_id}{suffix}.bin"),
+        os.path.join(MEDIA_CACHE_DIR, f"{image_id}{suffix}.ct"),
     )
 
 
-def get_cached_image_file(image_id: int) -> tuple[str, str] | None:
-    bin_path, ct_path = _cache_paths(image_id)
+def get_cached_image_file(image_id: int, width: int | None = None) -> tuple[str, str] | None:
+    bin_path, ct_path = _cache_paths(image_id, width)
     if os.path.isfile(bin_path) and os.path.isfile(ct_path):
         try:
             with open(ct_path, "r", encoding="utf-8") as f:
@@ -82,19 +84,20 @@ def _atomic_write(path: str, data: bytes) -> None:
         raise
 
 
-def write_image_cache(image_id: int, data: bytes, content_type: str) -> str:
-    bin_path, ct_path = _cache_paths(image_id)
+def write_image_cache(image_id: int, data: bytes, content_type: str, width: int | None = None) -> str:
+    bin_path, ct_path = _cache_paths(image_id, width)
     _atomic_write(bin_path, data)
     _atomic_write(ct_path, (content_type or "image/jpeg").encode("utf-8"))
     return bin_path
 
 
 def delete_image_cache(image_id: int) -> None:
-    for p in _cache_paths(image_id):
-        try:
-            os.remove(p)
-        except OSError:
-            pass
+    for w in (None, *ALLOWED_THUMB_WIDTHS):
+        for p in _cache_paths(image_id, w):
+            try:
+                os.remove(p)
+            except OSError:
+                pass
 
 
 def save_image_to_db(db: Session, content: bytes, content_type: str | None) -> str:

@@ -6,6 +6,7 @@ from sqlalchemy.orm import Session, joinedload, selectinload
 from sqlalchemy import func
 
 from .. import models, schemas, config, nepal_geo
+from ..cache_utils import cache_get, cache_set, invalidate_catalog_cache
 from ..database import get_db, SessionLocal
 from ..image_utils import get_cached_image_file, write_image_cache, optimize_image_bytes
 from ..settings_utils import get_all_settings
@@ -14,8 +15,10 @@ router = APIRouter(prefix="/api", tags=["catalog"])
 
 
 @router.get("/media/image/{image_id}")
-def get_image(image_id: int):
-    cached = get_cached_image_file(image_id)
+def get_image(image_id: int, w: Optional[int] = Query(None, ge=100, le=2000)):
+    target_w = 480 if (w is not None and w <= 540) else (800 if (w is not None and w <= 900) else None)
+
+    cached = get_cached_image_file(image_id, target_w)
     if cached:
         bin_path, content_type = cached
         return FileResponse(
@@ -23,6 +26,24 @@ def get_image(image_id: int):
             media_type=content_type,
             headers={"Cache-Control": "public, max-age=31536000, immutable"},
         )
+
+    # For thumbnail requests, try generating from already-cached full-size file without touching DB.
+    if target_w is not None:
+        base_cached = get_cached_image_file(image_id, None)
+        if base_cached:
+            base_bin, base_ct = base_cached
+            try:
+                with open(base_bin, "rb") as f:
+                    base_bytes = f.read()
+                thumb_bytes, thumb_ct = optimize_image_bytes(base_bytes, base_ct, max_width=target_w, quality=80)
+                bin_path = write_image_cache(image_id, thumb_bytes, thumb_ct, target_w)
+                return FileResponse(
+                    bin_path,
+                    media_type=thumb_ct,
+                    headers={"Cache-Control": "public, max-age=31536000, immutable"},
+                )
+            except OSError:
+                pass
 
     db = SessionLocal()
     try:
@@ -39,9 +60,17 @@ def get_image(image_id: int):
         data, content_type = optimize_image_bytes(data, content_type)
 
     try:
-        bin_path = write_image_cache(image_id, data, content_type)
+        base_bin = write_image_cache(image_id, data, content_type, None)
+        if target_w is not None and content_type.startswith("image/"):
+            thumb_bytes, thumb_ct = optimize_image_bytes(data, content_type, max_width=target_w, quality=80)
+            thumb_bin = write_image_cache(image_id, thumb_bytes, thumb_ct, target_w)
+            return FileResponse(
+                thumb_bin,
+                media_type=thumb_ct,
+                headers={"Cache-Control": "public, max-age=31536000, immutable"},
+            )
         return FileResponse(
-            bin_path,
+            base_bin,
             media_type=content_type,
             headers={"Cache-Control": "public, max-age=31536000, immutable"},
         )
@@ -86,27 +115,40 @@ def get_active_site_images_batch(
     slots: Optional[str] = Query(None, description="Comma-separated slot names"),
     db: Session = Depends(get_db),
 ):
-    q = db.query(models.SiteImage).filter(models.SiteImage.is_active == True)  # noqa: E712
+    response.headers["Cache-Control"] = "public, max-age=60"
     slot_list = [s.strip() for s in slots.split(",") if s.strip()] if slots else []
+    cache_key = f"site_images:{','.join(sorted(slot_list)) if slot_list else '*'}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
+    q = db.query(models.SiteImage).filter(models.SiteImage.is_active == True)  # noqa: E712
     if slot_list:
         q = q.filter(models.SiteImage.slot.in_(slot_list))
     rows = q.order_by(models.SiteImage.sort_order).all()
     grouped: dict[str, list[schemas.SiteImageOut]] = {s: [] for s in slot_list}
     for row in rows:
         grouped.setdefault(row.slot, []).append(schemas.SiteImageOut.model_validate(row))
-    response.headers["Cache-Control"] = "public, max-age=60"
+    cache_set(cache_key, grouped, ttl=300.0)
     return grouped
 
 
 @router.get("/site-images/{slot}", response_model=list[schemas.SiteImageOut])
 def get_active_site_images(slot: str, response: Response, db: Session = Depends(get_db)):
     response.headers["Cache-Control"] = "public, max-age=60"
-    return (
+    cache_key = f"site_image:{slot}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+    rows = (
         db.query(models.SiteImage)
         .filter(models.SiteImage.slot == slot, models.SiteImage.is_active == True)  # noqa: E712
         .order_by(models.SiteImage.sort_order)
         .all()
     )
+    out = [schemas.SiteImageOut.model_validate(r) for r in rows]
+    cache_set(cache_key, out, ttl=300.0)
+    return out
 
 
 @router.get("/settings", response_model=schemas.PublicSettingsOut)
@@ -159,6 +201,10 @@ def _card_from_product(p: models.Product) -> schemas.ProductCardOut:
 
 @router.get("/brands", response_model=list[schemas.BrandOut])
 def list_brands(response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=60"
+    cached = cache_get("brands")
+    if cached is not None:
+        return cached
     brands = db.query(models.Brand).all()
     counts = dict(
         db.query(models.Product.brand_id, func.count(models.Product.id))
@@ -166,14 +212,54 @@ def list_brands(response: Response, db: Session = Depends(get_db)):
         .group_by(models.Product.brand_id)
         .all()
     )
-    response.headers["Cache-Control"] = "public, max-age=60"
-    return [
+    out = [
         schemas.BrandOut(
             id=b.id, slug=b.slug, name=b.name, logo_url=b.logo_url,
             count=counts.get(b.id, 0),
         )
         for b in brands
     ]
+    cache_set("brands", out, ttl=300.0)
+    return out
+
+
+HOMEPAGE_SLOTS = (
+    "homepage_hero,homepage_hero_video,homepage_story,"
+    "homepage_tile_men,homepage_tile_women,homepage_tile_new,instagram_grid"
+)
+
+
+@router.get("/homepage")
+def get_homepage_bundle(response: Response, db: Session = Depends(get_db)):
+    """Single cached bootstrap payload for the homepage — avoids 6+ separate requests."""
+    response.headers["Cache-Control"] = "public, max-age=60"
+    cached = cache_get("homepage")
+    if cached is not None:
+        return cached
+
+    dummy_resp = Response()
+    payload = {
+        "settings": get_public_settings(dummy_resp, db).model_dump(),
+        "brands": [b.model_dump() for b in list_brands(dummy_resp, db)],
+        "site_images": {
+            slot: [img.model_dump() for img in imgs]
+            for slot, imgs in get_active_site_images_batch(dummy_resp, HOMEPAGE_SLOTS, db).items()
+        },
+        "featured": [
+            c.model_dump()
+            for c in list_products(dummy_resp, is_featured=True, brand=None, in_stock=None, limit=4, offset=0, db=db)
+        ],
+        "on_sale": [
+            c.model_dump()
+            for c in list_products(dummy_resp, on_sale=True, brand=None, in_stock=None, limit=4, offset=0, db=db)
+        ],
+        "best_sellers": [
+            c.model_dump()
+            for c in list_products(dummy_resp, is_best_seller=True, sort="popularity", brand=None, in_stock=None, limit=4, offset=0, db=db)
+        ],
+    }
+    cache_set("homepage", payload, ttl=300.0)
+    return payload
 
 
 @router.get("/delivery-zones", response_model=list[schemas.DeliveryZoneOut])
@@ -252,6 +338,7 @@ def get_taxonomy(category: str, db: Session = Depends(get_db)):
 
 @router.get("/products", response_model=list[schemas.ProductCardOut])
 def list_products(
+    response: Response,
     category: Optional[str] = None,
     department: Optional[str] = None,
     subcategory: Optional[str] = None,
@@ -276,6 +363,17 @@ def list_products(
     offset: int = Query(0, ge=0),
     db: Session = Depends(get_db),
 ):
+    response.headers["Cache-Control"] = "public, max-age=60"
+    cache_key = (
+        f"products:{category}:{department}:{subcategory}:{is_new_arrival}:{on_sale}:"
+        f"{collection}:{size}:{min_price}:{max_price}:{(search or '').strip().lower()}:"
+        f"{brand}:{movement}:{strap_material}:{case_material}:{dial_color}:"
+        f"{in_stock}:{is_best_seller}:{is_featured}:{is_limited_edition}:{sort}:{limit}:{offset}"
+    )
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
     q = (
         db.query(models.Product)
         .join(models.Category)
@@ -379,17 +477,24 @@ def list_products(
         elif offset:
             cards = cards[offset:]
 
+    cache_set(cache_key, cards, ttl=120.0 if _search_term else 300.0)
     return cards
 
 
 @router.get("/products/{slug}", response_model=schemas.ProductDetailOut)
-def get_product(slug: str, db: Session = Depends(get_db)):
+def get_product(slug: str, response: Response, db: Session = Depends(get_db)):
+    response.headers["Cache-Control"] = "public, max-age=60"
+    cache_key = f"product:{slug}"
+    cached = cache_get(cache_key)
+    if cached is not None:
+        return cached
+
     p = (
         db.query(models.Product)
         .options(
-            joinedload(models.Product.images),
-            joinedload(models.Product.colors),
-            joinedload(models.Product.variants),
+            selectinload(models.Product.images),
+            selectinload(models.Product.colors),
+            selectinload(models.Product.variants),
             joinedload(models.Product.category),
             joinedload(models.Product.brand),
         )
@@ -402,7 +507,7 @@ def get_product(slug: str, db: Session = Depends(get_db)):
         models.Review.product_id == p.id, models.Review.is_visible == True  # noqa: E712
     ).all()
     avg_rating = round(sum(r.rating for r in visible_reviews) / len(visible_reviews), 1) if visible_reviews else None
-    return schemas.ProductDetailOut(
+    out = schemas.ProductDetailOut(
         id=p.id, slug=p.slug, title=p.title, price=p.price, compare_at_price=p.compare_at_price,
         description=p.description or "", material=p.material or "",
         department=p.department or "Classic", subcategory=p.subcategory or "", category_slug=p.category.slug,
@@ -420,6 +525,8 @@ def get_product(slug: str, db: Session = Depends(get_db)):
         variants=[schemas.VariantOut.model_validate(v) for v in p.variants],
         avg_rating=avg_rating, review_count=len(visible_reviews),
     )
+    cache_set(cache_key, out, ttl=300.0)
+    return out
 
 
 @router.get("/products/{slug}/reviews", response_model=list[schemas.ReviewOut])
@@ -461,6 +568,7 @@ def create_product_review(slug: str, payload: schemas.ReviewIn, db: Session = De
     db.add(review)
     db.commit()
     db.refresh(review)
+    invalidate_catalog_cache()
     return schemas.ReviewOut.from_model(review)
 
 

@@ -291,8 +291,8 @@
 </div>
 </div>
 </footer>
-<script src="assets/js/api.js"></script>
-<script src="assets/js/shared.js?v=4"></script>
+<script src="assets/js/api.js?v=5"></script>
+<script src="assets/js/shared.js?v=5"></script>
 <script>
         const mobileSearchTrigger = document.getElementById('mobile-search-trigger');
         if (mobileSearchTrigger) {
@@ -331,8 +331,8 @@
             return `
             <a href="product.html?slug=${p.slug}" class="group cursor-pointer block">
                 <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3"${hasHoverMedia ? ` onmouseenter="activateCardHoverMedia(this)" onmouseleave="pauseCardHoverMedia(this)" ontouchstart="activateCardHoverMedia(this)"` : ''}>
-                    <img src="${p.primary_image || ''}" alt="${p.title}" loading="lazy" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
-                    ${hasSecondary ? `<img data-src="${p.secondary_image}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
+                    <img src="${thumbUrl(p.primary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="${hasHoverMedia ? 'product-primary-img ' : ''}absolute inset-0 w-full h-full object-cover object-center">
+                    ${hasSecondary ? `<img data-src="${thumbUrl(p.secondary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0">` : ''}
                     ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0" muted loop playsinline preload="none" data-src="${p.video_url}"></video>` : ''}
                     ${discount ? `<span class="absolute top-3 left-3 discount-badge text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${discount}% OFF</span>` : ''}
                     <div class="absolute inset-x-0 bottom-0 p-3 product-quick-action bg-gradient-to-t from-black/60 to-transparent">

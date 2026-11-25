@@ -29,6 +29,14 @@ async function apiForm(method, path, formData) {
   return res.json();
 }
 
+function thumbUrl(url, w = 480) {
+  if (!url) return "";
+  if (url.includes("/api/media/image/") && !url.includes("w=")) {
+    return url + (url.includes("?") ? "&" : "?") + "w=" + w;
+  }
+  return url;
+}
+
 function formatNPR(amount) {
   return `NPR ${Number(amount).toLocaleString("en-IN")}`;
 }

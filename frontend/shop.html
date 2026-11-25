@@ -291,8 +291,8 @@
 </div>
 </div>
 </footer>
-<script src="assets/js/api.js"></script>
-<script src="assets/js/shared.js?v=4"></script>
+<script src="assets/js/api.js?v=5"></script>
+<script src="assets/js/shared.js?v=5"></script>
 <script>
         const PAGE_SIZE = 12;
         let allProductsUnfiltered = [];
@@ -394,8 +394,8 @@
             return `
             <a href="product.html?slug=${p.slug}" class="group cursor-pointer block ${!p.in_stock ? 'opacity-50' : ''}">
                 <div class="relative w-full aspect-[3/4] bg-timexCharcoal overflow-hidden mb-3"${hasHoverMedia ? ` onmouseenter="activateCardHoverMedia(this)" onmouseleave="pauseCardHoverMedia(this)" ontouchstart="activateCardHoverMedia(this)"` : ''}>
-                    <img src="${p.primary_image || ''}" alt="${p.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover object-center">
-                    ${hasSecondary ? `<img data-src="${p.secondary_image}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">` : ''}
+                    <img src="${thumbUrl(p.primary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="absolute inset-0 w-full h-full object-cover object-center">
+                    ${hasSecondary ? `<img data-src="${thumbUrl(p.secondary_image, 480)}" alt="${p.title}" loading="lazy" decoding="async" class="product-secondary-img absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500">` : ''}
                     ${p.video_url ? `<video class="product-card-video absolute inset-0 w-full h-full object-cover object-center opacity-0 group-hover:opacity-100 transition-opacity duration-500" muted loop playsinline preload="none" data-src="${p.video_url}"></video>` : ''}
                     ${badge ? `<span class="absolute top-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">${badge}</span>` : ''}
                     ${!p.in_stock ? '<span class="absolute bottom-3 left-3 bg-timexWhite text-timexBlack text-[10px] font-semibold uppercase tracking-widest px-2 py-1 z-10">Out of Stock</span>' : `

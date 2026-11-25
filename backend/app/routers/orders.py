@@ -8,6 +8,7 @@ from fastapi.responses import Response as RawResponse
 from sqlalchemy.orm import Session, joinedload
 
 from .. import models, schemas, config, nepal_geo
+from ..cache_utils import invalidate_catalog_cache
 from ..database import get_db
 from ..settings_utils import get_setting
 from .customers import get_optional_customer
@@ -243,6 +244,7 @@ def create_order(
 
     db.commit()
     db.refresh(order)
+    invalidate_catalog_cache()
 
     # Build the receipt PDF fresh for the confirmation email. It is NOT persisted to
     # disk here — the download endpoint always regenerates from the order's current
@@ -327,6 +329,7 @@ def cancel_order(order_number: str, email: str = "", phone: str = "", db: Sessio
     restore_stock_for_order(db, order)
     db.commit()
     db.refresh(order)
+    invalidate_catalog_cache()
     return _order_to_schema(order)
 
 

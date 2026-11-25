@@ -163,7 +163,7 @@ function initSiteSearch() {
       const cardHtml = (p) => `
         <a href="product.html?slug=${p.slug}" class="flex items-center gap-4 py-3 border-b border-white/10 hover:bg-white/5 px-2 -mx-2 transition-colors">
           <div class="w-12 h-16 bg-white/10 overflow-hidden flex-shrink-0">
-            ${p.primary_image ? `<img src="${p.primary_image}" loading="lazy" decoding="async" class="w-full h-full object-cover">` : ""}
+            ${p.primary_image ? `<img src="${thumbUrl(p.primary_image, 480)}" loading="lazy" decoding="async" class="w-full h-full object-cover">` : ""}
           </div>
           <div class="flex-1 text-left">
             <p class="text-timexWhite text-sm uppercase tracking-wide">${p.title}</p>
@@ -197,7 +197,9 @@ async function applySiteSettingsToPage() {
   if (!contactEls.length && !igEls.length && !ttEls.length && !fbEls.length && !logoImgs.length && !brandNameEls.length && !taglineEls.length && !brandShowcase) return;
 
   try {
-    const settings = await apiGet("/api/settings");
+    const settings = window.__SITE_SETTINGS_PROMISE__
+      ? await window.__SITE_SETTINGS_PROMISE__
+      : await apiGet("/api/settings");
 
     if (settings.site_logo_url && logoImgs.length) {
       logoImgs.forEach((el) => {
@@ -547,7 +549,7 @@ function initAutocompleteSearch() {
           html += topResults.map(p => `
             <a href="product.html?slug=${p.slug}" style="display:flex;align-items:center;gap:20px;padding:16px 24px;border-bottom:1px solid #f5f5f5;text-decoration:none;color:inherit;transition:all .2s;" onmouseover="this.style.background='#fafafa';this.style.paddingLeft='30px'" onmouseout="this.style.background='';this.style.paddingLeft='24px'">
               <div style="width:64px;height:64px;background:#f8f8f8;border-radius:8px;overflow:hidden;flex-shrink:0;">
-                <img src="${p.primary_image || ''}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;" alt="">
+                <img src="${thumbUrl(p.primary_image, 480)}" loading="lazy" decoding="async" style="width:100%;height:100%;object-fit:contain;" alt="">
               </div>
               <div style="flex:1;min-width:0;">
                 <div style="font-size:13px;font-weight:800;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#111;">${highlight(p.title)}</div>

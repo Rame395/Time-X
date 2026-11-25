@@ -15,6 +15,7 @@ from starlette.middleware.trustedhost import TrustedHostMiddleware
 from sqlalchemy import text
 
 from . import models, config
+from .cache_utils import invalidate_catalog_cache
 from .database import engine, SessionLocal
 from .seed import seed_if_empty, ensure_unisex_category, ensure_default_departments, ensure_default_delivery_zones, ensure_default_brand_assets, ensure_carried_brands, ensure_display_rank_column
 from .routers import products, cart, orders, admin, customers
@@ -107,16 +108,48 @@ class SmartGZipMiddleware:
 
 app.add_middleware(SmartGZipMiddleware, minimum_size=1000)
 
-@app.middleware("http")
-async def security_headers(request, call_next):
-    response = await call_next(request)
-    response.headers.setdefault("X-Content-Type-Options", "nosniff")
-    response.headers.setdefault("X-Frame-Options", "SAMEORIGIN")
-    response.headers.setdefault("Referrer-Policy", "strict-origin-when-cross-origin")
-    response.headers.setdefault("Permissions-Policy", "camera=(), microphone=(), geolocation=()")
-    if config.IS_PRODUCTION:
-        response.headers.setdefault("Strict-Transport-Security", "max-age=31536000; includeSubDomains")
-    return response
+
+class SecurityAndCacheMiddleware:
+    """Pure ASGI security headers + admin mutation cache invalidation (zero streaming buffer overhead)."""
+    _SECURITY_HEADERS = [
+        (b"x-content-type-options", b"nosniff"),
+        (b"x-frame-options", b"SAMEORIGIN"),
+        (b"referrer-policy", b"strict-origin-when-cross-origin"),
+        (b"permissions-policy", b"camera=(), microphone=(), geolocation=()"),
+    ]
+
+    def __init__(self, app):
+        self.app = app
+
+    async def __call__(self, scope, receive, send):
+        if scope.get("type") != "http":
+            await self.app(scope, receive, send)
+            return
+
+        method = (scope.get("method") or "GET").upper()
+        path = scope.get("path") or ""
+        is_admin_mutation = method in ("POST", "PUT", "PATCH", "DELETE") and path.startswith("/api/admin/")
+
+        async def send_wrapper(message):
+            if message["type"] == "http.response.start":
+                headers = list(message.get("headers") or [])
+                existing = {k.lower() for k, _ in headers}
+                for k, v in self._SECURITY_HEADERS:
+                    if k not in existing:
+                        headers.append((k, v))
+                if config.IS_PRODUCTION and b"strict-transport-security" not in existing:
+                    headers.append((b"strict-transport-security", b"max-age=31536000; includeSubDomains"))
+                message = {**message, "headers": headers}
+
+                status = message.get("status", 0)
+                if is_admin_mutation and 200 <= status < 300:
+                    invalidate_catalog_cache()
+            await send(message)
+
+        await self.app(scope, receive, send_wrapper)
+
+
+app.add_middleware(SecurityAndCacheMiddleware)
 
 app.add_middleware(
     CORSMiddleware,
