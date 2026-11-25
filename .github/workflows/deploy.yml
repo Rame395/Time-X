@@ -51,13 +51,10 @@ jobs:
             cd backend
             source venv/bin/activate
             pip install -r requirements.txt
-            chmod +x venv/bin/* || true
 
-            # Delete any existing timex-backend process in PM2
+            # Stop and delete any existing process, start fresh with ecosystem config
             pm2 delete timex-backend || true
-
-            # Start timex-backend using virtualenv uvicorn
-            pm2 start "$PWD/venv/bin/uvicorn" --name timex-backend --cwd "$PWD" -- app.main:app --host 127.0.0.1 --port 8000 --workers 2
+            pm2 start ecosystem.config.js
             pm2 save
             pm2 status
 
