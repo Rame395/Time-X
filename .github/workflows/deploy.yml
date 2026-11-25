@@ -52,24 +52,23 @@ jobs:
           ssh -o StrictHostKeyChecking=no "$SSH_USER@$SSH_HOST" 'bash -s' << 'REMOTE_SCRIPT' > deploy.log 2>&1 || FAILED=1
           set -e
           cd ~/Time-X
-          git pull origin main
+          git fetch origin main
+          git reset --hard origin/main
           cd backend
           source venv/bin/activate
           pip install -r requirements.txt
 
-          echo "=== TESTING APPLICATION STARTUP WITH PYTHON ==="
+          export NVM_DIR="$HOME/.nvm"
+          [ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+
+          echo "=== TESTING APPLICATION STARTUP + DATABASE CONNECTION ==="
           venv/bin/python -c "
           from app.main import app
-          print('APP IMPORT SUCCESS')
-          "
-
-          echo "=== TESTING DATABASE CONNECTION ==="
-          venv/bin/python -c "
           from app.database import engine
           from sqlalchemy import text
           with engine.connect() as conn:
               res = conn.execute(text('SELECT 1')).scalar()
-              print('DB TEST SUCCESS, result:', res)
+          print('APP + DB CHECK SUCCESS, result:', res)
           "
 
           echo "=== RESTARTING TIMEX-BACKEND UNDER PM2 ==="
